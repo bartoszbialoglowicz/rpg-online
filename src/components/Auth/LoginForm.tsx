@@ -2,6 +2,8 @@ import { ChangeEvent, FormEvent, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import SubmitInput from "../UI/SubmitInput";
 import InputLabel from "./InputLabel";
+import Form from "../../models/Form";
+import Input from "../../models/Input";
 
 const LoginForm = () => {
     const [emailValue, setEmailValue] = useState('');
@@ -13,8 +15,7 @@ const LoginForm = () => {
         {'email': emailValue, 'password': passwordValue}
     );
 
-    const loginHandler = (event: FormEvent) => {
-        event.preventDefault();
+    const loginHandler = () => {
         sendRequest();
     }
 
@@ -25,12 +26,13 @@ const LoginForm = () => {
         setPasswordValue(event.target.value);
     };
 
+    const form = new Form([
+        new Input("E-mail address", "email", "email", emailValue, false, getEmailInputValue),
+        new Input("Passoword", "password", "password", passwordValue, false, getPasswordInputValue)
+    ], "SIGN IN!", loginHandler);
+
     return <div className="login-form">
-        <form onSubmit={loginHandler}>
-            <InputLabel type="text" label="E-mail address" name="email" value={emailValue} onChange={getEmailInputValue}/>
-            <InputLabel type="password" label="Password" name="password" value={passwordValue} onChange={getPasswordInputValue}/>
-            <SubmitInput text="SIGN IN" />
-        </form>
+        {form.render()}
     </div>
 };
 
