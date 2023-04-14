@@ -32,8 +32,8 @@ class Input {
         this.defaultValidator = this.setValidator();
     }
 
-    public getJSXElement = () => {
-        return <InputLabel label={this.label} type={this.type} name={this.name} value={this.value} onChange={this.onChange} />
+    public getJSXElement = (id: number) => {
+        return <InputLabel key={id} label={this.label} type={this.type} name={this.name} value={this.value} onChange={this.onChange} />
     }
     
     public validate = (fn?: ()=> boolean) => {
