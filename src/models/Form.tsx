@@ -16,6 +16,7 @@ class Form {
     };
 
     public validate = () => {
+        this.isValid = true;
         this.inputs.forEach((input: Input) => {
             input.validate();
             if (!input.isValid) {
@@ -23,20 +24,22 @@ class Form {
                 return;
             }
         });
-        this.isValid = true;
     };
 
     private validateAndSubmit = (event: FormEvent) => {
         event.preventDefault();
+        this.validate();
+
         if (this.isValid) {
+            console.log('ok');
             this.onSubmit();
         } else {
-            console.log("bad");
+            this.inputs.forEach((el: Input) => console.log(el.isValid));
         }
     }
 
     public render = () => {
-        const inputs = this.inputs.map((el: Input) => el.getJSXElement());
+        const inputs = this.inputs.map((el: Input, index: number) => el.getJSXElement(index));
         return <form onSubmit={this.validateAndSubmit}>
             {inputs}
             <SubmitInput text={this.submitText}/>
