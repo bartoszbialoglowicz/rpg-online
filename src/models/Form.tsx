@@ -6,10 +6,12 @@ class Form {
     isValid: boolean;
     inputs: Input[];
     submitText: string;
+    alwaysValid: boolean;
     onSubmit: () => void;
 
-    constructor(inputs: Input[], submitText: string, onSubmit: () => void) {
-        this.isValid = false;
+    constructor(inputs: Input[], submitText: string, onSubmit: () => void, alwaysValid: boolean) {
+        this.alwaysValid = alwaysValid;
+        this.isValid = alwaysValid ? true : false;
         this.submitText = submitText;
         this.onSubmit = onSubmit;
         this.inputs = inputs;
@@ -28,13 +30,11 @@ class Form {
 
     private validateAndSubmit = (event: FormEvent) => {
         event.preventDefault();
-        this.validate();
-
+        if (!this.alwaysValid) {
+            this.validate();
+        }
         if (this.isValid) {
-            console.log('ok');
             this.onSubmit();
-        } else {
-            this.inputs.forEach((el: Input) => console.log(el.isValid));
         }
     }
 
