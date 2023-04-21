@@ -10,7 +10,7 @@ class Input {
     value: string;
     isValid: boolean;
     defaultValidator: () => boolean;
-    onChange?: (event: ChangeEvent<HTMLInputElement>) => void;
+    onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 
     private setValidator = () => {
         if (this.type === 'email') {
@@ -26,19 +26,27 @@ class Input {
         this.label = label;
         this.type = type;
         this.name = name;
-        this.isValid = isValid;
+        this.isValid = false;
         this.value = value ? value : '';
         this.onChange = onChange;
         this.defaultValidator = this.setValidator();
     }
 
+    public validate = (fn?: ()=> boolean) => {
+        if (this.type === 'email') {
+            return this.isValid = AppSettings.EMAIL_REGEX.test(this.value);
+        }
+        else if (this.type === 'password') {
+            return this.isValid = AppSettings.PASSWORD_REGEX.test(this.value);
+        }
+        return this.isValid = AppSettings.NICKNAME_REGEX.test(this.value);
+    }
+
     public getJSXElement = (id: number) => {
-        return <InputLabel key={id} label={this.label} type={this.type} name={this.name} value={this.value} onChange={this.onChange} />
+        return <InputLabel key={id} label={this.label} type={this.type} name={this.name} value={this.value} onChange={this.onChange} isValid={this.validate()}/>
     }
     
-    public validate = (fn?: ()=> boolean) => {
-        this.isValid = fn ? fn() : this.defaultValidator();
-    }
+    
 };
 
 export default Input;
