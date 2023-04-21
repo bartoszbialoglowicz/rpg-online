@@ -1,11 +1,13 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import './App.css';
 import LoginPage from './components/Auth/AuthPage';
+import { UserContext } from './store/user-context';
+import Layout from './components/Layout/Layout';
 
 function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const userCtx = useContext(UserContext);
 
-  const content = !isAuthenticated ? <LoginPage /> : <p>Zalogowano.</p>
+  const content = !userCtx.isAuthenticated ? <LoginPage /> : <Layout />
   return (
     <div className="App">
       {content}
