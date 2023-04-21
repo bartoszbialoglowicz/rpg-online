@@ -1,23 +1,17 @@
-import { ChangeEvent, FormEvent, useState } from "react";
+import { ChangeEvent, useContext, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
-import SubmitInput from "../UI/SubmitInput";
-import InputLabel from "./InputLabel";
 import Form from "../../models/Form";
 import Input from "../../models/Input";
+import { feedbackResult } from "../../utils/types";
+import { UserContext } from "../../store/user-context";
+import User from "../../models/User";
 
-const LoginForm = () => {
+const LoginForm: React.FC<{setfeedbackHandler: (text: string, type: feedbackResult) => void }> = (props) => {
+
+    const userCtx = useContext(UserContext);
+
     const [emailValue, setEmailValue] = useState('');
     const [passwordValue, setPasswordValue] = useState('');
-
-    const sendRequest = useHttp(
-        'api/token/', 
-        'POST', 
-        {'email': emailValue, 'password': passwordValue}
-    );
-
-    const loginHandler = () => {
-        sendRequest();
-    }
 
     const getEmailInputValue = (event: ChangeEvent<HTMLInputElement>) => {
         setEmailValue(event.target.value);
@@ -26,10 +20,30 @@ const LoginForm = () => {
         setPasswordValue(event.target.value);
     };
 
-    const form = new Form([
-        new Input("E-mail address", "email", "email", emailValue, false, getEmailInputValue),
-        new Input("Passoword", "password", "password", passwordValue, false, getPasswordInputValue)
-    ], "SIGN IN!", loginHandler);
+    const emailInput = new Input("E-mail address", "email", "email", emailValue, false, getEmailInputValue);
+    const passwordInput = new Input("Passoword", "password", "password", passwordValue, false, getPasswordInputValue);
+
+    const sendRequest = useHttp(
+        'api/token/', 
+        'POST', 
+        {'email': emailValue, 'password': passwordValue}
+    );
+
+    const loginHandler = async () => {
+        const [data, status] = await sendRequest();
+        if (status === 200) {
+            props.setfeedbackHandler("Zalogowano", "success");
+            //console.log(data);
+            userCtx.login(new User(data.id, data.user, data.email, data.token));
+        }
+        else {
+            console.log(data);
+            props.setfeedbackHandler("Incorrect credentials", "error");
+        }
+    }
+
+    const form = new Form([emailInput, passwordInput], "SIGN IN!", loginHandler, true);
+
 
     return <div className="login-form">
         {form.render()}
