@@ -13,7 +13,8 @@ export const useHttp = (path: string, method: HttpMethod, body?: object) => {
             body: body ? JSON.stringify(body) : null
         });
         const data = await response.json();
-        console.log(data);
+        const code = response.status;
+        return [data, code];
     }
     return sendRequest;
 };
