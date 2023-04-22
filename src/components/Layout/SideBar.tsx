@@ -1,8 +1,9 @@
+import SideBarList from '../Sidebar/SideBarList';
 import './SideBar.css';
 
 const SideBar = () => {
     return <div className="sidebar">
-        x
+        <SideBarList />
     </div>
 };
 

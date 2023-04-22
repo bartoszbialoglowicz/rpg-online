@@ -1,0 +1,17 @@
+.sidebar-list-item-image {
+    width: 25%;
+}
+
+.sidebar-list-item-image > img {
+    width: 100%;
+    color: white;
+}
+
+.sidebar-list-item-name {
+    width: 100%;
+}
+
+.sidebar-list-item-name > p {
+    text-align: center;
+    margin: 0;
+}
