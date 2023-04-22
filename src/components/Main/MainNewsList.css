@@ -1,0 +1,7 @@
+.main-news-list {
+    width: 220px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    cursor: pointer;
+}
