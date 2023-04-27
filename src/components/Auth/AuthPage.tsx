@@ -17,7 +17,7 @@ const AuthPage = () => {
 
     // Provide additional props is there any feedback
     const loginForm = (feedbackText && feedbackType) ? <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType} /> : <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
-    const registerForm = <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
+    const registerForm = (feedbackText && feedbackType) ? <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType}/> : <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
 
     const content = formType ? loginForm : registerForm;
 
