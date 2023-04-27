@@ -11,7 +11,7 @@ const ResourceContainer = () => {
 
     useEffect(() => {
         const fetchData = async () => {
-            const [data, code] = await sendRequest();
+            const {data, code} = await sendRequest();
             console.log([data, code]);
         }
         fetchData();
