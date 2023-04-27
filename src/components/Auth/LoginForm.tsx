@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import Form from "../../models/Form";
 import Input from "../../models/Input";
-import { authContextObject, feedbackResult, loginResponse } from "../../utils/types";
+import { feedbackResult, loginResponse } from "../../utils/types";
 import { UserContext } from "../../store/user-context";
 import User from "../../models/User";
 
