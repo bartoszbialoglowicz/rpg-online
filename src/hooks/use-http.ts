@@ -1,7 +1,7 @@
 import { AppSettings } from "../utils/settings";
-import { HttpMethod } from "../utils/types";
+import { HttpMethod, responseObject } from "../utils/types";
 
-export const useHttp = (path: string, method: HttpMethod, body?: object) => {
+export const useHttp = <objType>(path: string, method: HttpMethod, body?: object) => {
     const sendRequest = async () => {
         const response = await fetch(`http://${AppSettings.SERVER_IP}/${path}`, {
             method: method,
@@ -12,9 +12,13 @@ export const useHttp = (path: string, method: HttpMethod, body?: object) => {
             },
             body: body ? JSON.stringify(body) : null
         });
-        const data = await response.json();
+        const data: objType = await response.json();
         const code = response.status;
-        return [data, code];
+        const responseData: responseObject<objType> = {
+            data: data,
+            code: code
+        }
+        return responseData;
     }
     return sendRequest;
 };

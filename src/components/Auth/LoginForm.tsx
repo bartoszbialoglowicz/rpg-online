@@ -2,7 +2,7 @@ import { ChangeEvent, useContext, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import Form from "../../models/Form";
 import Input from "../../models/Input";
-import { feedbackResult } from "../../utils/types";
+import { authContextObject, feedbackResult, loginResponse } from "../../utils/types";
 import { UserContext } from "../../store/user-context";
 import User from "../../models/User";
 
@@ -23,15 +23,15 @@ const LoginForm: React.FC<{setfeedbackHandler: (text: string, type: feedbackResu
     const emailInput = new Input("E-mail address", "email", "email", emailValue, false, getEmailInputValue);
     const passwordInput = new Input("Passoword", "password", "password", passwordValue, false, getPasswordInputValue);
 
-    const sendRequest = useHttp(
+    const sendRequest = useHttp<loginResponse>(
         'api/token/', 
         'POST', 
         {'email': emailValue, 'password': passwordValue}
     );
 
     const loginHandler = async () => {
-        const [data, status] = await sendRequest();
-        if (status === 200) {
+        const {data, code} = await sendRequest();
+        if (code === 200) {
             props.setfeedbackHandler("Zalogowano", "success");
             //console.log(data);
             userCtx.login(new User(data.id, data.user, data.email, data.token));

@@ -1,5 +1,5 @@
 import { ChangeEvent, useState } from "react";
-import { feedbackResult } from "../../utils/types";
+import { errorResponse, feedbackResult, responseObject } from "../../utils/types";
 import { useHttp } from "../../hooks/use-http";
 import Input from "../../models/Input";
 import Form from "../../models/Form";
@@ -24,15 +24,26 @@ const RegisterForm: React.FC<{setFeedbackHandler: (text:string, type:feedbackRes
         setPassword2Value(event.target.value);
     }
     
-    const sendRequest = useHttp(
-        'api/createuser/', 
-        'POST',
-        {'email': 'dupa'})
+    const sendRequest = useHttp<errorResponse>('api/createuser/', 'POST',
+        {
+            'email': emailValue,
+            'name': nicknameValue,
+            'password': password1Value
+        }
+    )
 
     // Submit form event, provide feedback into controller and render login form
-    const onSubmitHandler = () => {
-        props.setFeedbackHandler(dummy_text, 'success');
-        props.setFormTypeHandler(true);
+    const onSubmitHandler = async () => {
+        const {data, code} = await sendRequest();
+        if (code === 201) {       
+            props.setFeedbackHandler(dummy_text, 'success');
+            props.setFormTypeHandler(true);
+        }
+        else {
+            const unkownError = 'Something went wrong... try again later.'
+            const feedbackText = data.email ? data.email[0] : (data.name ? data.name[0] : (data.password ? data.password[0] : unkownError));
+            props.setFeedbackHandler(feedbackText, 'error')
+        }
     }
 
     const form = new Form([
