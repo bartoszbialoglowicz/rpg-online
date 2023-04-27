@@ -8,8 +8,8 @@ import { mainContentName } from "../../utils/types";
 const SideBarList: React.FC<{setCurrentMainContent: (name: mainContentName) => void}> = (props) => {
 
     const tmpList = [
-        <SideBarListItem iconPath={news} name="NEWS" setCurrentMainContent={props.setCurrentMainContent}/>,
-        <SideBarListItem iconPath={character} name="CHARACTER" setCurrentMainContent={props.setCurrentMainContent}/>
+        <SideBarListItem iconPath={news} name="NEWS" setCurrentMainContent={props.setCurrentMainContent} key="NEWS"/>,
+        <SideBarListItem iconPath={character} name="CHARACTER" setCurrentMainContent={props.setCurrentMainContent} key="CHARACTER"/>
     ]
 
     return <div className="sidebar-list">
