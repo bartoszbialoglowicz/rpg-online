@@ -25,3 +25,8 @@ export type errorResponse = {
     name?: string[],
     password?: string[],
 }
+export type resurcesResponse = [{
+    gold: number,
+    lvl: number,
+    exp: number
+}]
