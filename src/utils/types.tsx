@@ -9,3 +9,18 @@ export type authContextObject = {
     login: (user: User) => void,
     logout: () => void
 };
+export type responseObject<objType> = {
+    code: number,
+    data: objType
+}
+export type loginResponse = {
+    id: number,
+    user: string,
+    email: string,
+    token: string
+};
+export type errorResponse = {
+    email?: string[],
+    name?: string[],
+    password?: string[],
+}
