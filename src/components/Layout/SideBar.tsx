@@ -1,9 +1,10 @@
+import { mainContentName } from '../../utils/types';
 import SideBarList from '../Sidebar/SideBarList';
 import './SideBar.css';
 
-const SideBar = () => {
+const SideBar: React.FC<{setCurrentMainContent: (name: mainContentName) => void}> = (props) => {
     return <div className="sidebar">
-        <SideBarList />
+        <SideBarList setCurrentMainContent={props.setCurrentMainContent}/>
     </div>
 };
 
