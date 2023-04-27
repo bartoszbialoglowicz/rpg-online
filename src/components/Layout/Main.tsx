@@ -1,9 +1,10 @@
+import { mainContentName } from '../../utils/types';
 import MainContentContainer from '../Main/MainContentContainer';
 import './Main.css';
 
-const Main = () => {
+const Main: React.FC<{currentMainContent: mainContentName}> = (props) => {
     return <div className="main">
-        <MainContentContainer />
+        <MainContentContainer currentContent={props.currentMainContent}/>
     </div>
 };
 
