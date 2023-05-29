@@ -6,6 +6,8 @@ import { feedbackResult, loginResponse } from "../../utils/types";
 import { UserContext } from "../../store/user-context";
 import User from "../../models/User";
 
+import './LoginForm.css';
+
 const LoginForm: React.FC<{setfeedbackHandler: (text: string, type: feedbackResult) => void }> = (props) => {
 
     const userCtx = useContext(UserContext);
@@ -30,10 +32,10 @@ const LoginForm: React.FC<{setfeedbackHandler: (text: string, type: feedbackResu
     );
 
     const loginHandler = async () => {
+        console.log(emailValue);
         const {data, code} = await sendRequest();
         if (code === 200) {
             props.setfeedbackHandler("Zalogowano", "success");
-            //console.log(data);
             userCtx.login(new User(data.id, data.user, data.email, data.token));
         }
         else {

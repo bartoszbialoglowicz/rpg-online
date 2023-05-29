@@ -5,7 +5,7 @@ import FormTitle from "./FormTitle"
 import RegisterForm from "./RegisterForm"
 
 const RegisterFormContainer: React.FC<{setFormTypeHandler: (type: boolean) => void, setFeedbackHandler: (text:string, type:feedbackResult)=>void, feedbackText?: string, feedbackResult?: feedbackResult}> = (props) => {
-    return <div className="register-form-container">
+    return <div className="form-container">
         <FormTitle formTitle="SIGN UP" />
         <RegisterForm setFeedbackHandler={props.setFeedbackHandler} setFormTypeHandler={props.setFormTypeHandler}/>
         { props.feedbackResult && props.feedbackText && <FormFeedback text={props.feedbackText} result={props.feedbackResult}/>}

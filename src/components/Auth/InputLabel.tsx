@@ -14,7 +14,7 @@ const InputLabel: React.FC<{name: string, type: inputType, label: string, value?
 
     return <div className={cssClass}>
         <label htmlFor={props.name}>{[props.label]}</label>
-        <input type={props.type} name={props.name} value={props.value} onChange={onChangeHandler}/>
+        <input type={props.type} name={props.name} value={props.value} onChange={onChangeHandler} autoComplete="true"/>
     </div>
 };
 

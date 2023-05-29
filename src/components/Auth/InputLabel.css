@@ -1,3 +1,37 @@
-.invalid {
-    border: 1px solid red;
+.invalid input {
+    box-shadow: 0 0 15px 1px #7a2929 inset;
+}
+
+.form-input-label {
+    width: 100%;
+    margin: 0.5rem 0;
+    box-sizing: border-box;
+}
+.form-input-label label {
+    width: 100%;
+}
+.form-input-label input {
+    width: calc(100% - 1rem);
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: transparent;
+    padding: 0.5rem ;
+    color: #eee;
+    font-size: 14px;
+    margin: 0.25rem 0;
+    outline: none;
+    transition: .3s;
+    font-family: 'IBM Plex Mono', monospace;
+}
+
+.form-input-label input:focus {
+    box-shadow: 0 0 5px 1px #eee;
+}
+
+.form-input-label input:-webkit-autofill,
+.form-input-label input:-webkit-autofill:hover,
+.form-input-label input:-webkit-autofill:focus,
+.form-input-label input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: #eee !important;
 }

@@ -3,6 +3,8 @@ import LoginFormContainer from "./LoginFormContainer";
 import RegisterFormContainer from "./RegisterFormContainer";
 import { feedbackResult } from "../../utils/types";
 
+import './AuthPage.css';
+
 const AuthPage = () => {
     // form type -> true for login form false for register form
     const [formType, setFormType] = useState(true);
