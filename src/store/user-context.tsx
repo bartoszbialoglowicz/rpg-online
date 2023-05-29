@@ -1,41 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { authContextObject } from "../utils/types";
+import React, { useEffect, useReducer, useState } from "react";
+import { Action, authContextObject, authState } from "../utils/types";
 import User from "../models/User";
 
-const defaultUser = new User(-1, '', '', '');
-
-export const UserContext = React.createContext<authContextObject>({
+const defaultState: authContextObject = {
+    user: null,
     isAuthenticated: false,
-    user: defaultUser,
     login: (user: User) => {},
     logout: () => {}
-});
+}
+
+const reducer = (state: authState, action: Action) => {
+    switch(action.type) {
+        case 'LOGIN_USER':
+            return {...state, user: action.payload}
+        case 'LOGOUT_USER':
+            return {...state, user: null}
+        case 'SET_IS_AUTHENTICATED':
+            return {...state, isAuthenticated: action.payload}
+        default:
+            return state;
+    }
+}
+
+export const UserContext = React.createContext<authContextObject>(defaultState);
 
 const UserContextProvider: React.FC<{children: JSX.Element}>= (props) => {
-    const [user, setUser] = useState(defaultUser);
-    const [isAuthenticated, setIsAuthenticated] = useState(false);
-    
-    const loginHandler = (user: User) => {
-        setUser(user);
-        localStorage.setItem('user', JSON.stringify(user));
-        setIsAuthenticated(true);
-    }
-    const logoutHandler = () => {
-        setUser(defaultUser);
-        localStorage.removeItem('user');
-        setIsAuthenticated(false);
-    }
+    const [state, dispatch] = useReducer(reducer, defaultState);
 
     useEffect(() => {
         const stored = localStorage.getItem('user');
         if (stored) {
-            loginHandler(JSON.parse(stored));
+            dispatch({type: 'LOGIN_USER', payload: JSON.parse(stored)});
+            dispatch({type: 'SET_IS_AUTHENTICATED', payload: true})
         }
     }, []);
 
+    const loginHandler = (user: User) => {
+        localStorage.setItem('user', JSON.stringify(user));
+        dispatch({type: 'LOGIN_USER', payload: user});
+        dispatch({type: 'SET_IS_AUTHENTICATED', payload: true});
+    }
+    const logoutHandler = () => {
+        localStorage.removeItem('user');
+        dispatch({type: 'LOGOUT_USER'});
+        dispatch({type: 'SET_IS_AUTHENTICATED', payload: false})
+    }
     const userContextValue = {
-        isAuthenticated: isAuthenticated,
-        user: user,
+        ...state,
         login: loginHandler,
         logout: logoutHandler
     };
