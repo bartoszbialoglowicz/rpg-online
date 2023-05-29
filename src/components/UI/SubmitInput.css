@@ -1,0 +1,21 @@
+.submit-input-container {
+    width: 100%;
+    margin: 1rem 0;
+}
+
+.submit-input-container input {
+    padding: 0.5rem 1rem;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    font-size: 16px;
+    font-family: 'IBM Plex Mono', monospace;
+    background-color: transparent;
+    color: #eee;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.submit-input-container input:hover {
+    
+    box-shadow: 0 0 5px 1px #eee;
+}
