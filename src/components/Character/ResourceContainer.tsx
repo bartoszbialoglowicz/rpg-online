@@ -10,7 +10,7 @@ const ResourceContainer = () => {
     const [lvl, setLvl] = useState(0);
     const [exp, setExp] = useState(0);
     const userCtx = useContext(UserContext);
-    const sendRequest = useHttp<resurcesResponse>('api/resources', 'GET', undefined, userCtx.user.authToken);
+    const sendRequest = useHttp<resurcesResponse>('api/resources', 'GET', undefined, userCtx.user!.authToken);
 
     useEffect(() => {
         const fetchData = async () => {

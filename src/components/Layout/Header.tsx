@@ -7,7 +7,7 @@ const Header = () => {
     
     return <div className="header">
         <header>
-            <p>Hello {userCtx.user.nickname}</p>
+            <p>Hello  {userCtx.user!.nickname}</p>
         </header>
     </div>
 };
