@@ -2,8 +2,9 @@ import Header from "./Header";
 import Main from "./Main";
 import './Layout.css';
 import SideBar from "./SideBar";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { mainContentName } from "../../utils/types";
+import GameContextProvider, { GameContext } from "../../store/game-context";
 
 const Layout = () => {
 
@@ -13,11 +14,15 @@ const Layout = () => {
         setCurrentMainContent(name);
     }
 
-    return <div className="layout">
-        <Header />
-        <SideBar setCurrentMainContent={setCurrentMainContentHandler}/>
-        <Main currentMainContent={currentMainContent}/>
-    </div>
+    const gameContext = useContext(GameContext);
+
+    return <GameContextProvider>
+            <div className="layout">
+                <Header />
+                <SideBar setCurrentMainContent={setCurrentMainContentHandler}/>
+                <Main currentMainContent={currentMainContent}/>
+            </div>
+        </GameContextProvider>
 };
 
 export default Layout;
