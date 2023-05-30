@@ -12,17 +12,14 @@ const EquipmentItem: React.FC<Item> = (props) => {
     }
 
     const onMouseHandler = (event: React.MouseEvent<HTMLDivElement>) => {
-        setTimeout(() => setIsHidden((prevState: boolean) => !prevState), 200)
-        ;
-        
+        setTimeout(() => setIsHidden((prevState: boolean) => !prevState), 200);
     }
-
     const hiddenClass = isHidden ? 'hidden' : '';
 
     return <div className="equipment-container-item" onMouseEnter={onMouseHandler} onMouseLeave={onMouseHandler}>
         <p>{props.name}</p>
         <p>{props.itemType}</p>
-        <div className={`${hiddenClass} equipment-container-item-stats`}>
+        <div className={`${hiddenClass} equipment-container-item-stats`} >
             {getPositiveValue(props.armor) && <p>{`Armor: ${props.armor}`}</p>}
             {getPositiveValue(props.magicResist) && <p>{`Magic resists: ${props.magicResist}`}</p>}
             {getPositiveValue(props.damage) && <p>{`Damage: ${props.damage}`}</p>}
@@ -32,7 +29,3 @@ const EquipmentItem: React.FC<Item> = (props) => {
 };
 
 export default EquipmentItem;
-
-function usestate(arg0: boolean): [any, any] {
-    throw new Error("Function not implemented.");
-}
