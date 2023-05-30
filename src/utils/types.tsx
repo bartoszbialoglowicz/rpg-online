@@ -3,7 +3,7 @@ import User from "../models/User";
 export type feedbackResult = 'success' | 'error';
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH';
 export type inputType = 'email' | 'text' | 'password';
-export type mainContentName = 'CHARACTER' | 'NEWS' | 'EQUIPMENT';
+export type mainContentName = 'CHARACTER' | 'NEWS' | 'EQUIPMENT' | 'MAP';
 export type authContextObject = {
     isAuthenticated: boolean,
     user: User | null,
@@ -57,10 +57,15 @@ export type Equipment = {
 }
 export type EquipmentResponseObject = {
     slot: ItemType;
-    item: Item;
+    item: Item | null;
 };
 export type UserItemsResponseObject = {
     id: number;
     user: number;
     item: Item[];
+};
+export type Location = {
+    id: number;
+    name: string;
+    lvlRequired: number;
 }
