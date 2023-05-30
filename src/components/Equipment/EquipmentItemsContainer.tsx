@@ -16,7 +16,7 @@ const EquipmentItemsContainer = () => {
     // Get item value from response object and set it into eq
     const setItemIntoEq = (eqObj: EquipmentResponseObject) => {
         const tmpEq = equipment;
-        tmpEq[eqObj.slot] = eqObj.item;
+        tmpEq[eqObj.slot] = eqObj.item ? eqObj.item : undefined;
         setEquipment(tmpEq);
     }
 
@@ -26,7 +26,7 @@ const EquipmentItemsContainer = () => {
     // Returned JSX will be used as returned value from this current component
     const setItemsJSX = (items: Item[]) => {
         const tmpJSX: JSX.Element[] = [];
-        const types: ItemType[] = ['armor', 'boots', 'gloves', 'helmet', 'helmet', 'trousers', 'weapon'];
+        const types: ItemType[] = ['armor', 'boots', 'gloves', 'helmet', 'trousers', 'weapon'];
         types.forEach((el: string, index: number) => {
             let tmpJsxEl = <p key={index}>{`${el}: Unequipped`}</p>;
             items.forEach((item: Item) => {
@@ -55,8 +55,12 @@ const EquipmentItemsContainer = () => {
             if (code === 200) {
                 const tmpItems: Item[] = [];
                 data.forEach((eqObj: EquipmentResponseObject) => {
-                    setItemIntoEq(eqObj);
-                    tmpItems.push(eqObj.item);
+                    
+                    if (eqObj.item) {
+                        setItemIntoEq(eqObj);
+                        tmpItems.push(eqObj.item);
+                    }
+                        
                 });
                 setEquippedItems(setItemsJSX(tmpItems));
             }
