@@ -14,7 +14,6 @@ const UserItemContainer = () => {
         const getItems = async () => {
             const {data, code} = await sendRequest();
             if (code === 200) {
-                console.log(data);
                 setItems(data[0].item);
             }
             else {
