@@ -3,13 +3,16 @@ import User from "../models/User";
 export type feedbackResult = 'success' | 'error';
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH';
 export type inputType = 'email' | 'text' | 'password';
-export type mainContentName = 'CHARACTER' | 'NEWS' | 'EQUIPMENT' | 'MAP';
+export type mainContentName = 'CHARACTER' | 'NEWS' | 'EQUIPMENT' | 'MAP' | 'STORE';
 export type authContextObject = {
     isAuthenticated: boolean,
     user: User | null,
     login: (user: User) => void,
     logout: () => void
 };
+export type GameContextObject = {
+    location: Location,
+}
 export type authState = {
     user: User | null;
     isAuthenticated: boolean;
@@ -68,4 +71,16 @@ export type Location = {
     id: number;
     name: string;
     lvlRequired: number;
+}
+export type UserLocationResponseObject = {
+    user: number,
+    id: number,
+    location: Location
+}
+
+export type Store = {
+    id: number,
+    name: string,
+    type: string,
+    location: number
 }
