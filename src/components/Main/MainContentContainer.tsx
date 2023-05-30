@@ -6,6 +6,7 @@ import CharacterContainer from '../Character/CharacterContainer';
 import Equipment from '../Equipment/Equipment';
 import React from 'react';
 import MapContainer from '../Map/MapContainer';
+import StoreContainer from '../Store/StoreContainer';
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
@@ -24,6 +25,9 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
                 break;
             case 'MAP':
                 setContent(<MapContainer />);
+                break;
+            case 'STORE':
+                setContent(<StoreContainer />);
                 break;
         }
     }, [props.currentContent])
