@@ -22,12 +22,13 @@ const StoreContainer = () => {
             }
         };
         getData();
-    });
+    }, []);
  
     const storesJSX = stores.map((store: Store) => <StoreContainerItem name={store.name} type={store.type} location={store.location} id={store.id} key={store.id}/>);
 
     return <div className="store-container">
-        {storesJSX}
+        {storesJSX.length > 0 && storesJSX}
+        {storesJSX.length === 0 && <p>No available stores for this location</p>}
     </div>
 };
 
