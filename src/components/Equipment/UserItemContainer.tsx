@@ -1,20 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
-import { Item, UserItemsResponseObject } from "../../utils/types";
+import { InventoryResponseObject, Item, UserItemsResponseObject } from "../../utils/types";
 import EquipmentItem from "./EquipmentItem";
 
 const UserItemContainer = () => {
 
     const userCtx = useContext(UserContext);
-    const sendRequest = useHttp<UserItemsResponseObject[]>('api/useritems/', "GET", undefined, userCtx.user?.authToken);
+    const sendRequest = useHttp<InventoryResponseObject>('api/inventory/', "GET", undefined, userCtx.user?.authToken);
     const [items, setItems] = useState<Item[]>([]);
 
     useEffect(() => {
         const getItems = async () => {
             const {data, code} = await sendRequest();
             if (code === 200) {
-                setItems(data[0].item);
+                const responseItems = data.items.map((item) => item.item);
+                setItems(responseItems);
             }
             else {
                 console.log(data);
