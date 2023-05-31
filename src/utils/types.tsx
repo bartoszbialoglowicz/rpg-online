@@ -67,6 +67,40 @@ export type UserItemsResponseObject = {
     user: number;
     item: Item[];
 };
+export type Potion = {
+    id: number;
+    name: string;
+    hpValue: number;
+    goldValue: number;
+}
+export type CollectableItem = {
+    id: number;
+    name: string;
+    goldValue: number;
+}
+type InventoryItem = {
+    id: number;
+    item: Item;
+    user: number;
+}
+type InventoryPotion = {
+    id: number;
+    potion: Potion;
+    quantity: number;
+    user: number;
+}
+type InventoryCollectableItem = {
+    id: number;
+    collectableItem: CollectableItem;
+    quantity: number;
+    user: number;
+}
+export type InventoryResponseObject = {
+    items: InventoryItem[];
+    potions: InventoryPotion[];
+    collectableItems: InventoryCollectableItem[];
+}
+
 export type Location = {
     id: number;
     name: string;
