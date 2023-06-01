@@ -78,6 +78,16 @@ export type CollectableItem = {
     name: string;
     goldValue: number;
 }
+export type ItemStatsValues = {
+    name?: string;
+    hpValue?: number;
+    goldValue?: number;
+    armor?: number;
+    magicResist?: number;
+    damage?: number;
+    health?: number;
+    hidden: boolean;
+}
 type InventoryItem = {
     id: number;
     item: Item;
