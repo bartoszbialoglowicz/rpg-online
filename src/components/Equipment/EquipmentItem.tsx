@@ -1,9 +1,9 @@
 import { useState } from "react";
-import { Item } from "../../utils/types";
+import { CollectableItem, Item, Potion } from "../../utils/types";
 
 import './EquipmentItem.css';
 
-const EquipmentItem: React.FC<Item> = (props) => {
+const EquipmentItem: React.FC<Item | Potion | CollectableItem> = (props) => {
 
     const [isHidden, setIsHidden] = useState(true);
 
