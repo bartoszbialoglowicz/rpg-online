@@ -16,4 +16,6 @@ const EquipmentCollectableItem: React.FC<CollectableItem> = (props) => {
             goldValue={props.goldValue}
             hidden={isHidden}/>
     </div>
-}
+};
+
+export default EquipmentCollectableItem;
