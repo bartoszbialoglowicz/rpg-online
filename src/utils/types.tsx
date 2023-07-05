@@ -3,7 +3,7 @@ import User from "../models/User";
 export type feedbackResult = 'success' | 'error';
 export type HttpMethod = 'GET' | 'POST' | 'PUT' | 'PATCH';
 export type inputType = 'email' | 'text' | 'password';
-export type mainContentName = 'CHARACTER' | 'NEWS' | 'EQUIPMENT' | 'MAP' | 'STORE';
+export type mainContentName = 'CHARACTER' | 'NEWS' | 'EQUIPMENT' | 'MAP' | 'STORE' | 'ENEMIES';
 export type authContextObject = {
     isAuthenticated: boolean,
     user: User | null,
@@ -127,4 +127,13 @@ export type Store = {
     name: string,
     type: string,
     location: number
+}
+export type Enemy = {
+    id: number;
+    name: string;
+    hp: number;
+    armor: number;
+    magicResist: number;
+    damage: number;
+    lvl: number;
 }
