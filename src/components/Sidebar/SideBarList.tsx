@@ -15,7 +15,8 @@ const SideBarList: React.FC<{setCurrentMainContent: (name: mainContentName) => v
         <SideBarListItem iconPath={character} name="CHARACTER" setCurrentMainContent={props.setCurrentMainContent} key="CHARACTER"/>,
         <SideBarListItem iconPath={equipment} name="EQUIPMENT" setCurrentMainContent={props.setCurrentMainContent} key="EQUIPMENT" />,
         <SideBarListItem iconPath={map} name="MAP" setCurrentMainContent={props.setCurrentMainContent} key="MAP" />,
-        <SideBarListItem iconPath={store} name="STORE" setCurrentMainContent={props.setCurrentMainContent} key="STORE" />
+        <SideBarListItem iconPath={store} name="STORE" setCurrentMainContent={props.setCurrentMainContent} key="STORE" />,
+        <SideBarListItem iconPath={store} name="ENEMIES" setCurrentMainContent={props.setCurrentMainContent} key="ENEMIES" />
     ]
 
     return <div className="sidebar-list">

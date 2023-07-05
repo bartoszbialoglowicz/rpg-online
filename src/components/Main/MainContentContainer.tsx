@@ -7,6 +7,8 @@ import Equipment from '../Equipment/Equipment';
 import React from 'react';
 import MapContainer from '../Map/MapContainer';
 import StoreContainer from '../Store/StoreContainer';
+import EnemiesContainer from '../Enemies/EnemiesContainer';
+import FightContainer from '../Enemies/FightContainer';
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
@@ -28,6 +30,9 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
                 break;
             case 'STORE':
                 setContent(<StoreContainer />);
+                break;
+            case 'ENEMIES':
+                setContent(<EnemiesContainer />);
                 break;
         }
     }, [props.currentContent])
