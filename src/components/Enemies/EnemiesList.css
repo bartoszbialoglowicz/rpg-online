@@ -1,0 +1,6 @@
+.enemy-container {
+    cursor: pointer;
+}
+.enemy-container:hover {
+    background-color: rgba(0,0,0,0.1);
+}
