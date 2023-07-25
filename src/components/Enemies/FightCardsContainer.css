@@ -1,0 +1,17 @@
+.fight-container-character-card {
+    width: 200px;
+    height: 200px;
+    background-color: rgba(0,0,0,0.1);
+}
+
+.character-hp-bar-border {
+    border: 1px solid #111;
+    background-color: #232323;
+    width: 180px;
+    margin: 0 10px;
+}
+
+.character-hp-bar {
+    background-color: green;
+    transition: .3s ease-in;
+}
