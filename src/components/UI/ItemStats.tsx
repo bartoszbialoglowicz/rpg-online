@@ -1,17 +1,30 @@
 import React from "react";
 import { ItemStatsValues } from "../../utils/types";
 
+import './ItemStats.css';
+import { camelCaseToText } from "../../utils/string-modifiers";
+
 const ItemStats:React.FC<ItemStatsValues> = (props) => {
 
     const getPositiveValue = (value: number) => {
+        // Check if provided valu
         return value > 0 ? true : false;
     }
+
+    const setPropsJSX = () => {
+        const propsCopy = props;
+        const jsx = Object.entries(propsCopy).filter((el) => el[0] !== 'hidden').map((el, index) => {
+            if (typeof el[1] === "number") {
+                return  getPositiveValue(el[1]) ? <p key={index}>{`${camelCaseToText(el[0])}: ${el[1]}`}</p> : null;
+            }
+            return null;
+        });
+        return jsx;
+    }
     const hiddenClass = props.hidden ? 'hidden' : '';
-    return <div className={`${hiddenClass} equipment-container-item-stats`} >
-            {props.armor && getPositiveValue(props.armor) && <p>{`Armor: ${props.armor}`}</p>}
-            {props.magicResist && getPositiveValue(props.magicResist) && <p>{`Magic resists: ${props.magicResist}`}</p>}
-            {props.damage && getPositiveValue(props.damage) && <p>{`Damage: ${props.damage}`}</p>}
-            {props.health && getPositiveValue(props.health) && <p>{`Health: ${props.health}`}</p>}
+
+    return <div className={`item-stats ${hiddenClass}`} >
+            {setPropsJSX()}
         </div>
 };
 
