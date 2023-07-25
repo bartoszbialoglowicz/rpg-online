@@ -10,9 +10,7 @@ export type authContextObject = {
     login: (user: User) => void,
     logout: () => void
 };
-export type GameContextObject = {
-    location: Location,
-}
+
 export type authState = {
     user: User | null;
     isAuthenticated: boolean;
@@ -116,6 +114,20 @@ export type Location = {
     name: string;
     lvlRequired: number;
 }
+
+export type Character = {
+    user: number,
+    armor: number,
+    magicResist: number,
+    health: number,
+    damage: number
+}
+
+export type GameContextObject = {
+    location: Location,
+    character: Character
+}
+
 export type UserLocationResponseObject = {
     user: number,
     id: number,
@@ -136,4 +148,16 @@ export type Enemy = {
     magicResist: number;
     damage: number;
     lvl: number;
+}
+
+export type WebSocketMessage = {
+    action?: string,
+    type?: string,
+    enemyId?: number,
+    userEmail?: string,
+    enemy?: Enemy,
+    character?: Character,
+    message?: string,
+    loot?: string,
+    strike?: number
 }
