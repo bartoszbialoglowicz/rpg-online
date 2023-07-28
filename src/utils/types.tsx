@@ -159,5 +159,6 @@ export type WebSocketMessage = {
     character?: Character,
     message?: string,
     loot?: string,
-    strike?: number
+    strike?: number,
+    fightIsOver?: boolean
 }
