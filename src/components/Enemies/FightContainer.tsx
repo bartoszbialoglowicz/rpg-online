@@ -5,6 +5,7 @@ import FightCardsContainer from "./FightCardsContainer";
 import WebsocketService from "../../services/websocketService";
 import { UserContext } from "../../store/user-context";
 import { GameContext } from "../../store/game-context";
+import Alert from "../UI/Alert";
 
 const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
 
@@ -13,7 +14,19 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
 
     const [characterStats, setCharacterStats] = useState<Character>(gameCtx.character);
     const [enemyStats, setEnemyStats] = useState<Enemy>(props.enemy);
+    const [alertIsVisible, setAlertIsVisible] = useState(false);
+    const [fightIsOver, setFightIsOver] = useState(false);
+    const [serverMessage, setServerMessage] = useState('');
+    const [loot, setLoot] = useState('');
+
+    const showAlertHandler = () => {
+        setAlertIsVisible(true);
+    }
     
+    const hideAlertHandler = () => {
+        setAlertIsVisible(false);
+    }
+
     const handleWebSocketMessage = (data: WebSocketMessage) => {
         if (data.character) {
             setCharacterStats(data.character);
@@ -22,14 +35,28 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
             setEnemyStats(data.enemy);
             console.log(enemyStats)
         }
+        if (data.message) {
+            setServerMessage(data.message);
+        }
+        if (data.fightIsOver) {
+            setFightIsOver(data.fightIsOver);
+            showAlertHandler();
+        }
+        if (data.loot) {
+            setLoot(data.loot);
+        }
         console.log(data);
     }
 
     const handleAttack = () => {
-        WebsocketService.sendMessage({action: 'user_attack'})
-        setTimeout(() => {
-            WebsocketService.sendMessage({action: 'enemy_attack'})
-        }, 1000)
+        if (!fightIsOver) {
+            WebsocketService.sendMessage({action: 'user_attack'})
+            setTimeout(() => {
+                if (!fightIsOver)
+                    WebsocketService.sendMessage({action: 'enemy_attack'})
+            }, 1000)
+        }
+        
     }
 
     useEffect(() => {  
@@ -53,6 +80,7 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
     }, []);
 
     return <div className="fight-container">
+        {alertIsVisible && <Alert title={serverMessage} description={`Loot: ${loot}`} onClickHandler={hideAlertHandler}/>}
         <FightCardsContainer enemy={props.enemy} enemyCurrentHP={enemyStats.hp} myCurrentHP={characterStats.health} myMaxHP={100}/>
         <ActionsContainer onAttack={handleAttack}/> 
     </div>
