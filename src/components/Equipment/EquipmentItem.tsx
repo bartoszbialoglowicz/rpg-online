@@ -13,9 +13,11 @@ const EquipmentItem: React.FC<Item> = (props) => {
     }
     
     return <div className="equipment-container-item" onMouseEnter={onMouseHandler} onMouseLeave={onMouseHandler}>
-        <p>{props.name}</p>
-        <p>{props.itemType}</p>
-        <ItemStats 
+        <div className="equipment-container-item-image">
+            <img src={props.imageUrl} alt={props.name} />
+        </div>
+        <ItemStats
+            name={props.name}
             armor={props.armor}
             damage={props.damage}
             health={props.health}

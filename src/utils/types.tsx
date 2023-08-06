@@ -47,6 +47,7 @@ export type Item = {
     magicResist: number;
     health: number;
     damage: number;
+    imageUrl?: string;
 };
 export type Equipment = {
     weapon?: Item;
