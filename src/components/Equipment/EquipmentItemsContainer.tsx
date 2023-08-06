@@ -5,6 +5,7 @@ import { Equipment, EquipmentResponseObject, Item, ItemType } from "../../utils/
 import EquipmentItem from "./EquipmentItem";
 
 import './EquipmentItemsContainer.css';
+import CharacterStatsTitle from "../Character/CharacterStatsTitle";
 
 const EquipmentItemsContainer = () => {
     const userCtx = useContext(UserContext);
@@ -26,7 +27,7 @@ const EquipmentItemsContainer = () => {
     // Returned JSX will be used as returned value from this current component
     const setItemsJSX = (items: Item[]) => {
         const tmpJSX: JSX.Element[] = [];
-        const types: ItemType[] = ['armor', 'boots', 'gloves', 'helmet', 'trousers', 'weapon'];
+        const types: ItemType[] = ['helmet', 'weapon', 'armor', 'gloves', 'trousers', 'boots'];
         types.forEach((el: string, index: number) => {
             let tmpJsxEl = <p key={index}>{`${el}: Unequipped`}</p>;
             items.forEach((item: Item) => {
@@ -38,6 +39,7 @@ const EquipmentItemsContainer = () => {
                     health={item.health}
                     armor={item.armor}
                     name={item.name}
+                    imageUrl={item.imageUrl}
                     key={item.name}
                     />;
                 }
@@ -68,8 +70,15 @@ const EquipmentItemsContainer = () => {
         getData();
     }, [])
 
+    const equippedItemsJSX = equippedItems.map((item, key) => {
+        return <div key={key} className="equipment-container-row">
+            {item}
+        </div>
+    })
+
     return <div className="equipment-container">
-        {equippedItems}
+        <CharacterStatsTitle title='ekwipunek' />
+        {equippedItemsJSX}
     </div>
 };
 

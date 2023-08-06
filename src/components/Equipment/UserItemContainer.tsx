@@ -7,6 +7,9 @@ import { CollectableItem } from "../../utils/types";
 import EquipmentCollectableItem from "./EquipmentCollectableItem";
 import EquipmentPotion from "./EquipmentPotion";
 
+import './UserItemsContainer.css';
+import CharacterStatsTitle from "../Character/CharacterStatsTitle";
+
 const UserItemContainer = () => {
 
     const userCtx = useContext(UserContext);
@@ -45,6 +48,7 @@ const UserItemContainer = () => {
     })
 
     return <div className="user-items-container">
+        <CharacterStatsTitle title='Twoje przedmioty' />
         {itemsJsx}
         {collectableJsx}
         {potionJsx}
