@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
 import './App.css';
-import LoginPage from './components/Auth/AuthPage';
 import { UserContext } from './store/user-context';
 import Layout from './components/Layout/Layout';
 import AuthPage from './components/Auth/AuthPage';

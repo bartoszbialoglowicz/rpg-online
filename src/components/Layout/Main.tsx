@@ -1,13 +1,11 @@
-import { useState } from 'react';
 import { mainContentName } from '../../utils/types';
 import MainContentContainer from '../Main/MainContentContainer';
 import './Main.css';
 
 const Main: React.FC<{currentMainContent: mainContentName}> = (props) => {
-    return (<div className="main">
-        
+    return <div className="main">
         <MainContentContainer currentContent={props.currentMainContent}/>
-    </div>)
+    </div>
 };
 
 export default Main;
