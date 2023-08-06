@@ -25,9 +25,9 @@ const ResourceContainer = () => {
     }, [])
 
     return <div className="character-resource-container">
-        <ResourceItem name="GOLD" value={gold}/>
-        <ResourceItem name="LVL" value={lvl}/>
-        <ResourceItem name="EXP" value={exp}/>
+        <ResourceItem name="GOLD" value={gold} dark={false}/>
+        <ResourceItem name="LVL" value={lvl} dark={true}/>
+        <ResourceItem name="EXP" value={exp} dark={false}/>
     </div>
 };
 
