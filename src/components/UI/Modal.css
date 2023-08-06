@@ -49,6 +49,7 @@
     z-index: 30;
     animation-name: popUp;
     animation-duration: .4s;
+    text-align: center;
   }
 
   .modal-close {

@@ -1,4 +1,10 @@
-.equipment-container {
+.equipment-container-row {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
+    height: 80px;
+}
+
+.equipment-container {
+    width: 40%;
 }

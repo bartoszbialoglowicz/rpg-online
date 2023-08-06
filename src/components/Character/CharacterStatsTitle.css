@@ -1,0 +1,12 @@
+.character-stats-container-title {
+    width: 100%;
+    text-align: center;
+    background: linear-gradient(rgba(0,0,0,0.3), transparent 99%);
+    margin-bottom: 5px;
+}
+
+.character-stats-container-title h3 {
+    margin: 0.2rem;
+    text-transform: uppercase;
+    font-weight: 300;
+}
