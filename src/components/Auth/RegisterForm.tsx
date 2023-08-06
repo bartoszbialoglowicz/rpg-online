@@ -39,11 +39,15 @@ const RegisterForm: React.FC<{setFeedbackHandler: (text:string, type:feedbackRes
             props.setFeedbackHandler(dummy_text, 'success');
             props.setFormTypeHandler(true);
         }
+        else if (code >= 500) {
+            props.setFeedbackHandler('Server error! Try again later.','error')
+        }
         else {
             const unkownError = 'Something went wrong... try again later.'
             const feedbackText = data.email ? data.email[0] : (data.name ? data.name[0] : (data.password ? data.password[0] : unkownError));
             props.setFeedbackHandler(feedbackText, 'error')
         }
+        console.log(data, code);
     }
 
     const form = new Form([
