@@ -1,10 +1,33 @@
 .equipment-container-item {
     border: 1px solid black;
-    position: relative;
     width: 100%;
     height: 80px;
+    transition: .3s;
+    overflow: hidden;
     display: flex;
     align-items: center;
+}
+
+.equipment-container-item-stats {
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+    height: 100%;
+    cursor: pointer;
+}
+
+.equipment-container-item-stats-backdrop {
+    width: 100%;
+    transition: .3s;
+    height: 0%;
+    margin-top: -20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+.equipment-container-item-stats:hover .equipment-container-item-stats-backdrop{
+    height: 100%;
+    margin-top: 0;
 }
 
 .equipment-container-item-image {
