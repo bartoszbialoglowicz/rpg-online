@@ -40,13 +40,16 @@ export type resurcesResponse = [{
     exp: number
 }];
 export type ItemType = 'weapon' | 'helmet' | 'armor' | 'gloves' |'trousers' | 'boots';
+export type StatType = 'armor' | 'damage' | 'magicResist' | 'health';
 export type Item = {
+    id: number;
     name: string;
     itemType: ItemType;
     armor: number;
     magicResist: number;
     health: number;
     damage: number;
+    goldValue: number;
     imageUrl?: string;
 };
 export type Equipment = {
@@ -85,7 +88,6 @@ export type ItemStatsValues = {
     magicResist?: number;
     damage?: number;
     health?: number;
-    hidden: boolean;
 }
 type InventoryItem = {
     id: number;
@@ -141,6 +143,22 @@ export type Store = {
     type: string,
     location: number
 }
+export type StoreElement = {
+    id: number;
+    store: Store;
+    price: number;
+}
+
+export type StoreItem = StoreElement & {
+    item: Item;
+}
+export type StorePotion = StoreElement & {
+    potion: Potion;
+}
+export type StoreCollectableItem = StoreElement & {
+    collectableItem: CollectableItem;
+}
+
 export type Enemy = {
     id: number;
     name: string;
