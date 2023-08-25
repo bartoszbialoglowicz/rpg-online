@@ -1,18 +1,21 @@
 import { useContext, useEffect, useState } from "react";
 import { UserContext } from "../../store/user-context";
 import { useHttp } from "../../hooks/use-http";
-import { Character, resurcesResponse } from "../../utils/types";
+import { Character, ItemStatsValues, resurcesResponse } from "../../utils/types";
 import ResourceItem from "./ResourceItem";
 
 import './CharacterInfoContainer.css';
 
-const CharacterInfoContainer: React.FC<Character> = (props) => {
+type Props = Character & {statsToCompare?: ItemStatsValues};
+
+const CharacterInfoContainer: React.FC<Props> = (props) => {
     
     const [gold, setGold] = useState(0);
     const [lvl, setLvl] = useState(0);
     const [exp, setExp] = useState(0);
     const userCtx = useContext(UserContext);
     const sendRequest = useHttp<resurcesResponse>('api/resources', 'GET', undefined, userCtx.user!.authToken);
+
 
 useEffect(() => {
     const fetchData = async () => {
@@ -34,13 +37,13 @@ useEffect(() => {
         </div>
         <div className="character-info-container-details">
             <div className="character-resource-container">
-                <ResourceItem key={0} name="GOLD" value={gold} dark={false}/>
+                <ResourceItem key={0} name="GOLD" value={gold} dark={false} />
                 <ResourceItem key={1} name="LVL" value={lvl} dark={true}/>
                 <ResourceItem key={2} name="EXP" value={exp} dark={false}/>
-                <ResourceItem key={3} name="HP" value={props.health} dark={true}/>
-                <ResourceItem key={4} name="Damage" value={props.damage} dark={false}/>
-                <ResourceItem key={5} name="Armor" value={props.armor} dark={true}/>
-                <ResourceItem key={6} name="Magic Resist" value={props.magicResist} dark={false}/>
+                <ResourceItem key={3} name="HP" value={props.health} dark={true} statsToCompare={props.statsToCompare?.health}/>
+                <ResourceItem key={4} name="Damage" value={props.damage} dark={false} statsToCompare={props.statsToCompare?.damage}/>
+                <ResourceItem key={5} name="Armor" value={props.armor} dark={true} statsToCompare={props.statsToCompare?.armor}/>
+                <ResourceItem key={6} name="Magic Resist" value={props.magicResist} dark={false} statsToCompare={props.statsToCompare?.magicResist}/>
             </div>
         </div>
     </div>
