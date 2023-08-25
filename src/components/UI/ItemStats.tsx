@@ -1,32 +1,38 @@
 import React from "react";
-import { ItemStatsValues } from "../../utils/types";
+import { Item } from "../../utils/types";
 
 import './ItemStats.css';
 
-const ItemStats:React.FC<ItemStatsValues> = (props) => {
+const ItemStats:React.FC<{stats?: Item, itemType?: string}> = (props) => {
 
-    return <div className="item-stats">
-            <div className="item-stats-row">
+    const content = props.stats ? <>
+        <div className="item-stats-row">
                 <div className="item-stats-column">
-                    <div className="item-stats-cell">{props.name}</div>
+                    <div className="item-stats-cell">{props.stats.name}</div>
                 </div>
             </div>
             <div className="item-stats-row">
                 <div className="item-stats-column">
-                    <div className="item-stats-cell">Damage: {props.damage}</div>
-                    <div className="item-stats-cell">Health: {props.health}</div>
+                    <div className="item-stats-cell">Damage: {props.stats.damage}</div>
+                    <div className="item-stats-cell">Health: {props.stats.health}</div>
                 </div>
                 <div className="item-stats-column">
-                    <div className="item-stats-cell">Armor: {props.armor}</div>
-                    <div className="item-stats-cell">Magic resist: {props.magicResist}</div>
+                    <div className="item-stats-cell">Armor: {props.stats.armor}</div>
+                    <div className="item-stats-cell">Magic resist: {props.stats.magicResist}</div>
                 </div>
             </div>
             <div className="item-stats-row">
                 <div className="item-stats-column">
-                    <div className="item-stats-cell">Gold value: {props.goldValue}</div>
+                    <div className="item-stats-cell">Gold value: {props.stats.goldValue}</div>
                     <div className="item-stats-cell"></div>
                 </div>
             </div>
+    </> : <div className="item-stats-empty">
+        <p>{`EMPTY SLOT ${props.itemType ? '[' + props.itemType + ']': ''}`}</p>
+    </div>
+
+    return <div className="item-stats">
+            {content}
         </div>
 };
 
