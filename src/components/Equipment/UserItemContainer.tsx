@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
-import { InventoryResponseObject, Item, Potion, UserItemsResponseObject } from "../../utils/types";
+import { InventoryResponseObject, Item, ItemStatsValues, Potion, UserItemsResponseObject } from "../../utils/types";
 import EquipmentItem from "./EquipmentItem";
 import { CollectableItem } from "../../utils/types";
 import EquipmentCollectableItem from "./EquipmentCollectableItem";
@@ -10,13 +10,17 @@ import EquipmentPotion from "./EquipmentPotion";
 import './UserItemsContainer.css';
 import CharacterStatsTitle from "../Character/CharacterStatsTitle";
 
-const UserItemContainer = () => {
+const UserItemContainer: React.FC<{addItemHandler: (item:Item) => void, onHoverHandler: (item: Item) => void, onMouseLeaveHandler?: () => void}> = (props) => {
 
     const userCtx = useContext(UserContext);
     const sendRequest = useHttp<InventoryResponseObject>('api/inventory/', "GET", undefined, userCtx.user?.authToken);
     const [items, setItems] = useState<Item[]>([]);
     const [potions, setPotions] = useState<Potion[]>([]);
     const [collectableItems, setCollectableItems] = useState<CollectableItem[]>([]);
+
+    const setEqItemHandler = (item: Item) => {
+        props.addItemHandler(item);
+    };
 
     useEffect(() => {
         const getItems = async () => {
@@ -38,7 +42,7 @@ const UserItemContainer = () => {
     }, []);
 
     const itemsJsx = items.map((item: Item, index: number) => {
-        return <EquipmentItem name={item.name} itemType={item.itemType} armor={item.armor} magicResist={item.magicResist} damage={item.damage} health={item.health} key={index}/>
+        return <EquipmentItem item={item} key={index} addItemHandler={setEqItemHandler} onHoverHandler={props.onHoverHandler} onMouseLeaveHandler={props.onMouseLeaveHandler}/>
     });
     const collectableJsx = collectableItems.map((item: CollectableItem) => {
         return <EquipmentCollectableItem name={item.name} goldValue={item.goldValue} id={item.id} key={item.id}/>
