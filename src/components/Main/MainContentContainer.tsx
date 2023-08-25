@@ -9,6 +9,7 @@ import MapContainer from '../Map/MapContainer';
 import StoreContainer from '../Store/StoreContainer';
 import EnemiesContainer from '../Enemies/EnemiesContainer';
 import FightContainer from '../Enemies/FightContainer';
+import EquipmentContextProvider from '../../store/equipment-context';
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
@@ -38,7 +39,9 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
     }, [props.currentContent])
 
     return <div className="main-content-container">
-        {content}
+        <EquipmentContextProvider>
+            {content}
+        </EquipmentContextProvider>
     </div>
 };
 
