@@ -15,3 +15,7 @@
 .item-stats-cell {
     width: 100%;
 }
+
+.item-stats-empty {
+    text-transform: uppercase;
+}

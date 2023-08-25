@@ -5,3 +5,11 @@
 .character-resource-item {
     width: 100%;
 }
+
+.character-resource-item-stats-postive {
+    color: green;
+}
+
+.character-resource-item-stats-negative {
+    color: red;
+}
