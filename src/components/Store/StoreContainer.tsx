@@ -2,17 +2,20 @@ import { useContext, useEffect, useState } from "react";
 import { GameContext } from "../../store/game-context";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
-import { Store } from "../../utils/types";
-import StoreContainerItem from "./StoreContainerItem";
+import { Store as StoreType } from "../../utils/types";
+import Store from "./Store";
 import AvailableStoreList from "./AvailableStoreList";
 
 const StoreContainer = () => {
 
-    const [stores, setStores] = useState<Store[]>([]);
-    const gameCtx = useContext(GameContext);
+    const [stores, setStores] = useState<StoreType[]>([]);
+    const [currentStore, setCurrentStore] = useState<JSX.Element | undefined>();
     const userCtx = useContext(UserContext);
-    const sendRequest = useHttp<Store[]>('api/store', 'GET', undefined, userCtx.user!.authToken);
+    const sendRequest = useHttp<StoreType[]>('api/store', 'GET', undefined, userCtx.user!.authToken);
 
+    const setStoreHandler = (store: StoreType) => {
+        setCurrentStore(<Store store={store}/>);
+    }
 
     useEffect(() => {
         const getData = async () => {
@@ -26,12 +29,12 @@ const StoreContainer = () => {
         };
         getData();
     }, []);
- 
-    const storesJSX = stores.map((store: Store) => <StoreContainerItem name={store.name} type={store.type} location={store.location} id={store.id} key={store.id}/>);
+
+    const JSXItem = currentStore ? currentStore : <AvailableStoreList stores={stores} setStore={setStoreHandler}/>
+
 
     return <div className="store-container">
-        {storesJSX.length > 0 && <AvailableStoreList storeNames={stores}/>}
-        {storesJSX.length === 0 && <p>No available stores for this location</p>}
+        {JSXItem}
     </div>
 };
 
