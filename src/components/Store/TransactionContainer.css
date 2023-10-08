@@ -1,0 +1,49 @@
+.transaction-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+}
+
+.transaction-item {
+    width: 90%;
+    padding: 0 5%;
+    display: flex;
+    border-bottom: 1px solid rgba(0,0,0,0.4);
+}
+
+.transaction-item:first-child > span {
+    color: red;
+    justify-content: center !important;
+}
+
+.transaction-item > span {
+    display: flex;
+    align-items: flex-end;
+}
+
+.transaction-item > span:nth-child(1) {
+    width: 50%;
+}
+.transaction-item > span:nth-child(2) {
+    background-color: rgba(0,0,0,0.4);
+    width: 50px;
+    justify-content: flex-end;
+}
+.transaction-item > span:nth-child(3) {
+    width: calc(50% - 50px);
+    justify-content: flex-end;
+}
+
+.transaction-total-amount {
+    width: 90%;
+    padding: 0 5%;
+    background-color: rgba(0,0,0,0.4);
+    text-align: right;
+    justify-self: flex-end;
+}
+
+.transaction-container > button {
+    justify-self: flex-end;
+}
+
