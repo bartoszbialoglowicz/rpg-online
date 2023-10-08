@@ -1,13 +1,11 @@
-import { useContext, useEffect, useRef, useState } from "react";
-import { useHttp } from "../../hooks/use-http";
-import { UserContext } from "../../store/user-context";
-import { Equipment, EquipmentResponseObject, Item, ItemType } from "../../utils/types";
+import { useEffect, useState } from "react";
+import { ButtonController, Equipment, Item, ItemType } from "../../utils/types";
 import EquipmentItem from "./EquipmentItem";
 
 import './EquipmentItemsContainer.css';
 import CharacterStatsTitle from "../Character/CharacterStatsTitle";
 
-const EquipmentItemsContainer: React.FC<{equipment: Equipment, replaceItemHandler: (item: ItemType) => void}> = (props) => {
+const EquipmentItemsContainer: React.FC<{equipment: Equipment, replaceItemHandler: (item: Item) => void}> = (props) => {
 
     const [equippedItems, setEquippedItems] = useState<JSX.Element[]>([]);
 
@@ -22,15 +20,11 @@ const EquipmentItemsContainer: React.FC<{equipment: Equipment, replaceItemHandle
             let tmpJsxEl = <div key={index} className="equipment-container-row">
                 <EquipmentItem itemType={el}/>
             </div>;
-            const tmpItems = items.map((itemOrBlank: Item | undefined) => {
-                if (itemOrBlank !== undefined) {
-                    return itemOrBlank;
-                }
-            })
-            tmpItems.forEach((item: Item | undefined) => {
+            items.forEach((item: Item) => {
                 if (item !== undefined && item.itemType === el) {
+                    const button: ButtonController = {onClick: () => {props.replaceItemHandler(item)}, text: "ZDEJMIJ"};
                     tmpJsxEl = <div key={index} className="equipment-container-row">
-                    <EquipmentItem item={item} removeItemHandler={props.replaceItemHandler}/>
+                    <EquipmentItem item={item} buttons={[button]}/>
                     </div>;
                 }
             });
@@ -42,7 +36,6 @@ const EquipmentItemsContainer: React.FC<{equipment: Equipment, replaceItemHandle
     useEffect(() => {
         const itemArray = Object.values(props.equipment);
         setEquippedItems(setItemsJSX(itemArray));
-        console.log("EquipmentItemsCt useEffect");
     }, [props.equipment]);
 
     return <div className="equipment-container">
