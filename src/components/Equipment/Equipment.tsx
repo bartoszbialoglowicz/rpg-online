@@ -4,10 +4,10 @@ import UserItemContainer from "./UserItemContainer";
 
 import './Equipment.css';
 import { useContext, useEffect, useRef, useState } from "react";
-import { EquipmentResponseObject, Item, Equipment as EquipmentType, ItemType, ItemStatsValues } from "../../utils/types";
+import { EquipmentResponseObject, Item, Equipment as EquipmentType, ItemType, ButtonController, Potion, CollectableItem, InventoryResponseObject } from "../../utils/types";
 import { UserContext } from "../../store/user-context";
 import { useHttp } from "../../hooks/use-http";
-import EquipmentContextProvider, { EquipmentContext } from "../../store/equipment-context";
+import { EquipmentContext } from "../../store/equipment-context";
 
 const Equipment = () => {
     // Store bool for Equipment change signal
@@ -18,13 +18,23 @@ const Equipment = () => {
     const [updateStats, setUpdateStats] = useState(false);
     // Store stats difference between items
     const [itemToCompare, setItemToCompare] = useState<Item>();
+    // Store User's equipped items
+    const [equipment, setEquipment] = useState<EquipmentType>({});
+    // Track user equipment
+    const prevEquipmentRef = useRef(eqChanged);
 
+    // Store items already collected by users
+    const [items, setItems] = useState<Item[]>([]);
+    const [potions, setPotions] = useState<Potion[]>([]);
+    const [collectableItems, setCollectableItems] = useState<CollectableItem[]>([]);
+
+    // Global variables stored in context
     const eqCtx = useContext(EquipmentContext);
     const userCtx = useContext(UserContext);
-    const sendRequest = useHttp<EquipmentResponseObject[]>('api/equipment', 'GET', undefined, userCtx.user!.authToken);
 
-    const [equipment, setEquipment] = useState<EquipmentType>({});
-    const prevEquipmentRef = useRef(eqChanged);
+    // Hook for making API requests
+    const sendRequest = useHttp<EquipmentResponseObject[]>('api/equipment', 'GET', undefined, userCtx.user!.authToken);
+    const sendRequest2 = useHttp<InventoryResponseObject>('api/inventory/', "GET", undefined, userCtx.user?.authToken);
 
     // Prevent sending requests if true
     const [requestLock, setRequestLock] = useState(false);
@@ -34,9 +44,11 @@ const Equipment = () => {
     // Get item value from response object and set it into eq
     const setItemsIntoEq = (eqArr: EquipmentResponseObject[]) => {
         const tmpEq = equipment;
+        // Search for item slot
         eqArr.forEach(slotItem => {
             tmpEq[slotItem.slot] = slotItem.item ? slotItem.item : undefined;
         });
+
         eqCtx.setEquipment(tmpEq);
         setEquipment((prevEq) => ({
             ...prevEq,
@@ -62,6 +74,8 @@ const Equipment = () => {
         setEqChanged((prevState) => !prevState);
     }
 
+    // Remove item from user's equipment
+    // Replace that item with item provided as argument
     const removeItemFromEq = (item: ItemType) => {
         setItemToReplaceWith(null);
         setSlotToReplace(item);
@@ -73,13 +87,36 @@ const Equipment = () => {
         setEqChanged((prevState) => !prevState);
     }
 
+    // Remove item from user's equipment
+    // Add this item into user's inventory
+    const replaceItemHandler = (item: Item) => {
+        removeItemFromEq(item.itemType);
+        addUserItemHandler(item);
+    }
+
     // Get Equipment data from the server
-    const getData = async () => {
+    const getEqData = async () => {
         const {data, code} = await sendRequest();
         if (code === 200) {
             setItemsIntoEq(data);
         }
     }
+
+    // Get user inventory from the server
+    const getUserItems = async () => {
+        const {data, code} = await sendRequest2('api/inventory/', "GET");
+        if (code === 200) {
+            const responseItems = data.items.map((item) => item.item);
+            const responseCollectables = data.collectableItems.map(el => el.collectableItem)
+            const responsePotions = data.potions.map(el => el.potion);
+            setCollectableItems(responseCollectables);
+            setPotions(responsePotions);
+            setItems(responseItems);
+        }
+        else {
+            console.log(data);
+        }
+    };
 
     // Send Replace Item request
     const replaceItemRequest = async () => {
@@ -100,7 +137,61 @@ const Equipment = () => {
         setItemToCompare(undefined);
     }
 
+    // Add item into inventory
+    const addUserItemHandler = (item: Item | CollectableItem | Potion) => {
+        // Check type of the item
+        if ('itemType' in item) {
+            let tmpArr = items.slice();
+            tmpArr.push(item);
+            setItems(tmpArr);
+        }
+        else if ('hpValue' in item) {
+            let tmpArr = potions.slice();
+            tmpArr.push(item);
+            setPotions(tmpArr);
+        }
+        else {
+            let tmpArr = collectableItems.slice();
+            tmpArr.push(item);
+            setCollectableItems(tmpArr);
+        }
+    };
+
+    // Remove item from inventory
+    const removeUserItemHandler = (item: Item | CollectableItem | Potion) => {
+        // Check type of the item
+        if ('itemType' in item) {
+            let tmpArr = items.slice();
+            tmpArr = tmpArr.filter(el => el.id !== item.id);
+            setItems(tmpArr);
+        }
+        else if ('hpValue' in item) {
+            let tmpArr = potions.slice();
+            tmpArr = tmpArr.filter(el => el.id !== item.id);
+            setPotions(tmpArr);
+        }
+        else {
+            let tmpArr = potions.slice();
+            tmpArr = tmpArr.filter(el => el.id !== item.id);
+            setCollectableItems(tmpArr);
+        }
+    }
+
+    // Button fn triggered on click
+    const buttonOnClick = (item: Item) => {
+        setItemIntoEq(item);
+        removeUserItemHandler(item);
+    }
+
+    const userButtons: ButtonController[] = [
+        {
+            onClick: buttonOnClick,
+            text: 'ZAŁÓŻ'
+        }
+    ]
+
     useEffect(() => {
+        // Send request if equipment has changed
         if (prevEquipmentRef.current !== eqChanged) {
             console.log('Zmieniono przedmiot');
             replaceItemRequest();
@@ -109,18 +200,22 @@ const Equipment = () => {
 
         // Send request at first render
         if (!requestLock) {
-            getData();
+            getEqData();
+            getUserItems();
             setRequestLock(true);
             setUpdateStats((prevStats) => !prevStats);
         }
         
+        // Track equipment change
         prevEquipmentRef.current = eqChanged;
-    }, [equipment, eqChanged])
+    }, [equipment, eqChanged]);
 
     return <div className="equipment">
-            <CharacterStatsContainer statsHasChanged={updateStats} itemToCompare={itemToCompare}/>
-            <EquipmentItemsContainer equipment={equipment} replaceItemHandler={removeItemFromEq}/>
-            <UserItemContainer addItemHandler={setItemIntoEq} onHoverHandler={compareItemStatsHandler} onMouseLeaveHandler={removeComparedStatsHandler}/>
+            <div className="equipment-character">     
+                <CharacterStatsContainer statsHasChanged={updateStats} itemToCompare={itemToCompare}/>
+                <EquipmentItemsContainer equipment={equipment} replaceItemHandler={replaceItemHandler}/>
+            </div>
+            <UserItemContainer items={items} potions={potions} collectableItems={collectableItems} buttons={userButtons} onHoverHandler={compareItemStatsHandler} onMouseLeaveHandler={removeComparedStatsHandler}/>
     </div>
 };
 
