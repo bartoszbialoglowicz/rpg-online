@@ -1,33 +1,15 @@
-import { useContext, useEffect, useState } from "react";
-import { useHttp } from "../../hooks/use-http";
+import { useContext } from "react";
 import ResourceItem from "./ResourceItem";
-import { UserContext } from "../../store/user-context";
-import { resurcesResponse } from "../../utils/types";
+import { GameContext } from "../../store/game-context";
 
 const ResourceContainer = () => {
 
-    const [gold, setGold] = useState(0);
-    const [lvl, setLvl] = useState(0);
-    const [exp, setExp] = useState(0);
-    const userCtx = useContext(UserContext);
-    const sendRequest = useHttp<resurcesResponse>('api/resources', 'GET', undefined, userCtx.user!.authToken);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            const {data, code} = await sendRequest();
-            if (code === 200) {
-                setGold(data[0].gold)
-                setExp(data[0].exp)
-                setLvl(data[0].lvl)
-            }
-        }
-        fetchData();
-    }, [])
+    const gameCtx = useContext(GameContext);
 
     return <div className="character-resource-container">
-        <ResourceItem name="GOLD" value={gold} dark={false}/>
-        <ResourceItem name="LVL" value={lvl} dark={true}/>
-        <ResourceItem name="EXP" value={exp} dark={false}/>
+        <ResourceItem name="GOLD" value={gameCtx.resources.gold} dark={false}/>
+        <ResourceItem name="LVL" value={gameCtx.resources.lvl} dark={true}/>
+        <ResourceItem name="EXP" value={gameCtx.resources.exp} dark={false}/>
     </div>
 };
 
