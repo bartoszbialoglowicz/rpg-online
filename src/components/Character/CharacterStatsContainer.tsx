@@ -62,18 +62,18 @@ const CharacterStatsContainer: React.FC<{statsHasChanged?: boolean, itemToCompar
         getData();
     }, [props.statsHasChanged])
 
-    const statsJSX = <>
+    const statsJSX = <div className="character-stats-container">
+        <CharacterStatsTitle title='Twoja postać' />
         <CharacterImage src={characterImg} />
         <div className='character-stats-container-info'>
             <CharacterInfoContainer statsToCompare={compareStats()} damage={stats!.damage} health={stats!.health} armor={stats!.armor} magicResist={stats!.magicResist} user={stats!.user}/>
         </div>
-    </>
+    </div>
 
-    return <div className="character-stats-container">
-        <CharacterStatsTitle title='Twoja postać' />
+    return <>
         {error && error}
         {!error && statsJSX}
-        </div>
+        </>
 };
 
 export default CharacterStatsContainer;
