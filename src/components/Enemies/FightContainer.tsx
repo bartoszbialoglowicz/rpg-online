@@ -80,7 +80,12 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
     }, []);
 
     return <div className="fight-container">
-        {alertIsVisible && <Alert title={serverMessage} description={`Loot: ${loot}`} onClickHandler={hideAlertHandler}/>}
+        {alertIsVisible && <Alert 
+            title={serverMessage} 
+            description={`Loot: ${loot}`}
+            buttonText="ZABIERAM"
+            onButtonClick={hideAlertHandler} 
+            onOutOfBoxClickHandler={hideAlertHandler}/>}
         <FightCardsContainer enemy={props.enemy} enemyCurrentHP={enemyStats.hp} myCurrentHP={characterStats.health} myMaxHP={100}/>
         <ActionsContainer onAttack={handleAttack}/> 
     </div>
