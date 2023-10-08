@@ -1,15 +1,27 @@
 .equipment {
+    height: 100%;
+}
+
+.equipment-character {
     display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
-    justify-content: center;
+    width: 100%;
 }
 
 @media screen and (max-width: 800px) {
     .equipment {
         align-items: flex-start;
+        overflow-x: auto;
     }
-    .equipment > div {
+    .equipment-character {
+        flex-wrap: wrap;
+    }
+    .equipment-character > div {
         width: 100%
+    }
+}
+
+@media screen and (min-width: 1021px) {
+    .equipment-character {
+        height: 470px;
     }
 }
