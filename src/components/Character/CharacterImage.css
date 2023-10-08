@@ -1,5 +1,4 @@
 .character-stats-container-image {
-    width: 40%;
     position: relative;
     overflow: hidden;
     background: linear-gradient(
@@ -11,7 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0.3rem;
+    padding: 5px;
 }
 
 .character-stats-container-image-content {

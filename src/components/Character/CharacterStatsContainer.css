@@ -1,9 +1,32 @@
 .character-stats-container {
     display: flex;
     flex-wrap: wrap;
-    width: 60%
+    align-content: flex-start;
+    width: 60%;
+}
+
+
+.character-stats-container-image {
+    width: 250px;
 }
 
 .character-stats-container-info {
-    width: 58%;
+    width: calc(100% - 260px);
+}
+
+@media screen and (max-width: 650px) {
+    .character-stats-container {
+        justify-content: center;
+    }
+    .character-stats-container-info {
+        width: 100%;
+    }
+
+}
+
+@media  screen and (min-width: 800px) and (max-width: 1020px) {
+    .character-stats-container-info {
+        width: 100%;
+
+    }
 }
