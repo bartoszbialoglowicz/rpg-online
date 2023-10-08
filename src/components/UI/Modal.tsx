@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import ReactDOM from "react-dom"
 
 import './Modal.css';
@@ -21,15 +21,17 @@ const overlaysElement = document.getElementById('overlays');
 const Modal: React.FC<{children: JSX.Element, onClickHandler: () => void}> = (props) => {
     const [modalClose, setModalClose] = useState(false);
 
-    const onClickModifier = () => {
+    const delay = 400;
+
+    const onClickModifier = (fn: Function) => {
         setModalClose(true);
         setTimeout(() => {
-            props.onClickHandler();
-        }, 400);
+            fn();
+        }, delay);
     }
 
     return <>
-        {overlaysElement && ReactDOM.createPortal(<BackDrop onClickHandler={onClickModifier}/>, overlaysElement)}
+        {overlaysElement && ReactDOM.createPortal(<BackDrop onClickHandler={() => {onClickModifier(props.onClickHandler)}}/>, overlaysElement)}
         {overlaysElement && ReactDOM.createPortal(<ModalOverlay applyClose={modalClose}>{props.children}</ModalOverlay>, overlaysElement)}
     </>
 }
