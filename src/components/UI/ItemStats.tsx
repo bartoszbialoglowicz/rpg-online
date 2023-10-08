@@ -6,11 +6,6 @@ import './ItemStats.css';
 const ItemStats:React.FC<{stats?: Item, itemType?: string}> = (props) => {
 
     const content = props.stats ? <>
-        <div className="item-stats-row">
-                <div className="item-stats-column">
-                    <div className="item-stats-cell">{props.stats.name}</div>
-                </div>
-            </div>
             <div className="item-stats-row">
                 <div className="item-stats-column">
                     <div className="item-stats-cell">Damage: {props.stats.damage}</div>
@@ -28,7 +23,7 @@ const ItemStats:React.FC<{stats?: Item, itemType?: string}> = (props) => {
                 </div>
             </div>
     </> : <div className="item-stats-empty">
-        <p>{`EMPTY SLOT ${props.itemType ? '[' + props.itemType + ']': ''}`}</p>
+        
     </div>
 
     return <div className="item-stats">
