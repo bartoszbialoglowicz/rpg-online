@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Equipment, EquipmentResponseObject, Item, ItemType } from "../utils/types";
-import { useHttp } from "../hooks/use-http";
-import { UserContext } from "./user-context";
+import React, { useState } from "react";
+import { Equipment, Item, ItemType } from "../utils/types";
 
 type EquipmentContextObject = Equipment & {
+    eqIsLoaded: boolean,
     setEquipment: (eq: Equipment) => void,
     setItem: (item: Item) => void,
     removeItem: (slot: ItemType) => void
@@ -16,6 +15,7 @@ const defaultState: EquipmentContextObject = {
     trousers: undefined,
     boots: undefined,
     gloves: undefined,
+    eqIsLoaded: false,
     setEquipment: (eq: Equipment) => {},
     setItem: (item: Item) => {},
     removeItem: (slot: ItemType) => {}
@@ -25,22 +25,12 @@ export const EquipmentContext = React.createContext<EquipmentContextObject>(defa
 
 const EquipmentContextProvider: React.FC<{children: JSX.Element | JSX.Element[]}> = (props) => {
 
+    // Store Player's EQ
     const [eq, setEq] = useState<Equipment>();
-
-    const userCtx = useContext(UserContext);
-
-    const sendRequest = useHttp<EquipmentResponseObject[]>('api/equipment', 'GET', undefined, userCtx.user?.authToken);
-
-    
-
-    useEffect(() => {
-        const getData = async () => {
-            const {data, code} = await sendRequest();
-        }
-    }, []);
+    // Store info if EQ was fetched from server
+    const [eqIsLoaded, setEqIsLoaded] = useState(false);
 
     const setEqHandler = (eq: Equipment) => {
-        console.log('items-added');
         setEq((prevState) => ({
             ...prevState,
             weapon: eq.weapon,
@@ -50,7 +40,7 @@ const EquipmentContextProvider: React.FC<{children: JSX.Element | JSX.Element[]}
             boots: eq.boots,
             gloves: eq.gloves
         }));
-        console.log('items-added');
+        setEqIsLoaded(true);
     };
 
     const setItemHandler = (item: Item) => {
@@ -58,8 +48,7 @@ const EquipmentContextProvider: React.FC<{children: JSX.Element | JSX.Element[]}
             ...prevState,
             [item.itemType]: item
         }));
-        
-        console.log('items-added');
+        setEqIsLoaded(true);
     }
 
     const removeItemHandler = (slot: ItemType) => {
@@ -67,6 +56,7 @@ const EquipmentContextProvider: React.FC<{children: JSX.Element | JSX.Element[]}
             ...prevState,
             [slot]: undefined
         }));
+        setEqIsLoaded(true);
     }
 
     const contextValue: EquipmentContextObject = {
@@ -76,9 +66,10 @@ const EquipmentContextProvider: React.FC<{children: JSX.Element | JSX.Element[]}
         boots: eq?.boots,
         trousers: eq?.trousers,
         gloves: eq?.gloves,
+        eqIsLoaded: eqIsLoaded,
         setEquipment: setEqHandler,
         setItem: setItemHandler,
-        removeItem: removeItemHandler
+        removeItem: removeItemHandler,
     };
 
     return <EquipmentContext.Provider value={contextValue}>{props.children}</EquipmentContext.Provider>
