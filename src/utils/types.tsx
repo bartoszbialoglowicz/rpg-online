@@ -19,6 +19,12 @@ export type Action = {
     type: 'LOGIN_USER' | 'LOGOUT_USER' | 'SET_IS_AUTHENTICATED';
     payload?: any;
 }
+
+export type ButtonController = {
+    onClick: Function,
+    text: string
+};
+
 export type responseObject<objType> = {
     code: number,
     data: objType
@@ -34,11 +40,11 @@ export type errorResponse = {
     name?: string[],
     password?: string[],
 }
-export type resurcesResponse = [{
+export type Resource = {
     gold: number,
     lvl: number,
     exp: number
-}];
+};
 export type ItemType = 'weapon' | 'helmet' | 'armor' | 'gloves' |'trousers' | 'boots';
 export type StatType = 'armor' | 'damage' | 'magicResist' | 'health';
 export type Item = {
@@ -89,18 +95,18 @@ export type ItemStatsValues = {
     damage?: number;
     health?: number;
 }
-type InventoryItem = {
+export type InventoryItem = {
     id: number;
     item: Item;
     user: number;
 }
-type InventoryPotion = {
+export type InventoryPotion = {
     id: number;
     potion: Potion;
     quantity: number;
     user: number;
 }
-type InventoryCollectableItem = {
+export type InventoryCollectableItem = {
     id: number;
     collectableItem: CollectableItem;
     quantity: number;
@@ -128,7 +134,8 @@ export type Character = {
 
 export type GameContextObject = {
     location: Location,
-    character: Character
+    character: Character,
+    resources: Resource
 }
 
 export type UserLocationResponseObject = {
