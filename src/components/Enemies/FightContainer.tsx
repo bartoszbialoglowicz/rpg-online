@@ -40,6 +40,9 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
         }
         if (data.fightIsOver) {
             setFightIsOver(data.fightIsOver);
+            if (data.exp && data.expPoints && data.lvl) {
+                gameCtx.updateResources(undefined, {currentExp: data.exp, expPointsGap: data.expPoints, lvl: data.lvl});
+            }
             showAlertHandler();
         }
         if (data.loot) {
