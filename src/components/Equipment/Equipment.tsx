@@ -162,17 +162,20 @@ const Equipment = () => {
         // Check type of the item
         if ('itemType' in item) {
             let tmpArr = items.slice();
-            tmpArr = tmpArr.filter(el => el.id !== item.id);
+            const index = tmpArr.findIndex(el => el.id === item.id);
+            tmpArr.splice(index, 1);
             setItems(tmpArr);
         }
         else if ('hpValue' in item) {
             let tmpArr = potions.slice();
-            tmpArr = tmpArr.filter(el => el.id !== item.id);
+            const index = tmpArr.findIndex(el => el.id === item.id);
+            tmpArr.splice(index, 1);
             setPotions(tmpArr);
         }
         else {
-            let tmpArr = potions.slice();
-            tmpArr = tmpArr.filter(el => el.id !== item.id);
+            let tmpArr = collectableItems.slice();
+            const index = tmpArr.findIndex(el => el.id === item.id);
+            tmpArr.splice(index, 1);
             setCollectableItems(tmpArr);
         }
     }
@@ -215,8 +218,10 @@ const Equipment = () => {
                 <CharacterStatsContainer statsHasChanged={updateStats} itemToCompare={itemToCompare}/>
                 <EquipmentItemsContainer equipment={equipment} replaceItemHandler={replaceItemHandler}/>
             </div>
-            <UserItemContainer items={items} potions={potions} collectableItems={collectableItems} buttons={userButtons} onHoverHandler={compareItemStatsHandler} onMouseLeaveHandler={removeComparedStatsHandler}/>
-    </div>
+            <div className="user-items">
+                <UserItemContainer items={items} potions={potions} collectableItems={collectableItems} buttons={userButtons} onHoverHandler={compareItemStatsHandler} onMouseLeaveHandler={removeComparedStatsHandler}/>
+            </div>
+        </div>
 };
 
 export default Equipment;
