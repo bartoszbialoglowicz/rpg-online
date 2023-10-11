@@ -6,6 +6,7 @@ import './Store.css';
 import StoreItemsContainer from "./StoreItemsContainer";
 import UserItemContainer from "../Equipment/UserItemContainer";
 import TransactionContainer from "./TranscationContainer";
+import { GameContext } from "../../store/game-context";
 
 type responseType = {
     items: StoreItem[],
@@ -21,6 +22,9 @@ const Store: React.FC<{store: StoreType}> = (props) => {
 
     // Store Items displayed in shop
     const [storeItems, setStoreItems] = useState<StoreItem[]>([]);
+
+    // Store total amount of transaction
+    const [totalAmount, setTotalAmount] = useState(0);
     
     const [items, setItems] = useState<InventoryItem[]>([]);
     const [potions, setPotions] = useState<InventoryPotion[]>([]);
@@ -29,6 +33,8 @@ const Store: React.FC<{store: StoreType}> = (props) => {
     const [transactionItemsBuy, setTransactionItemsBuy] = useState<StoreItem[][]>([]);
     // Current items user going to sell
     const [transactionItemsSell, setTransactionItemsSell] = useState<StoreItem[][]>([]);
+
+    const gameCtx = useContext(GameContext);
 
     const getStoreData = async () => {
         const {data, code} = await sendRequest();
@@ -46,18 +52,20 @@ const Store: React.FC<{store: StoreType}> = (props) => {
     const removeItemHandler = (item: Item | CollectableItem | Potion) => {
         if ('itemType' in item) {
             let tmpArr = items.slice();
-            console.log(userItems);
-            tmpArr = tmpArr.filter(el => el.item.id !== item.id);
+            const index = tmpArr.findIndex(el => el.item.id === item.id);
+            tmpArr.splice(index, 1);
             setItems(tmpArr);
         }
         else if ('hpValue' in item) {
             let tmpArr = potions.slice();
-            tmpArr = tmpArr.filter(el => el.potion.id !== item.id);
+            const index = tmpArr.findIndex(el => el.potion.id === item.id);
+            tmpArr.splice(index, 1);
             setPotions(tmpArr);
         }
         else {
             let tmpArr = collectableItems.slice();
-            tmpArr = tmpArr.filter(el => el.collectableItem.id !== item.id);
+            const index = tmpArr.findIndex(el => el.collectableItem.id === item.id);
+            tmpArr.splice(index, 1);
             setCollectableItems(tmpArr);
         }
     }
@@ -116,13 +124,18 @@ const Store: React.FC<{store: StoreType}> = (props) => {
         }
         const {data, code} = await sendRequest3(undefined, undefined, body);
 
-        console.log(code, data);
+        return code;
     }
 
-    const processTransactionHandler = () => {
+    const processTransactionHandler = async (totalAmount: number) => {
         const {buyIds, sellIds} = getTransactionItemsIds();
-        getTransactionResponse(buyIds, sellIds);
-        clearTransactionItems();
+        const code = await getTransactionResponse(buyIds, sellIds);
+        if (code === 201) {
+            console.log(code);
+            gameCtx.updateResources(totalAmount);
+            setTotalAmount(0);
+            clearTransactionItems();
+        }
     }
 
     useEffect(()=> {

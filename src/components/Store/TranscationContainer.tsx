@@ -5,7 +5,7 @@ import CharacterStatsTitle from "../Character/CharacterStatsTitle";
 import './TransactionContainer.css';
 import Alert from "../UI/Alert";
 
-const TransactionContainer: React.FC<{transactionItemsBuy: StoreItem[][], transactionItemsSell: StoreItem[][], finishTransactionHandler: () => void}> = (props) => {
+const TransactionContainer: React.FC<{transactionItemsBuy: StoreItem[][], transactionItemsSell: StoreItem[][], finishTransactionHandler: (amount: number) => void}> = (props) => {
 
     let totalSellAmount = 0;
     let totalBuyAmount = 0;
@@ -41,7 +41,7 @@ const TransactionContainer: React.FC<{transactionItemsBuy: StoreItem[][], transa
     const buyItemsJSX = addTransactionItemJSX(props.transactionItemsBuy, false);
 
     const finishTransaction = () => {
-        props.finishTransactionHandler();
+        props.finishTransactionHandler(totalSellAmount - totalBuyAmount);
         setAlertIsVisible(false);
     }
 
