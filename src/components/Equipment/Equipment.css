@@ -1,10 +1,15 @@
 .equipment {
     height: 100%;
+    display: flex;
+}
+
+.equipment > div {
+    width: 50%;
 }
 
 .equipment-character {
     display: flex;
-    width: 100%;
+    flex-wrap: wrap;
 }
 
 @media screen and (max-width: 800px) {
@@ -17,11 +22,5 @@
     }
     .equipment-character > div {
         width: 100%
-    }
-}
-
-@media screen and (min-width: 1021px) {
-    .equipment-character {
-        height: 470px;
     }
 }
