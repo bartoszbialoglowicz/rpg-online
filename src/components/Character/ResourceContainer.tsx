@@ -8,8 +8,8 @@ const ResourceContainer = () => {
 
     return <div className="character-resource-container">
         <ResourceItem name="GOLD" value={gameCtx.resources.gold} dark={false}/>
-        <ResourceItem name="LVL" value={gameCtx.resources.lvl} dark={true}/>
-        <ResourceItem name="EXP" value={gameCtx.resources.exp} dark={false}/>
+        <ResourceItem name="LVL" value={gameCtx.resources.lvl.lvl} dark={true}/>
+        <ResourceItem name="EXP" value={gameCtx.resources.lvl.currentExp} dark={false}/>
     </div>
 };
 

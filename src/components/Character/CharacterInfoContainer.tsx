@@ -21,8 +21,8 @@ const CharacterInfoContainer: React.FC<Props> = (props) => {
         <div className="character-info-container-details">
             <div className="character-resource-container">
                 <ResourceItem key={0} name="GOLD" value={gameCtx.resources.gold} dark={false} />
-                <ResourceItem key={1} name="LVL" value={gameCtx.resources.lvl} dark={true}/>
-                <ResourceItem key={2} name="EXP" value={gameCtx.resources.exp} dark={false}/>
+                <ResourceItem key={1} name="LVL" value={gameCtx.resources.lvl.lvl} dark={true}/>
+                <ResourceItem key={2} name="EXP" value={gameCtx.resources.lvl.currentExp} dark={false}/>
                 <ResourceItem key={3} name="HP" value={props.health} dark={true} statsToCompare={props.statsToCompare?.health}/>
                 <ResourceItem key={4} name="Damage" value={props.damage} dark={false} statsToCompare={props.statsToCompare?.damage}/>
                 <ResourceItem key={5} name="Armor" value={props.armor} dark={true} statsToCompare={props.statsToCompare?.armor}/>

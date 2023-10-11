@@ -40,11 +40,29 @@ export type errorResponse = {
     name?: string[],
     password?: string[],
 }
+
+export type UserLvl = {
+    lvl: number,
+    currentExp: number,
+    expPointsGap: number
+}
+
 export type Resource = {
     gold: number,
-    lvl: number,
-    exp: number
+    lvl: UserLvl
 };
+
+export type ResourceResponse = {
+    id: number;
+    lvl: {
+        lvl: number,
+        expPoints: number,
+    },
+    gold: number,
+    exp: number,
+    user: number
+}
+
 export type ItemType = 'weapon' | 'helmet' | 'armor' | 'gloves' |'trousers' | 'boots';
 export type StatType = 'armor' | 'damage' | 'magicResist' | 'health';
 export type Item = {
@@ -135,7 +153,8 @@ export type Character = {
 export type GameContextObject = {
     location: Location,
     character: Character,
-    resources: Resource
+    resources: Resource,
+    updateResources: (gold?: number, userLvl?: UserLvl) => void
 }
 
 export type UserLocationResponseObject = {
@@ -186,5 +205,8 @@ export type WebSocketMessage = {
     message?: string,
     loot?: string,
     strike?: number,
-    fightIsOver?: boolean
+    fightIsOver?: boolean,
+    exp?: number,
+    expPoints?: number,
+    lvl?: number,
 }
