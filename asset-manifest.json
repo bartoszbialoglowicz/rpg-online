@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/rpg-online/static/css/main.fa17afc3.css",
+    "main.js": "/rpg-online/static/js/main.ec7cb225.js",
+    "static/js/787.6e6ec0c7.chunk.js": "/rpg-online/static/js/787.6e6ec0c7.chunk.js",
+    "static/media/tmp_news.jpg": "/rpg-online/static/media/tmp_news.c3cf212719caefd090a9.jpg",
+    "static/media/the-witcher-3-wild-hunt-hearts-of-stone-4k-6a.jpg": "/rpg-online/static/media/the-witcher-3-wild-hunt-hearts-of-stone-4k-6a.79518defe43bfdedec89.jpg",
+    "static/media/802668.png": "/rpg-online/static/media/802668.6d3950b6dee2312957f9.png",
+    "static/media/982990.jpg": "/rpg-online/static/media/982990.3cdcc0de29377f035c82.jpg",
+    "static/media/High_resolution_wallpaper_background_ID_77700660618.jpg": "/rpg-online/static/media/High_resolution_wallpaper_background_ID_77700660618.981ede5145d492afff7b.jpg",
+    "static/media/tmp_avatar.png": "/rpg-online/static/media/tmp_avatar.d8594459b71787222637.png",
+    "static/media/tmp_avatar2.png": "/rpg-online/static/media/tmp_avatar2.7fd36cb59232b0196729.png",
+    "static/media/empty_slot.jpg.png": "/rpg-online/static/media/empty_slot.jpg.a88361f28fa9605af497.png",
+    "static/media/store-svgrepo-com.svg": "/rpg-online/static/media/store-svgrepo-com.536e1c515b0b5fe5d29f77a0aae6bbd6.svg",
+    "static/media/map-svgrepo-com.svg": "/rpg-online/static/media/map-svgrepo-com.a3ce091be57ae97cf160fa8dc6f32bef.svg",
+    "static/media/backpack-svgrepo-com.svg": "/rpg-online/static/media/backpack-svgrepo-com.66fbd9209144560bb9b5af8b5eb44873.svg",
+    "static/media/user-svgrepo-com.svg": "/rpg-online/static/media/user-svgrepo-com.ec7daa193b73e8516dfa06cab5260b8a.svg",
+    "index.html": "/rpg-online/index.html",
+    "static/media/news-svgrepo-com.svg": "/rpg-online/static/media/news-svgrepo-com.713a518c2b7c837352479c729e5a80fd.svg",
+    "main.fa17afc3.css.map": "/rpg-online/static/css/main.fa17afc3.css.map",
+    "main.ec7cb225.js.map": "/rpg-online/static/js/main.ec7cb225.js.map",
+    "787.6e6ec0c7.chunk.js.map": "/rpg-online/static/js/787.6e6ec0c7.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.fa17afc3.css",
+    "static/js/main.ec7cb225.js"
+  ]
+}
