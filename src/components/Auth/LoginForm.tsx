@@ -36,7 +36,7 @@ const LoginForm: React.FC<{setfeedbackHandler: (text: string, type: feedbackResu
         const {data, code} = await sendRequest();
         if (code === 200) {
             props.setfeedbackHandler("Zalogowano", "success");
-            userCtx.login(new User(data.id, data.user, data.email, data.token));
+            userCtx.login(new User(data.id, data.user, data.email, data.token, data.isNew));
         }
         else {
             console.log(data);
