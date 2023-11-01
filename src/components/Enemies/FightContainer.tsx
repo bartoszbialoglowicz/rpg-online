@@ -1,11 +1,12 @@
 import { useContext, useEffect, useState } from "react";
-import { Character, Enemy, WebSocketMessage } from "../../utils/types";
+import { Character, Enemy, Item, WebSocketMessage } from "../../utils/types";
 import ActionsContainer from "./ActionsContainer";
 import FightCardsContainer from "./FightCardsContainer";
 import WebsocketService from "../../services/websocketService";
 import { UserContext } from "../../store/user-context";
 import { GameContext } from "../../store/game-context";
 import Alert from "../UI/Alert";
+import useAudio from "../../hooks/use-audio";
 
 const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
 
@@ -17,7 +18,12 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
     const [alertIsVisible, setAlertIsVisible] = useState(false);
     const [fightIsOver, setFightIsOver] = useState(false);
     const [serverMessage, setServerMessage] = useState('');
-    const [loot, setLoot] = useState('');
+    const [loot, setLoot] = useState<Item>();
+    const [lootJSX, setLootJSX] = useState<JSX.Element>();
+
+    const paul = require("../../assets/audio/paul.mp3");
+
+    const {isPlaying, toggle} = useAudio(paul);
 
     const showAlertHandler = () => {
         setAlertIsVisible(true);
@@ -25,6 +31,7 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
     
     const hideAlertHandler = () => {
         setAlertIsVisible(false);
+        toggle();
     }
 
     const handleWebSocketMessage = (data: WebSocketMessage) => {
@@ -43,7 +50,10 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
             if (data.exp && data.expPoints && data.lvl) {
                 gameCtx.updateResources(undefined, {currentExp: data.exp, expPointsGap: data.expPoints, lvl: data.lvl});
             }
+            setLootJSX(<div><img src={data.loot?.imageUrl} alt={data.loot?.name} /></div>);
+            console.log(data);
             showAlertHandler();
+            toggle();
         }
         if (data.loot) {
             setLoot(data.loot);
@@ -87,7 +97,8 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
             title={serverMessage} 
             description={`Loot: ${loot}`}
             buttonText="ZABIERAM"
-            onButtonClick={hideAlertHandler} 
+            onButtonClick={hideAlertHandler}
+            children={lootJSX} 
             onOutOfBoxClickHandler={hideAlertHandler}/>}
         <FightCardsContainer enemy={props.enemy} enemyCurrentHP={enemyStats.hp} myCurrentHP={characterStats.health} myMaxHP={100}/>
         <ActionsContainer onAttack={handleAttack}/> 
