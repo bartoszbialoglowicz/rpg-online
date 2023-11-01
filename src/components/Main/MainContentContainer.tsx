@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { mainContentName } from '../../utils/types';
 import './MainContentContainer.css';
 import MainNewsContainer from './MainNewsContainer';
@@ -8,12 +8,41 @@ import React from 'react';
 import MapContainer from '../Map/MapContainer';
 import StoreContainer from '../Store/StoreContainer';
 import EnemiesContainer from '../Enemies/EnemiesContainer';
-import FightContainer from '../Enemies/FightContainer';
 import EquipmentContextProvider from '../../store/equipment-context';
+import Alert from '../UI/Alert';
+import { UserContext } from '../../store/user-context';
+import { useHttp } from '../../hooks/use-http';
+import AvatarList from '../UI/AvatarList';
+
+type responseType = {
+    id: number,
+    name: string,
+    imageUrl: string
+}
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
     const [content, setContent] = useState<JSX.Element>(<MainNewsContainer />);
+    const [itemsReady, setItemsReady] = useState(false);
+    
+    const userCtx = useContext(UserContext);
+    const sendRequest = useHttp<responseType[]>('api/avatars/', 'GET', undefined, userCtx.user?.authToken);
+    const [isNew, setIsNew] = useState(userCtx.user?.isNew);
+
+    const [avatarsJSX, setAvatarsJSX] = useState<JSX.Element>();
+
+    useEffect(() => {
+        const getData = async () => {
+            const {data, code} = await sendRequest();
+
+            if (code === 200) {
+                setItemsReady(true);
+                setAvatarsJSX(<AvatarList avatars={data} />);
+            }
+        }
+
+        getData();
+    }, [])
 
     useEffect(() => {
         switch (props.currentContent) {
@@ -42,6 +71,13 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
         <EquipmentContextProvider>
             {content}
         </EquipmentContextProvider>
+        {(itemsReady && !isNew) && <Alert title={`Witaj ${userCtx.user?.nickname}!`}
+        description='Aby zakończyć proces tworzenia postaci wybierz awatar z listy poniżej'
+        buttonText='OK'
+        onButtonClick={() => {}}
+        onOutOfBoxClickHandler={() => {}}
+        children={avatarsJSX}
+        />}
     </div>
 };
 
