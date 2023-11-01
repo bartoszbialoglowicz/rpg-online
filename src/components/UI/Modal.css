@@ -26,6 +26,14 @@
     }
 }
 
+#overlays {
+    width: 100%;
+    position: absolute;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .backdrop {
     position: fixed;
     top: 0;
@@ -37,11 +45,8 @@
   }
   
   .modal {
-    position: fixed;
-    top: calc(45% - 100px);
-    left: calc(50% - 200px);
     width: 400px;
-    height: 200px;
+    min-height: 200px;
     background-color: #111;
     padding: 1rem;
     border-radius: 14px;
