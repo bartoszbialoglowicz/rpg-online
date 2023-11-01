@@ -20,6 +20,12 @@ export type Action = {
     payload?: any;
 }
 
+export type Avatar = {
+    id: number,
+    name: string,
+    imageUrl: string
+}
+
 export type ButtonController = {
     onClick: Function,
     text: string
@@ -33,7 +39,8 @@ export type loginResponse = {
     id: number,
     user: string,
     email: string,
-    token: string
+    token: string,
+    isNew: boolean,
 };
 export type errorResponse = {
     email?: string[],
@@ -142,12 +149,18 @@ export type Location = {
     lvlRequired: number;
 }
 
+export type UserAvatar = {
+    id: number,
+    name: string,
+    imageUrl: string,
+}
+
 export type Character = {
     user: number,
     armor: number,
     magicResist: number,
     health: number,
-    damage: number
+    damage: number,
 }
 
 export type GameContextObject = {
@@ -163,11 +176,18 @@ export type UserLocationResponseObject = {
     location: Location
 }
 
+export type NPC = {
+    id: number,
+    name: string,
+    imageUrl: string,
+}
+
 export type Store = {
     id: number,
     name: string,
     type: string,
-    location: number
+    location: number,
+    npc: NPC,
 }
 export type StoreElement = {
     id: number;
@@ -203,8 +223,7 @@ export type WebSocketMessage = {
     enemy?: Enemy,
     character?: Character,
     message?: string,
-    loot?: string,
-    strike?: number,
+    loot?: Item,
     fightIsOver?: boolean,
     exp?: number,
     expPoints?: number,
