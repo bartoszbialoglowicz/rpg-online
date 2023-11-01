@@ -1,0 +1,25 @@
+.avatar-list {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+}
+
+.avatar-list-item {
+    width: 100px;
+    transition: .3s;
+    cursor: pointer;
+}
+
+.avatar-list-item:hover {
+    filter: contrast(1.2);
+}
+
+.avatar-list-item img {
+    width: 100%;
+}
+
+.clicked {
+    box-shadow: 0 0 10px violet;
+    
+    filter: contrast(1.2);
+}

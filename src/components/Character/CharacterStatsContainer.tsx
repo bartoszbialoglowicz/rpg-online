@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import characterImg from '../../assets/images/tmp_avatar2.png';
 import { useHttp } from '../../hooks/use-http';
 import { UserContext } from '../../store/user-context';
-import { Character, Item, ItemStatsValues, ItemType, StatType } from '../../utils/types';
+import { Character, Item, ItemStatsValues, StatType, UserAvatar } from '../../utils/types';
 
 import './CharacterStatsContainer.css';
 import CharacterInfoContainer from './CharacterInfoContainer';
@@ -10,12 +10,16 @@ import CharacterImage from './CharacterImage';
 import CharacterStatsTitle from './CharacterStatsTitle';
 import { EquipmentContext } from '../../store/equipment-context';
 
+
+type ResponseObject = Character & {avatar: UserAvatar};
+
 const CharacterStatsContainer: React.FC<{statsHasChanged?: boolean, itemToCompare?: Item}> = (props) => {
     const userCtx = useContext(UserContext);
     const eqCtx = useContext(EquipmentContext);
-    const sendRequest = useHttp<Character[]>('api/character/', 'GET', undefined, userCtx.user?.authToken);
+    const sendRequest = useHttp<ResponseObject[]>('api/character/', 'GET', undefined, userCtx.user?.authToken);
 
     const [stats, setStats] = useState<Character>({damage: 0, health: 0, armor: 0, magicResist: 0, user: 0});
+    const [avatarUrl, setAvatarUrl] = useState('');
     const [error, setError] = useState<string | null>('Czekam na pobranie statystyk');
 
     const getStat = (item: Item, statType: StatType) => {
@@ -51,6 +55,7 @@ const CharacterStatsContainer: React.FC<{statsHasChanged?: boolean, itemToCompar
                     armor: data[0].armor,
                     magicResist: data[0].magicResist
                 }));
+                setAvatarUrl(data[0].avatar.imageUrl);
                 setError(null);
                 console.log('stats updated');
             }
@@ -64,7 +69,7 @@ const CharacterStatsContainer: React.FC<{statsHasChanged?: boolean, itemToCompar
 
     const statsJSX = <div className="character-stats-container">
         <CharacterStatsTitle title='Twoja postać' />
-        <CharacterImage src={characterImg} />
+        <CharacterImage src={avatarUrl} />
         <div className='character-stats-container-info'>
             <CharacterInfoContainer statsToCompare={compareStats()} damage={stats!.damage} health={stats!.health} armor={stats!.armor} magicResist={stats!.magicResist} user={stats!.user}/>
         </div>
