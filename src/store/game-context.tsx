@@ -1,13 +1,19 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Character, GameContextObject, Location, Resource, ResourceResponse, UserLocationResponseObject, UserLvl } from "../utils/types";
+import { Character, GameContextObject, Location, Resource, ResourceResponse, UserLocation, UserLvl } from "../utils/types";
 import { useHttp } from "../hooks/use-http";
 import { UserContext } from "./user-context";
 
 const defaultState: GameContextObject = {
-    location: {
-        name: '',
-        lvlRequired: 1,
-        id: 1
+    userLocation: {
+        location: {
+            name: '',
+            lvlRequired: 1,
+            id: 1,
+            description: "",
+            imageUrl: "",
+        },
+        travelTime: new Date(),
+        startTravelTime: new Date()
     },
     character: {
         user: -1,
@@ -20,18 +26,19 @@ const defaultState: GameContextObject = {
         gold: 0,
         lvl: {currentExp: 0, lvl: 0, expPointsGap: 0}
     },
-    updateResources: (gold?: number, userLvl?: UserLvl) => null
+    updateResources: (gold?: number, userLvl?: UserLvl) => null,
+    updateTravelTime: (newTime: Date, travelStartTime: Date) => null,
 };
 
 export const GameContext = React.createContext<GameContextObject>(defaultState);
 
 const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
-    const [currentLocation, setCurrentLocation] = useState<Location>(defaultState.location);
+    const [currentLocation, setCurrentLocation] = useState<UserLocation>(defaultState.userLocation);
     const [character, setCharacter] = useState<Character>(defaultState.character);
     const [resources, setResources] = useState<Resource>(defaultState.resources);
 
     const userCtx = useContext(UserContext);
-    const sendRequest = useHttp<UserLocationResponseObject>('api/current_location', 'GET', undefined, userCtx.user!.authToken);
+    const sendRequest = useHttp<UserLocation[]>('api/current_location', 'GET', undefined, userCtx.user!.authToken);
     const sendRequestCharacter = useHttp<Character[]>('api/character', 'GET', undefined, userCtx.user!.authToken);
     const sendRequestResources = useHttp<ResourceResponse[]>('api/resources', 'GET', undefined, userCtx.user!.authToken);
 
@@ -41,7 +48,13 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
             const {data: charData, code: charCode} = await sendRequestCharacter();
             const {data: resourceData, code: resourceCode} = await sendRequestResources();
             if (code === 200) {
-                setCurrentLocation(data.location)
+                const tmpTravelTime = new Date(data[0].travelTime);
+                const tmpTravelStartTime = new Date(data[0].startTravelTime);
+                setCurrentLocation(prevState => ({
+                    ...data[0],
+                    travelTime: tmpTravelTime,
+                    startTravelTime: tmpTravelStartTime
+                }));
             }
             if (charCode === 200) {
                 setCharacter(charData[0])
@@ -62,24 +75,43 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
         getData();
     }, []);
 
+    const applyExpPoint = (currentLvl: UserLvl, expPoint: UserLvl) => {
+        let tmpLvl = currentLvl;
+        tmpLvl.currentExp += expPoint.currentExp;
+        if (tmpLvl.currentExp > tmpLvl.expPointsGap) {
+            tmpLvl.lvl ++;
+            tmpLvl.currentExp = (currentLvl.currentExp + expPoint.currentExp) - tmpLvl.expPointsGap;
+            tmpLvl.expPointsGap = expPoint.expPointsGap;
+        }
+
+        return tmpLvl;
+    }
+
     const updateResources = (gold?: number, userLvl?: UserLvl) => {
         let tmpRes = resources;
         if (gold) {
             tmpRes.gold += gold;
         }
         if (userLvl) {
-            tmpRes.lvl.currentExp = userLvl.currentExp;
-            tmpRes.lvl.expPointsGap = userLvl.expPointsGap;
-            tmpRes.lvl.lvl = userLvl.lvl;
+            tmpRes.lvl = applyExpPoint(tmpRes.lvl, userLvl);
         }
         setResources({...tmpRes});
     }
 
+    const updateTravelTime = (newTime: Date, startTravelTime: Date) => {
+        setCurrentLocation(prevState => ({
+            ...prevState,
+            travelTime: newTime,
+            startTravelTime: startTravelTime
+        }));
+    }
+
     const gameContextValue = {
-        location: currentLocation,
+        userLocation: currentLocation,
         character: character,
         resources: resources,
-        updateResources: updateResources
+        updateResources: updateResources,
+        updateTravelTime: updateTravelTime,
     }
     
     return <GameContext.Provider value={gameContextValue}>
