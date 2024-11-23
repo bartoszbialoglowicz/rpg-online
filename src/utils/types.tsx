@@ -140,6 +140,14 @@ export type Location = {
     id: number;
     name: string;
     lvlRequired: number;
+    imageUrl: string;
+    description: string;
+}
+
+export type UserLocation = {
+    location: Location,
+    travelTime: Date,
+    startTravelTime: Date
 }
 
 export type Character = {
@@ -151,16 +159,11 @@ export type Character = {
 }
 
 export type GameContextObject = {
-    location: Location,
+    userLocation: UserLocation
     character: Character,
     resources: Resource,
-    updateResources: (gold?: number, userLvl?: UserLvl) => void
-}
-
-export type UserLocationResponseObject = {
-    user: number,
-    id: number,
-    location: Location
+    updateResources: (gold?: number, userLvl?: UserLvl) => void,
+    updateTravelTime: (newTime: Date, startTravelTime: Date) => void
 }
 
 export type Store = {
@@ -188,11 +191,12 @@ export type StoreCollectableItem = StoreElement & {
 export type Enemy = {
     id: number;
     name: string;
-    hp: number;
+    health: number;
     armor: number;
     magicResist: number;
     damage: number;
     lvl: number;
+    imgSrc: string;
 }
 
 export type WebSocketMessage = {
