@@ -7,7 +7,12 @@ import { UserContext } from "../../store/user-context";
 import { GameContext } from "../../store/game-context";
 import Alert from "../UI/Alert";
 
-const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
+type Props = {
+    enemy: Enemy,
+    onFightEnd: () => void,
+}
+
+const FightContainer: React.FC<Props> = (props) => {
 
     const authCtx = useContext(UserContext);
     const gameCtx = useContext(GameContext);
@@ -25,6 +30,7 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
     
     const hideAlertHandler = () => {
         setAlertIsVisible(false);
+        props.onFightEnd();
     }
 
     const handleWebSocketMessage = (data: WebSocketMessage) => {
@@ -33,7 +39,6 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
         }
         if (data.enemy) {
             setEnemyStats(data.enemy);
-            console.log(enemyStats)
         }
         if (data.message) {
             setServerMessage(data.message);
@@ -41,6 +46,7 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
         if (data.fightIsOver) {
             setFightIsOver(data.fightIsOver);
             if (data.exp && data.expPoints && data.lvl) {
+                console.log(data);
                 gameCtx.updateResources(undefined, {currentExp: data.exp, expPointsGap: data.expPoints, lvl: data.lvl});
             }
             showAlertHandler();
@@ -48,7 +54,6 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
         if (data.loot) {
             setLoot(data.loot);
         }
-        console.log(data);
     }
 
     const handleAttack = () => {
@@ -67,9 +72,7 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
         WebsocketService.addMessageListener(handleWebSocketMessage);
         
         const interval = setInterval(() => {
-            console.log('first');
             if (WebsocketService.isConnected()) {
-                console.log('opem');
                 WebsocketService.sendMessage({ type: 'set_enemy', enemyId: props.enemy.id });
                 WebsocketService.sendMessage({ type: 'set_user', userEmail: authCtx.user!.email });
                 clearInterval(interval); // Stop the interval once messages are sent
@@ -77,6 +80,7 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
         }, 100);
     
         return () => {
+            console.log("walka zakończona.");
             WebsocketService.removeMessageListener(handleWebSocketMessage);
             WebsocketService.disconnect();
         }
@@ -85,11 +89,11 @@ const FightContainer: React.FC<{enemy: Enemy}> = (props) => {
     return <div className="fight-container">
         {alertIsVisible && <Alert 
             title={serverMessage} 
-            description={`Loot: ${loot}`}
-            buttonText="ZABIERAM"
+            description={loot === "null" ? "Nie zdobyto łupów." : `Zdobyto ${loot}`}
+            buttonText={loot === "null" ? "OPUŚĆ WALKĘ" : "ZABIERAM"}
             onButtonClick={hideAlertHandler} 
             onOutOfBoxClickHandler={hideAlertHandler}/>}
-        <FightCardsContainer enemy={props.enemy} enemyCurrentHP={enemyStats.hp} myCurrentHP={characterStats.health} myMaxHP={100}/>
+        <FightCardsContainer enemy={props.enemy} enemyCurrentHP={enemyStats.health} myCurrentHP={characterStats.health} myMaxHP={100}/>
         <ActionsContainer onAttack={handleAttack}/> 
     </div>
 };
