@@ -3,6 +3,7 @@ import { ButtonController, Item } from "../../utils/types";
 import './EquipmentItem.css';
 import ItemStats from "../UI/ItemStats";
 import slot from '../../assets/images/empty_slot.jpg.png';
+import Button from "../UI/Button";
 
 type Props = {
     item?: Item, 
@@ -28,7 +29,7 @@ const EquipmentItem: React.FC<Props> = (props) => {
         }
     }
 
-    const buttonsJSX = props.buttons ? props.buttons.map((bt, index) => <button key={index} onClick={() => bt.onClick(props.item)}>{bt.text}</button>) : undefined;
+    const buttonsJSX = props.buttons ? props.buttons.map((bt, index) => <Button key={index} onClickHandler={() => bt.onClick(props.item)} text={bt.text}/>) : undefined;
 
     const actionsJSX = props.item && props.buttons ? <div className="equipment-container-item-actions">
         <span>{props.item.name}</span>
