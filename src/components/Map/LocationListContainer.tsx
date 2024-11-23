@@ -4,28 +4,55 @@ import { UserContext } from "../../store/user-context";
 import LocationListItem from "./LocationListItem";
 import { Location } from "../../utils/types";
 
+import './LocationListContainer.css';
+import { GameContext } from "../../store/game-context";
+import { useTimeCalculator } from "../../hooks/use-time-calculator";
+import TravelContainer from "./TravelContainer";
+
 const LocationListContainer = () => {
     
-    const token = useContext(UserContext).user?.authToken;
-    const sendRequest = useHttp<Location[]>('api/locations', 'GET', undefined, token);
-    const [locations, setLocations] = useState<Location[]>([]);
+    const userCtx = useContext(UserContext);
+    const gameCtx = useContext(GameContext);
+
+    const sendRequest = useHttp<Location[]>('api/locations', 'GET', undefined, userCtx.user?.authToken);
+    const timeCalculator = useTimeCalculator();
+
     const [locationsJSX, setLocationsJSX] = useState<JSX.Element[]>([]);
+    const [travelTime, setTraveltime] = useState(gameCtx.userLocation.travelTime);
+    const [remainingTime, setRemainingTime] = useState<string>(timeCalculator.getTimeUnits(travelTime));
+
+    const updateTravelTime = (newTravelTime: Date, startTravelTime: Date) => {
+        gameCtx.updateTravelTime(newTravelTime, startTravelTime);
+        setTraveltime(newTravelTime);
+    }
 
     useEffect(() => {
         const getData = async () => {
             const {data, code} = await sendRequest();
             if (code === 200) {
-                setLocations(data);
-                const tmpJSX = data.map((el: Location) => <LocationListItem id={el.id} name={el.name} lvlRequired={el.lvlRequired} key={el.id}/>);
+                const tmpJSX = data.map((el: Location) => <LocationListItem location={el} onTravelHandler={updateTravelTime} key={el.id}/>);
+                const index = data.findIndex(el => el.id === gameCtx.userLocation.location.id);
+                tmpJSX[index] = <LocationListItem location={data[index]} onTravelHandler={updateTravelTime} key={index} currentlyVisited={true}/>
                 setLocationsJSX(tmpJSX);
             }
         }
         getData();
     }, []);
 
-    return <div className="location-list-container">
-        {locationsJSX}
-    </div>
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setRemainingTime(timeCalculator.getTimeUnits(travelTime));
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, [travelTime, timeCalculator])
+
+    return <>
+        {!remainingTime && <div className="location-list-container">
+              {locationsJSX}
+        </div>}
+        {remainingTime && <TravelContainer startTravelTime={gameCtx.userLocation.startTravelTime} travelTime={travelTime} remainingTime={remainingTime} />}
+    </>
 };
 
 export default LocationListContainer;
