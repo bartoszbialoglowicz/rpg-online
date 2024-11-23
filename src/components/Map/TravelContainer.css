@@ -1,0 +1,24 @@
+.travel-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    
+}
+
+.travel-container-locations {
+    width: 100%;
+    overflow-x: scroll;
+    display: flex;
+}
+
+.travel-container-locations-item {
+    width: 300px;
+    display: block;
+}
+
+.travel-container-locations-item > img {
+    width: 100%;
+}
