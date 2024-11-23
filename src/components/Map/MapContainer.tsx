@@ -1,9 +1,9 @@
 import LocationListContainer from "./LocationListContainer";
 
 const MapContainer = () => {
-    return <div className="map-container">
+    return <>
         <LocationListContainer />
-    </div>
+    </>
 };
 
 export default MapContainer;
