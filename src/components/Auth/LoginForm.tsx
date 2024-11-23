@@ -32,16 +32,20 @@ const LoginForm: React.FC<{setfeedbackHandler: (text: string, type: feedbackResu
     );
 
     const loginHandler = async () => {
-        console.log(emailValue);
-        const {data, code} = await sendRequest();
-        if (code === 200) {
-            props.setfeedbackHandler("Zalogowano", "success");
-            userCtx.login(new User(data.id, data.user, data.email, data.token));
+        try {
+            const {data, code} = await sendRequest();
+            if (code === 200) {
+                props.setfeedbackHandler("Zalogowano", "success");
+                userCtx.login(new User(data.id, data.user, data.email, data.token));
+            }
+            else {
+                console.log(data);
+                props.setfeedbackHandler("Incorrect credentials", "error");
+            }
+        } catch (error: any) {
+            props.setfeedbackHandler("Server error!", "error");
         }
-        else {
-            console.log(data);
-            props.setfeedbackHandler("Incorrect credentials", "error");
-        }
+        
     }
 
     const form = new Form([emailInput, passwordInput], "SIGN IN!", loginHandler, true);
