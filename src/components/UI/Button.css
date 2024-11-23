@@ -1,0 +1,25 @@
+.button-green {
+    border: 1px solid #e0cf80;
+    background: linear-gradient(#059133, #0e642a);
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-green:hover {
+    background: linear-gradient(#0e642a, #059133);
+}
+
+.button-dark-blue {
+    border: 1px solid #1d3250;
+    background: linear-gradient(#131318, #1f1f30);
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.button-dark-blue:hover {
+    background: linear-gradient(#1f1f30, #131318);
+}
