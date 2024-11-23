@@ -1,0 +1,36 @@
+.location-list-item {
+    width: 300px;
+    order: 1;
+    transition: .3s;
+}
+.location-list-item-image {
+    width: 100%;
+    position: relative;
+}
+
+.location-list-item-image > img {
+    width: 100%;
+}
+
+.location-list-item-action {
+    width: 100%;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    padding-bottom: 10px;
+}
+
+.location-list-item-info {
+    width: calc(100% - 20px);
+    padding: 0 10px;
+}
+
+.img-title {
+    position: absolute;
+    top: 50px;
+    width: 100%;
+    text-align: center;
+    background-color: #22222299;
+    text-shadow: 0 0 8px black;
+    font-size: 28px;
+}
