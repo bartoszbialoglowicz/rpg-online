@@ -1,7 +1,6 @@
 .main-content-container {
-    width: 90%;
-    margin: calc(5% - 20px) 5% 5% 5%;
+    width: calc(100% - 20px);
     border: 1px solid rgb(36, 41, 53);;
-    height: 85%;
-    overflow: auto;
+    margin: 10px;
+    min-height: calc(100% - 20px);
 }
