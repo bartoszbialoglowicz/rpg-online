@@ -1,7 +1,7 @@
 import { mainContentName } from '../../utils/types';
 import './SideBarListItem.css';
 
-const SideBarListItem: React.FC<{iconPath: string, name: mainContentName, setCurrentMainContent: (name: mainContentName) => void}> = (props) => {
+const SideBarListItem: React.FC<{name: mainContentName, setCurrentMainContent: (name: mainContentName) => void}> = (props) => {
     
     const onClickHandler = () => {
         props.setCurrentMainContent(props.name);
