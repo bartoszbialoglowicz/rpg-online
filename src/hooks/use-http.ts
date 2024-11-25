@@ -9,6 +9,7 @@ export const useHttp = <objType>(path: string, method: HttpMethod, body?: object
             headers: {
                 'Content-Type': 'application/json',
                 'Accept': 'application/json',
+                'Referrer-Policy': 'unsafe-url',
                 'Authorization': token ? `Token ${token}` : ''
             },
             body: body_2 ? JSON.stringify(body_2) : body ? JSON.stringify(body) : null,
