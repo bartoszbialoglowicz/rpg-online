@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rpg-online/static/css/main.3765ee09.css",
-    "main.js": "/rpg-online/static/js/main.2b997cfa.js",
+    "main.js": "/rpg-online/static/js/main.7c2f804e.js",
     "static/js/787.6e6ec0c7.chunk.js": "/rpg-online/static/js/787.6e6ec0c7.chunk.js",
     "static/media/tmp_news.jpg": "/rpg-online/static/media/tmp_news.c3cf212719caefd090a9.jpg",
     "static/media/the-witcher-3-wild-hunt-hearts-of-stone-4k-6a.jpg": "/rpg-online/static/media/the-witcher-3-wild-hunt-hearts-of-stone-4k-6a.79518defe43bfdedec89.jpg",
@@ -19,11 +19,11 @@
     "static/media/user-svgrepo-com.svg": "/rpg-online/static/media/user-svgrepo-com.ec7daa193b73e8516dfa06cab5260b8a.svg",
     "static/media/news-svgrepo-com.svg": "/rpg-online/static/media/news-svgrepo-com.713a518c2b7c837352479c729e5a80fd.svg",
     "main.3765ee09.css.map": "/rpg-online/static/css/main.3765ee09.css.map",
-    "main.2b997cfa.js.map": "/rpg-online/static/js/main.2b997cfa.js.map",
+    "main.7c2f804e.js.map": "/rpg-online/static/js/main.7c2f804e.js.map",
     "787.6e6ec0c7.chunk.js.map": "/rpg-online/static/js/787.6e6ec0c7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.3765ee09.css",
-    "static/js/main.2b997cfa.js"
+    "static/js/main.7c2f804e.js"
   ]
 }
