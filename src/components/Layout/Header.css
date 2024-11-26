@@ -4,9 +4,12 @@
     border-bottom: 1px solid rgb(36, 41, 53);
     background: linear-gradient(90deg, rgb(6, 8, 13) 0%, rgb(13, 18, 28) 100%);
     position: fixed;
+    z-index: 3;
 }
 
 header {
     display: flex;
     justify-content: space-between;
+    width: 100%;
+    height: 100%;
 }
