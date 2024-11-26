@@ -6,3 +6,7 @@
     background: linear-gradient(90deg, rgb(6, 8, 13) 0%, rgb(13, 18, 28) 100%);
     position: fixed;
 }
+
+.hidden {
+    display: none;
+}

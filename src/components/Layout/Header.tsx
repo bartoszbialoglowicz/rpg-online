@@ -1,15 +1,18 @@
-import { useContext } from "react";
-import { UserContext } from "../../store/user-context";
+import HeaderHamburger from "../Header/HeaderHamburger";
 import HeaderResources from "../Header/HeaderResources";
 
 import './Header.css';
 
-const Header = () => {
-    const userCtx = useContext(UserContext);
+type Props = {
+    onClick:  () => void
+}
+
+const Header:React.FC<Props> = (props) => {
     
+
     return <div className="header">
         <header>
-            <p>Hello  {userCtx.user!.nickname}</p>
+            <HeaderHamburger onClick={props.onClick}/>
             <HeaderResources />
         </header>
     </div>

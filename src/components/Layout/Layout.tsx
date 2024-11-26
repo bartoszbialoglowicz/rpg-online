@@ -9,16 +9,21 @@ import GameContextProvider from "../../store/game-context";
 const Layout = () => {
 
     const [currentMainContent, setCurrentMainContent] = useState<mainContentName>('NEWS');
+    const [menuHidden, setMenuHidden] = useState(false);
 
     const setCurrentMainContentHandler = (name: mainContentName) => {
         setCurrentMainContent(name);
     }
 
+    const toggleSideBarMenu = () => {
+        setMenuHidden((prevState) => !prevState);
+    }
+
     return <GameContextProvider>
             <div className="layout">
-                <Header />
-                <SideBar setCurrentMainContent={setCurrentMainContentHandler}/>
-                <Main currentMainContent={currentMainContent}/>
+                <Header onClick={toggleSideBarMenu}/>
+                <SideBar setCurrentMainContent={setCurrentMainContentHandler} menuHidden={menuHidden}/>
+                <Main currentMainContent={currentMainContent} menuHidden={menuHidden}/>
             </div>
         </GameContextProvider>
 };
