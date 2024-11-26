@@ -24,8 +24,10 @@ const AuthPage = () => {
     const content = formType ? loginForm : registerForm;
 
     return <div className="login-container">
-        {content}
-    </div>
+                <div className="form-container-wrap">
+                {content}
+            </div>
+        </div>
 };
 
 export default AuthPage;
