@@ -1,15 +1,16 @@
 import React, { useEffect, useReducer} from "react";
-import { Action, authContextObject, authState } from "../utils/types";
+import { Action, AuthContextObject, AuthState} from "../types/AuthTypes";
+
 import User from "../models/User";
 
-const defaultState: authContextObject = {
+const defaultState: AuthContextObject = {
     user: null,
     isAuthenticated: false,
     login: (user: User) => {},
     logout: () => {}
 }
 
-const reducer = (state: authState, action: Action) => {
+const reducer = (state: AuthState, action: Action) => {
     switch(action.type) {
         case 'LOGIN_USER':
             return {...state, user: action.payload}
@@ -22,7 +23,7 @@ const reducer = (state: authState, action: Action) => {
     }
 }
 
-export const UserContext = React.createContext<authContextObject>(defaultState);
+export const UserContext = React.createContext<AuthContextObject>(defaultState);
 
 const UserContextProvider: React.FC<{children: JSX.Element}>= (props) => {
     const [state, dispatch] = useReducer(reducer, defaultState);

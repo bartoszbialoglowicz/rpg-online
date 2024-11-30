@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { StoreItem } from "../../utils/types";
-import CharacterStatsTitle from "../Character/CharacterStatsTitle";
+import { StoreItem } from "../../types/StoreTypes";
 
 import './TransactionContainer.css';
 import Alert from "../UI/Alert";
@@ -46,7 +45,6 @@ const TransactionContainer: React.FC<{transactionItemsBuy: StoreItem[][], transa
     }
 
     return <div className="transaction-container">
-        <CharacterStatsTitle title="TRANSAKCJA"/>
         <div className="transaction-container-items">
             <div className="transaction-item">
                 <span>NAZWA</span>

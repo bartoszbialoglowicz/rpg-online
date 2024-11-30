@@ -2,7 +2,8 @@ import { ChangeEvent, useContext, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import Form from "../../models/Form";
 import Input from "../../models/Input";
-import { feedbackResult, loginResponse } from "../../utils/types";
+import { feedbackResult } from "../../types/RequestTypes";
+import { LoginResponse } from "../../types/AuthTypes";
 import { UserContext } from "../../store/user-context";
 import User from "../../models/User";
 
@@ -25,7 +26,7 @@ const LoginForm: React.FC<{setfeedbackHandler: (text: string, type: feedbackResu
     const emailInput = new Input("E-mail address", "email", "email", emailValue, false, getEmailInputValue);
     const passwordInput = new Input("Passoword", "password", "password", passwordValue, false, getPasswordInputValue);
 
-    const sendRequest = useHttp<loginResponse>(
+    const sendRequest = useHttp<LoginResponse>(
         'api/token/', 
         'POST', 
         {'email': emailValue, 'password': passwordValue}

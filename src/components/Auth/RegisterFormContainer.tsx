@@ -1,4 +1,4 @@
-import { feedbackResult } from "../../utils/types";
+import { feedbackResult } from "../../types/RequestTypes";
 import FormChange from "./FormChange";
 import FormFeedback from "./FormFeedback";
 import FormTitle from "./FormTitle"

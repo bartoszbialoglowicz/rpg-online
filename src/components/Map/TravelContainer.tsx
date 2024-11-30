@@ -1,4 +1,3 @@
-import { Location } from "../../utils/types";
 import LoadingBar from "../UI/LoadingBar";
 
 import './TravelContainer.css';

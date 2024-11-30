@@ -1,5 +1,5 @@
 import React from "react";
-import { Store } from "../../utils/types";
+import { Store } from "../../types/StoreTypes";
 
 import './AvailableStoreList.css';
 

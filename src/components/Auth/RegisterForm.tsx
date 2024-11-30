@@ -1,5 +1,6 @@
 import { ChangeEvent, useState } from "react";
-import { errorResponse, feedbackResult } from "../../utils/types";
+import { ErrorResponse } from "../../types/AuthTypes";
+import { feedbackResult } from "../../types/RequestTypes";
 import { useHttp } from "../../hooks/use-http";
 import Input from "../../models/Input";
 import Form from "../../models/Form";
@@ -24,7 +25,7 @@ const RegisterForm: React.FC<{setFeedbackHandler: (text:string, type:feedbackRes
         setPassword2Value(event.target.value);
     }
     
-    const sendRequest = useHttp<errorResponse>('api/createuser/', 'POST',
+    const sendRequest = useHttp<ErrorResponse>('api/createuser/', 'POST',
         {
             'email': emailValue,
             'name': nicknameValue,
