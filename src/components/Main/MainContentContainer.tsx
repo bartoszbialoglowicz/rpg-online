@@ -2,14 +2,11 @@ import { useEffect, useState } from 'react';
 import { mainContentName } from '../../utils/types';
 import './MainContentContainer.css';
 import MainNewsContainer from './MainNewsContainer';
-import CharacterContainer from '../Character/CharacterContainer';
-import Equipment from '../Equipment/Equipment';
 import React from 'react';
 import MapContainer from '../Map/MapContainer';
 import StoreContainer from '../Store/StoreContainer';
 import EnemiesContainer from '../Enemies/EnemiesContainer';
-import FightContainer from '../Enemies/FightContainer';
-import EquipmentContextProvider from '../../store/equipment-context';
+import InventoryContainer from '../Inventory/InventoryContainer';
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
@@ -17,14 +14,11 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
 
     useEffect(() => {
         switch (props.currentContent) {
-            case 'CHARACTER':
-                setContent(<CharacterContainer /> );
-                break;
             case 'NEWS':
                 setContent(<MainNewsContainer />);
                 break;
             case 'EQUIPMENT':
-                setContent(<Equipment />);
+                setContent(<InventoryContainer />);
                 break;
             case 'MAP':
                 setContent(<MapContainer />);
@@ -39,9 +33,7 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
     }, [props.currentContent])
 
     return <div className="main-content-container">
-        <EquipmentContextProvider>
             {content}
-        </EquipmentContextProvider>
     </div>
 };
 

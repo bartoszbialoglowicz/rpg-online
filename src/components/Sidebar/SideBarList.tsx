@@ -6,7 +6,6 @@ const SideBarList: React.FC<{setCurrentMainContent: (name: mainContentName) => v
 
     const tmpList = [
         <SideBarListItem name="NEWS" setCurrentMainContent={props.setCurrentMainContent} key="NEWS"/>,
-        <SideBarListItem name="CHARACTER" setCurrentMainContent={props.setCurrentMainContent} key="CHARACTER"/>,
         <SideBarListItem name="EQUIPMENT" setCurrentMainContent={props.setCurrentMainContent} key="EQUIPMENT" />,
         <SideBarListItem name="MAP" setCurrentMainContent={props.setCurrentMainContent} key="MAP" />,
         <SideBarListItem name="STORE" setCurrentMainContent={props.setCurrentMainContent} key="STORE" />,
