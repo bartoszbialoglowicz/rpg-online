@@ -1,11 +1,14 @@
 import { useContext, useEffect, useState } from "react";
-import { Character, Enemy, WebSocketMessage } from "../../utils/types";
+import { Enemy, WebSocketMessage } from "../../utils/types";
+import { Character } from "../../types/GameTypes";
 import ActionsContainer from "./ActionsContainer";
 import FightCardsContainer from "./FightCardsContainer";
 import WebsocketService from "../../services/websocketService";
 import { UserContext } from "../../store/user-context";
 import { GameContext } from "../../store/game-context";
 import Alert from "../UI/Alert";
+import { Stats } from "../../types/GameTypes";
+import { StatsContext } from "../../store/stats-context";
 
 type Props = {
     enemy: Enemy,
@@ -15,9 +18,10 @@ type Props = {
 const FightContainer: React.FC<Props> = (props) => {
 
     const authCtx = useContext(UserContext);
+    const statsContext = useContext(StatsContext);
     const gameCtx = useContext(GameContext);
 
-    const [characterStats, setCharacterStats] = useState<Character>(gameCtx.character);
+    const [characterStats, setCharacterStats] = useState<Character>(statsContext);
     const [enemyStats, setEnemyStats] = useState<Enemy>(props.enemy);
     const [alertIsVisible, setAlertIsVisible] = useState(false);
     const [fightIsOver, setFightIsOver] = useState(false);
@@ -93,7 +97,7 @@ const FightContainer: React.FC<Props> = (props) => {
             buttonText={loot === "null" ? "OPUŚĆ WALKĘ" : "ZABIERAM"}
             onButtonClick={hideAlertHandler} 
             onOutOfBoxClickHandler={hideAlertHandler}/>}
-        <FightCardsContainer enemy={props.enemy} enemyCurrentHP={enemyStats.health} myCurrentHP={characterStats.health} myMaxHP={100}/>
+        <FightCardsContainer enemy={props.enemy} enemyCurrentHP={enemyStats.health} myCurrentHP={characterStats.getAllStats().health} myMaxHP={characterStats.getAllStats().health}/>
         <ActionsContainer onAttack={handleAttack}/> 
     </div>
 };
