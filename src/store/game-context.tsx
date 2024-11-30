@@ -1,7 +1,15 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Character, GameContextObject, Location, Resource, ResourceResponse, UserLocation, UserLvl } from "../utils/types";
+import { UserLocation} from "../utils/types";
+import { Resource, ResourceResponse, UserLvl } from "../types/UserTypes";
 import { useHttp } from "../hooks/use-http";
 import { UserContext } from "./user-context";
+
+type GameContextObject = {
+    userLocation: UserLocation
+    resources: Resource,
+    updateResources: (gold?: number, userLvl?: UserLvl) => void,
+    updateTravelTime: (newTime: Date, startTravelTime: Date) => void
+}
 
 const defaultState: GameContextObject = {
     userLocation: {
@@ -15,13 +23,6 @@ const defaultState: GameContextObject = {
         travelTime: new Date(),
         startTravelTime: new Date()
     },
-    character: {
-        user: -1,
-        armor: 0,
-        magicResist: 0,
-        health: 0,
-        damage: 0
-    },
     resources: {
         gold: 0,
         lvl: {currentExp: 0, lvl: 0, expPointsGap: 0}
@@ -34,18 +35,15 @@ export const GameContext = React.createContext<GameContextObject>(defaultState);
 
 const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
     const [currentLocation, setCurrentLocation] = useState<UserLocation>(defaultState.userLocation);
-    const [character, setCharacter] = useState<Character>(defaultState.character);
     const [resources, setResources] = useState<Resource>(defaultState.resources);
 
     const userCtx = useContext(UserContext);
     const sendRequest = useHttp<UserLocation[]>('api/current_location', 'GET', undefined, userCtx.user!.authToken);
-    const sendRequestCharacter = useHttp<Character[]>('api/character', 'GET', undefined, userCtx.user!.authToken);
     const sendRequestResources = useHttp<ResourceResponse[]>('api/resources', 'GET', undefined, userCtx.user!.authToken);
 
     useEffect(() => {
         const getData = async () => {
             const {data, code} = await sendRequest();
-            const {data: charData, code: charCode} = await sendRequestCharacter();
             const {data: resourceData, code: resourceCode} = await sendRequestResources();
             if (code === 200) {
                 const tmpTravelTime = new Date(data[0].travelTime);
@@ -55,9 +53,6 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
                     travelTime: tmpTravelTime,
                     startTravelTime: tmpTravelStartTime
                 }));
-            }
-            if (charCode === 200) {
-                setCharacter(charData[0])
             }
             if (resourceCode === 200) {
                 let tmpRes: Resource = {
@@ -107,8 +102,7 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
     }
 
     const gameContextValue = {
-        userLocation: currentLocation,
-        character: character,
+        userLocation: currentLocation, 
         resources: resources,
         updateResources: updateResources,
         updateTravelTime: updateTravelTime,
