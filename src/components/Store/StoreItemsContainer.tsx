@@ -1,6 +1,7 @@
-import { ButtonController, Item, StoreItem } from "../../utils/types";
-import CharacterStatsTitle from "../Character/CharacterStatsTitle";
-import EquipmentItem from "../Equipment/EquipmentItem";
+import { Item } from '../../types/ItemTypes';
+import { StoreItem } from '../../types/StoreTypes';
+import { ButtonController } from '../../utils/types';
+import ItemContainer from '../Inventory/ItemContainer';
 
 import './StoreItemsContainer.css';
 
@@ -18,11 +19,10 @@ const StoreItemsContainer: React.FC<{storeItems: StoreItem[], addTransactionItem
 
     const itemsJSX = itemsList.map(el => {
         const button: ButtonController = {onClick: () => {getItemHandler(el)}, text:"KUP"}
-        return <EquipmentItem item={el} key={el.id} buttons={[button]}/>
+        return <ItemContainer item={el}/>
     })
 
     return <div className="store-items-container">
-        <CharacterStatsTitle title="shop items"/>
         {itemsJSX}
     </div>
 };
