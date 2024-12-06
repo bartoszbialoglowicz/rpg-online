@@ -1,0 +1,10 @@
+.empty-slot {
+    display: flex;
+    place-content: center;
+    box-shadow: 0 0 15px #555 inset;
+}
+
+.empty-slot > img {
+    width: 60%;
+    filter: sepia(24%);
+}

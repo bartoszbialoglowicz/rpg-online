@@ -1,0 +1,11 @@
+.equipment-container-row {
+    display: flex;
+    margin: 10px 0;
+    gap: 10px;
+}
+
+.equipment-container {
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}

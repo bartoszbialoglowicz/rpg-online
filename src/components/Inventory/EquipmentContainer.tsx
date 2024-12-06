@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { InventoryContext } from "../../store/inventory-context";
 import EquipmentSlot from "./EquipmentSlot";
 
+import './EquipmentContainer.css';
+
 import helmet from '../../assets/svgs/helmet-svgrepo-com.svg';
 import weapon from '../../assets/svgs/sword-svgrepo-com.svg';
 import armour from '../../assets/svgs/armoury-body-svgrepo-com.svg';
