@@ -10,8 +10,10 @@ export type Item = {
     magicResist: number,
     health: number,
     damage: number,
-    goldValue: number
-    rarity: ItemRarity
+    goldValue: number,
+    rarity: ItemRarity,
+    criticalHitChance: number,
+    criticalHitDamage: number
 }
 
 export type EquipmentItem = {
