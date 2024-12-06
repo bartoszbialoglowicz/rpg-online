@@ -6,7 +6,9 @@ import { CollectableItem, Equipment, EquipmentItem, InventoryCollectableItem, In
 type InventoryContextObject = {
     equipment: Equipment,
     inventory: InventoryItems,
-    removeFromInventory: (item: Item | Potion | CollectableItem) => void
+    removeFromInventory: (item: Item | Potion | CollectableItem) => void,
+    replaceEquipmentItem: (item: Item) => void,
+    addInventoryItem: (item: Item) => void
 }
 
 const defaultState: InventoryContextObject = {
@@ -16,18 +18,7 @@ const defaultState: InventoryContextObject = {
             slot: 'helmet'
         },
         weapon: {
-            item: {
-                name: 'test',
-                damage: 1,
-                imageUrl: '',
-                id: 1,
-                itemType: "weapon",
-                armor: 1,
-                magicResist: 1,
-                health: 1,
-                goldValue: 1,
-                rarity: 'common'
-            },
+            item: undefined,
             slot: 'weapon'
         },
         armor: {
@@ -52,7 +43,9 @@ const defaultState: InventoryContextObject = {
         potions: [],
         collectableItems: []
     },
-    removeFromInventory: (item: Item | CollectableItem | Potion) => {}
+    removeFromInventory: (item: Item | CollectableItem | Potion) => {},
+    replaceEquipmentItem: (item: Item) => {},
+    addInventoryItem: (item: Item) => {}
 } 
 
 export const InventoryContext = createContext(defaultState);
@@ -74,11 +67,10 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
                 const tmpEq: Equipment = defaultState.equipment;
                 data.forEach((slotData) => {
                     const { slot, item } = slotData;
-                    // Przypisz każdy slot do odpowiedniego pola w Equipment
                     if (["helmet", "weapon", "armor", "gloves", "trousers", "boots"].includes(slot)) {
                       tmpEq[slot as keyof Equipment] = {
                         slot,
-                        item: item || undefined, // Jeśli `item` to null, ustaw jako undefined
+                        item: item || undefined,
                       } as EquipmentItem;
                     }
                   });
@@ -105,12 +97,8 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
             tmpArr.splice(index, 1);
             setInventory(prevState => ({
                 ...prevState,
-                inventory: {
-                    ...prevState.collectableItems,
-                    ...prevState.potions,
-                    items: tmpArr
-                }
-            }))
+                items: tmpArr
+            }));
         }
         else if ('hpValue' in item) {
             let tmpArr = inventory.potions.slice();
@@ -118,11 +106,7 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
             tmpArr.splice(index, 1);
             setInventory(prevState => ({
                 ...prevState,
-                inventory: {
-                    ...prevState.items,
-                    ...prevState.collectableItems,
-                    potions: tmpArr
-                }
+                potions: tmpArr
             }))
         }
         else {
@@ -131,19 +115,46 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
             tmpArr.splice(index, 1);
             setInventory(prevState => ({
                 ...prevState,
-                inventory: {
-                    ...prevState.items,
-                    ...prevState.potions,
-                    collectableItems: tmpArr
-                }
+                collectableItems: tmpArr
             }))
         }
+    };
+
+    const addInventoryItem = (item: Item) => {
+        const tmpInv = inventory.items;
+        const invItem: InventoryItem = {
+            item: item,
+            user: userCtx.user!.id,
+            id: tmpInv[tmpInv.length - 1].id + 1
+        }
+        tmpInv.push(invItem);
+
+        setInventory(prevState => ({
+            ...prevState,
+            items: tmpInv
+        }))
+    }
+
+    const replaceEquipmentItem = (item: Item) => {
+        const slot = item.itemType;
+        const eqSlot = equipment[slot];
+        if (eqSlot.item)
+            addInventoryItem(eqSlot.item)
+        const tmpEq = equipment;
+        tmpEq[slot].item = item;
+        removeItemHandler(item);
+        setEquiment(prevState => ({
+            ...prevState,
+            slot: tmpEq[slot].item
+        }));
     }
 
     const contextValue = {
         equipment: equipment,
         inventory: inventory,
-        removeFromInventory: removeItemHandler
+        removeFromInventory: removeItemHandler,
+        replaceEquipmentItem: replaceEquipmentItem,
+        addInventoryItem: addInventoryItem
     };
 
     return <InventoryContext.Provider value={contextValue}>
