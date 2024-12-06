@@ -1,6 +1,6 @@
 .main-content-container {
     width: calc(100% - 20px);
-    border: 1px solid rgb(36, 41, 53);;
-    margin: 10px;
+    max-width: 1260px;
+    margin: 10px auto;
     min-height: calc(100% - 20px);
 }
