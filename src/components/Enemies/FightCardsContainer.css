@@ -1,14 +1,27 @@
+@keyframes shake {
+    0% { transform: translateY(0) rotate(0)}
+    25% { transform: translateY(2px) rotate(4deg)}
+    50% { transform: translateY(-2px) rotate(-2deg)}
+    75% { transform: translateY(2px) rotate(4deg)}
+    100% { transform: translateY(0) rotate(0)}
+}
+
 .fight-cards-container {
     display: flex;
-    justify-content: space-around;
-    width: 80%;
-    padding: 10%;
+    align-items: center;
+    justify-content: center;
+    gap: 5%;
+    width: 100%;
+    height: calc(70%);
 }
 
 .fight-container-character-card {
     width: 250px;
-    height: 327px;
+    height: 410px;
     background: rgb(2,9,3);
+    display: flex;
+    flex-wrap: wrap;
+    align-content: space-between;
 }
 
 .character-hp-bar-border {
@@ -40,11 +53,22 @@
 
 .character-image {
     width: calc(100% - 6px);
-    height: calc(322px - 6px);
     margin: 3px 3px 0 3px;
     overflow: hidden;
 }
 
 .character-image img {
     width: 100%;
+}
+
+.test {
+    animation-name: shake;
+    animation-duration: 0.3s;
+}
+
+@media only screen and (max-width: 720px) {
+    .fight-container-character-card {
+        width: 40%;
+        height: auto;
+    }
 }
