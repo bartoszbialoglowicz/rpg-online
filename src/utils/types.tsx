@@ -1,4 +1,4 @@
-import { Character } from "../types/GameTypes";
+import { Character, Stats } from "../types/GameTypes";
 import { Item } from "../types/ItemTypes";
 import { Resource, UserLvl } from "../types/UserTypes";
 
@@ -40,12 +40,13 @@ export type WebSocketMessage = {
     enemyId?: number,
     userEmail?: string,
     enemy?: Enemy,
-    character?: Character,
+    character?: Stats,
     message?: string,
-    loot?: string,
+    loot?: Item,
     strike?: number,
     fightIsOver?: boolean,
     exp?: number,
     expPoints?: number,
     lvl?: number,
+    criticalHit?: boolean
 }
