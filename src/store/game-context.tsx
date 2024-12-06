@@ -3,6 +3,8 @@ import { UserLocation} from "../utils/types";
 import { Resource, ResourceResponse, UserLvl } from "../types/UserTypes";
 import { useHttp } from "../hooks/use-http";
 import { UserContext } from "./user-context";
+import { InventoryContext } from "./inventory-context";
+import { StatsContext } from "./stats-context";
 
 type GameContextObject = {
     userLocation: UserLocation
@@ -38,6 +40,9 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
     const [resources, setResources] = useState<Resource>(defaultState.resources);
 
     const userCtx = useContext(UserContext);
+    const inventoryCtx = useContext(InventoryContext);
+    const statsCtx = useContext(StatsContext);
+
     const sendRequest = useHttp<UserLocation[]>('api/current_location', 'GET', undefined, userCtx.user!.authToken);
     const sendRequestResources = useHttp<ResourceResponse[]>('api/resources', 'GET', undefined, userCtx.user!.authToken);
 
@@ -53,6 +58,8 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
                     travelTime: tmpTravelTime,
                     startTravelTime: tmpTravelStartTime
                 }));
+            } else if (code === 401) {
+                userCtx.logout();
             }
             if (resourceCode === 200) {
                 let tmpRes: Resource = {
@@ -64,11 +71,17 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
                     }
                 }
                 setResources(tmpRes);
+            } else if (resourceCode === 401) {
+                userCtx.logout();
             }
         };
 
         getData();
     }, []);
+
+    useEffect(() => {
+        statsCtx.updateItemsStats(inventoryCtx.equipment);
+    }, [inventoryCtx.equipment]);
 
     const applyExpPoint = (currentLvl: UserLvl, expPoint: UserLvl) => {
         let tmpLvl = currentLvl;
