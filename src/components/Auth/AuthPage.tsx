@@ -17,9 +17,17 @@ const AuthPage = () => {
         setFeedbackType(type);
     };
 
+    const changeFormType = () => {
+        if (feedbackType !== "success") {
+            setFeedbackText("");
+            setFeedbackType("success");
+        }
+        setFormType(prevState => !prevState);
+    }
+
     // Provide additional props is there any feedback
-    const loginForm = (feedbackText && feedbackType) ? <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType} /> : <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
-    const registerForm = (feedbackText && feedbackType) ? <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType}/> : <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
+    const loginForm = (feedbackText && feedbackType) ? <LoginFormContainer changeFormHandler={changeFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType} /> : <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
+    const registerForm = (feedbackText && feedbackType) ? <RegisterFormContainer setFormTypeHandler={changeFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType}/> : <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
 
     const content = formType ? loginForm : registerForm;
 
