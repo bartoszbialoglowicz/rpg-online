@@ -1,29 +1,34 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, FormEvent, useState } from "react";
 import { ErrorResponse } from "../../types/AuthTypes";
 import { feedbackResult } from "../../types/RequestTypes";
 import { useHttp } from "../../hooks/use-http";
-import Input from "../../models/Input";
-import Form from "../../models/Form";
+import InputLabel from "./InputLabel";
+import SubmitInput from "../UI/SubmitInput";
+import { AppSettings } from "../../utils/settings";
 
 const RegisterForm: React.FC<{setFeedbackHandler: (text:string, type:feedbackResult)=>void, setFormTypeHandler: (type: boolean)=> void}> = (props) => {
-    const dummy_text = 'You have successfully registered your account! You can sign in now.'
+
+    const succesText = 'Pomyślnie zarejstrowano, możesz się zalogować';
+    const emailErrorText = "Nieprawidłowy adres e-mail";
+    const nicknameShortErrorText = "Nazwa użytkownika musi zawierać co najmniej 6 znaków";
+    const nicknameLongErrorText = "Nazwa użytkownika musi zawierać maksymalnie 64 znaki";
+    const passwordErrorText = 
+        "Hasło musi zawierać:\n" +
+        "**Przynajmniej 8 znaków\n" +
+        "**Co najmniej jedną wielką i małą literę\n" +
+        "**Co najmniej jedna cyfrę\n";
+    const password2ErrorText = "Hasła nie są takie same";
+
     const [emailValue, setEmailValue] = useState('');
     const [nicknameValue, setNicknameValue] = useState('');
     const [password1Value, setPassword1Value] = useState('');
     const [password2Value, setPassword2Value] = useState('');
-    
-    const setEmailInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-        setEmailValue(event.target.value);
-    }
-    const setNicknameInputValue = (event: ChangeEvent<HTMLInputElement>) => {
-        setNicknameValue(event.target.value);
-    }
-    const setPassword1InputValue = (event: ChangeEvent<HTMLInputElement>) => {
-        setPassword1Value(event.target.value);
-    }
-    const setPassword2InputValue = (event: ChangeEvent<HTMLInputElement>) => {
-        setPassword2Value(event.target.value);
-    }
+    const [nicknameErrorText, setNickNameErrorText] = useState(nicknameShortErrorText);
+
+    const [emailValid, setEmailValid] = useState(true);
+    const [nicknameValid, setNicknameValid] = useState(true);
+    const [passwordValid, setPasswordValid] = useState(true);
+    const [password2Valid, setPassword2Valid] = useState(true);
     
     const sendRequest = useHttp<ErrorResponse>('api/createuser/', 'POST',
         {
@@ -34,32 +39,78 @@ const RegisterForm: React.FC<{setFeedbackHandler: (text:string, type:feedbackRes
     )
 
     // Submit form event, provide feedback into controller and render login form
-    const onSubmitHandler = async () => {
+    const sendRequestHandler = async () => {
         const {data, code} = await sendRequest();
         if (code === 201) {       
-            props.setFeedbackHandler(dummy_text, 'success');
+            props.setFeedbackHandler(succesText, 'success');
             props.setFormTypeHandler(true);
         }
         else if (code >= 500) {
-            props.setFeedbackHandler('Server error! Try again later.','error')
+            props.setFeedbackHandler('Błąd serwera.','error')
         }
         else {
-            const unkownError = 'Something went wrong... try again later.'
+            const unkownError = 'Nierozpoznany błąd. Spróbuj ponowanie za chwilę.'
             const feedbackText = data.email ? data.email[0] : (data.name ? data.name[0] : (data.password ? data.password[0] : unkownError));
             props.setFeedbackHandler(feedbackText, 'error')
         }
         console.log(data, code);
     }
 
-    const form = new Form([
-        new Input("E-mail address", "email", "email", emailValue, false, setEmailInputValue),
-        new Input("Nickname", "text", "nickname", nicknameValue, false, setNicknameInputValue),
-        new Input("Password", "password", "password1", password1Value, false, setPassword1InputValue),
-        new Input("Repeat password", "password", "password2", password2Value, false, setPassword2InputValue)
-    ], "SIGN UP!",onSubmitHandler, false);
+    const setEmailValueHandler = (value: string) => {
+        setEmailValue(value);
+    }
+    const validateEmailHandler = () => {
+        setEmailValid(AppSettings.EMAIL_REGEX.test(emailValue));
+    }
+    const validateNicknameHandler = () => {
+        setNicknameValid(true);
+        if (!AppSettings.NICKNAME_REGEX.test(nicknameValue)) {
+            setNicknameValid(false);
+            if (nicknameValue.trim().length < 6)
+                setNickNameErrorText(nicknameShortErrorText);
+            else
+                setNickNameErrorText(nicknameLongErrorText);
+        }
+    }
+    const setNicknameValueHandler = (value: string) => {
+        setNicknameValue(value);
+    }
+    const validatePasswordHandler = () => {
+        setPasswordValid(AppSettings.PASSWORD_REGEX.test(password1Value));
+        setPassword2Valid(password1Value === password2Value);
+    }
+
+    const setPasswordValueHandler = (value: string) => {
+        setPassword1Value(value);
+    }
+    const validatePassword2Handler = () => {
+        setPassword2Valid(password1Value === password2Value);
+    }
+
+    const setPassword2ValueHandler = (value: string) => {
+        setPassword2Value(value);
+        setPassword2Valid(value === password1Value);
+    }
+
+    const onSubmitHandler = (event: FormEvent) => {
+        event.preventDefault();
+        props.setFeedbackHandler("", "success");
+        if (emailValue.trim() === "" || nicknameValue.trim() === "" || password1Value.trim() === "" || password2Value.trim() === "")
+            props.setFeedbackHandler("Wypełnij wszystkie pola", "error")
+        else if (!emailValid || !nicknameValid || !passwordValid || !password2Valid)
+            props.setFeedbackHandler("Sprawdź poprawność wszsytkich pól", "error")
+        else 
+            sendRequestHandler();
+    };
 
     return <div className="register-form">
-        {form.render()}
+        <form onSubmit={onSubmitHandler}>
+            <InputLabel name="email" type="email" label="Adres e-mail" isValid={emailValid} errorMsg={emailErrorText} onChange={setEmailValueHandler} onBlur={validateEmailHandler}/>
+            <InputLabel name="nickname" type="text" label="Nazwa użytkownika" isValid={nicknameValid} errorMsg={nicknameErrorText} onChange={setNicknameValueHandler} onBlur={validateNicknameHandler}/>
+            <InputLabel name="password" type="password" label="Hasło" isValid={passwordValid} errorMsg={passwordErrorText} onChange={setPasswordValueHandler} onBlur={validatePasswordHandler}/>
+            <InputLabel name="password2" type="password" label="Powtórz hasło" isValid={password2Valid} errorMsg={password2ErrorText} onChange={setPassword2ValueHandler} onBlur={validatePassword2Handler}/>
+            <SubmitInput text="REJESTRACJA" />
+        </form>
     </div>
 };
 export default RegisterForm;
