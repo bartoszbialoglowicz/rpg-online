@@ -1,3 +1,11 @@
+.store-container-store-list {
+}
+
 .store-container-store-list-option {
     cursor: pointer;
+    width: 300px;
+}
+
+.store-container-store-list-option > img {
+    width: 100%;
 }

@@ -11,13 +11,10 @@
     align-items: center;
     justify-content: center;
     gap: 5%;
-    width: 100%;
-    height: calc(70%);
 }
 
 .fight-container-character-card {
     width: 250px;
-    height: 410px;
     background: rgb(2,9,3);
     display: flex;
     flex-wrap: wrap;

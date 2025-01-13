@@ -4,11 +4,13 @@
     overflow: hidden;
     display: flex;
     place-content: center;
+    flex-direction: column;
+    align-items: center;
     border-radius: 5px;
 }
 
 .item-container > img {
-    width: 100%;
+    width: 80%;
 }
 
 .item-common {

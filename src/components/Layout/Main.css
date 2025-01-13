@@ -1,11 +1,12 @@
 .main-small {
     width: calc(100% - 150px);
     min-height: 100%;
-    margin: 50px 0 0 150px;
+    margin-top: 50px;
+    margin-left: 150px;
 }
 
 .main-big {
     width: 100%;
     min-height: 100%;
-    margin: 50px 0 0 0;
+    margin-top: 50px;
 }
