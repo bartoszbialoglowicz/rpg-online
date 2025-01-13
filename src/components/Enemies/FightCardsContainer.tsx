@@ -1,8 +1,7 @@
-import { Enemy } from "../../utils/types";
-
 import './FightCardsContainer.css';
 import avatar1 from '../../assets/images/tmp_avatar.png';
 import { useEffect, useState } from "react";
+import { Enemy } from '../../types/GameTypes';
 
 const FightCardsContainer: React.FC<{enemy: Enemy, enemyCurrentHP: number, myCurrentHP: number, myMaxHP: number}> = (props) => {
     
@@ -37,7 +36,7 @@ const FightCardsContainer: React.FC<{enemy: Enemy, enemyCurrentHP: number, myCur
                 <div className="character-hp-bar" style={{width: myHpBar}}>
                     
                 </div>
-                <div className="character-hp-bar-text">{myHpBar}</div>
+                <div className="character-hp-bar-text">{`${props.myCurrentHP}/${props.myMaxHP}`}</div>
             </div>
         </div>
         <div className={`fight-container-character-card ${enemyCardAnimations}`}>
@@ -47,7 +46,7 @@ const FightCardsContainer: React.FC<{enemy: Enemy, enemyCurrentHP: number, myCur
             <div className="character-hp-bar-border">
                 <div className="character-hp-bar" style={{width: enemyHPBar}}>
                 </div>
-                <div className="character-hp-bar-text">{enemyHPBar}</div>
+                <div className="character-hp-bar-text">{`${props.enemyCurrentHP}/${props.enemy.health}`}</div>
             </div>
         </div>
     </div>

@@ -2,7 +2,7 @@ import { useContext, useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
 import LocationListItem from "./LocationListItem";
-import { Location } from "../../utils/types";
+import { Location } from "../../types/GameTypes";
 
 import './LocationListContainer.css';
 import { GameContext } from "../../store/game-context";

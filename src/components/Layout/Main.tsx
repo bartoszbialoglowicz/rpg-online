@@ -1,4 +1,4 @@
-import { mainContentName } from '../../utils/types';
+import { mainContentName } from '../../utils/settings';
 import MainContentContainer from '../Main/MainContentContainer';
 import './Main.css';
 

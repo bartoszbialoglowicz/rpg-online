@@ -3,10 +3,10 @@ import Main from "./Main";
 import './Layout.css';
 import SideBar from "./SideBar";
 import { useState } from "react";
-import { mainContentName } from "../../utils/types";
 import GameContextProvider from "../../store/game-context";
 import { InventoryContextProvider } from "../../store/inventory-context";
 import { StatsContextProvider } from "../../store/stats-context";
+import { mainContentName } from "../../utils/settings";
 
 const Layout = () => {
 

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Enemy } from "../../utils/types";
+import { Enemy } from "../../types/GameTypes";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
 import EnemiesList from "./EnemiesList";

@@ -1,4 +1,4 @@
-import { Enemy } from "../../utils/types";
+import { Enemy } from "../../types/GameTypes";
 import Button from "../UI/Button";
 
 import './EnemiesListItem.css';

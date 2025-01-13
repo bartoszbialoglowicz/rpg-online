@@ -1,4 +1,4 @@
-import { mainContentName } from '../../utils/types';
+import { mainContentName } from '../../utils/settings';
 import './SideBarListItem.css';
 
 const SideBarListItem: React.FC<{name: mainContentName, setCurrentMainContent: (name: mainContentName) => void}> = (props) => {
