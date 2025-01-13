@@ -1,0 +1,17 @@
+.fight-container {
+    height: calc(100vh - 50px);
+    place-content: center;
+}
+
+.fight-top-container {
+    display: flex;
+    gap: 20px;
+    align-items: stretch;
+    justify-content: center;
+    max-height: 50%;
+    height: 50%;
+}
+
+.fight-bottom-container {
+    width: 100%;
+}
