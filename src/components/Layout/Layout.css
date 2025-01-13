@@ -4,3 +4,21 @@
     display: flex;
     flex-wrap: wrap;
 }
+
+::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: radial-gradient(#000 50%, rgb(36, 41, 53));
+  }
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: rgb(36, 41, 53);
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgb(16, 21, 33);
+  }
