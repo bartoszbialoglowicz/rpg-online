@@ -12,6 +12,7 @@ export type Item = {
     damage: number,
     goldValue: number,
     rarity: ItemRarity,
+    lvlRequired: number,
     criticalHitChance: number,
     criticalHitDamage: number
 }
