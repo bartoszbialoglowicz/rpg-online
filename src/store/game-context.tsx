@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import { UserLocation} from "../utils/types";
 import { Resource, ResourceResponse, UserLvl } from "../types/UserTypes";
 import { useHttp } from "../hooks/use-http";
 import { UserContext } from "./user-context";
 import { InventoryContext } from "./inventory-context";
 import { StatsContext } from "./stats-context";
+import { UserLocation } from "../types/GameTypes";
 
 type GameContextObject = {
     userLocation: UserLocation
@@ -83,10 +83,17 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
         statsCtx.updateItemsStats(inventoryCtx.equipment);
     }, [inventoryCtx.equipment]);
 
+    useEffect(() => {
+        inventoryCtx.updateLvlRef(resources.lvl.lvl);
+    }, [resources.lvl])
+
     const applyExpPoint = (currentLvl: UserLvl, expPoint: UserLvl) => {
         let tmpLvl = currentLvl;
+        console.log("current: " + tmpLvl.currentExp);
         tmpLvl.currentExp += expPoint.currentExp;
+        console.log("next: " + tmpLvl.currentExp)
         if (tmpLvl.currentExp > tmpLvl.expPointsGap) {
+            console.log('lvl up');
             tmpLvl.lvl ++;
             tmpLvl.currentExp = (currentLvl.currentExp + expPoint.currentExp) - tmpLvl.expPointsGap;
             tmpLvl.expPointsGap = expPoint.expPointsGap;
@@ -101,7 +108,7 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
             tmpRes.gold += gold;
         }
         if (userLvl) {
-            tmpRes.lvl = applyExpPoint(tmpRes.lvl, userLvl);
+            tmpRes.lvl = userLvl;
         }
         setResources({...tmpRes});
     }
