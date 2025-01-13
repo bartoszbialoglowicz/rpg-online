@@ -3,21 +3,29 @@ import { InventoryContext } from "../../store/inventory-context";
 import ItemContainer from "./ItemContainer";
 
 import './ItemsContainer.css';
+import { StatsContext } from "../../store/stats-context";
+import ItemsGrid from "../UI/ItemsGrid";
+
 const ItemsContainer = () => {
 
     const inventoryCtx = useContext(InventoryContext);
+    const statsCtx = useContext(StatsContext);
 
-    const items = inventoryCtx.inventory.items.map(item =>
-        <ItemContainer item={item.item} key={item.id} onClick={inventoryCtx.replaceEquipmentItem}/>
-    );
+    const items = inventoryCtx.inventory.items.map((item) => {
+        const equippedItem = inventoryCtx.equipment[item.item.itemType]?.item || undefined;
 
-    const nums: number[] = [...Array(40-inventoryCtx.inventory.items.length)];
+        return (
+            <ItemContainer
+                item={item.item}
+                key={item.id}
+                onClick={() => statsCtx.compareStats(item.item, equippedItem)}
+            />
+        );
+    });
 
-    const it = nums.map(el => <div className="item-container empty" />)
 
     return <div className="items-container">
-        {items}
-        {it}
+        <ItemsGrid children={items} gridItemsCount={40} />
     </div>
 };
 
