@@ -6,9 +6,12 @@ import { CollectableItem, Equipment, EquipmentItem, InventoryCollectableItem, In
 type InventoryContextObject = {
     equipment: Equipment,
     inventory: InventoryItems,
-    removeFromInventory: (item: Item | Potion | CollectableItem) => void,
+    removeItemFromInventory: (item: Item | Potion | CollectableItem) => void,
+    removeItemsFromInventory: (items: Item[] | CollectableItem[] | Potion[]) => void,
     replaceEquipmentItem: (item: Item) => void,
-    addInventoryItem: (item: Item) => void
+    addInventoryItem: (item: Item) => void,
+    addInventoryItems: (items: Item[]) => void,
+    updateLvlRef: (lvl: number) => void,
 }
 
 const defaultState: InventoryContextObject = {
@@ -43,9 +46,12 @@ const defaultState: InventoryContextObject = {
         potions: [],
         collectableItems: []
     },
-    removeFromInventory: (item: Item | CollectableItem | Potion) => {},
+    removeItemFromInventory: (item: Item | CollectableItem | Potion) => {},
+    removeItemsFromInventory: (item: Item[] | CollectableItem[] | Potion[]) => {},
     replaceEquipmentItem: (item: Item) => {},
-    addInventoryItem: (item: Item) => {}
+    addInventoryItem: (item: Item) => {},
+    addInventoryItems: (items: Item[]) => {},
+    updateLvlRef: () => {}
 } 
 
 export const InventoryContext = createContext(defaultState);
@@ -54,6 +60,7 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
 
     const [equipment, setEquiment] = useState<Equipment>(defaultState.equipment);
     const [inventory, setInventory] = useState<InventoryItems>(defaultState.inventory);
+    const [userLvlRef, setUserLvlRef] = useState(0);
 
     const userCtx = useContext(UserContext);
 
@@ -73,8 +80,8 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
                         item: item || undefined,
                       } as EquipmentItem;
                     }
-                  });
-                  setEquiment(tmpEq);
+                });
+                setEquiment(tmpEq);
             }
         }
 
@@ -87,9 +94,18 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
         };
 
         loadEquipment();
-        loadInventory();
+        loadInventory();    
     }, []);
 
+    const updateServerEquipmentSlot = async (slot: string, itemId: number | null) => {
+        const url = `api/equipment/${slot}/replace_item/`;
+        const { code, data } = await sendEqRequest(url, 'PATCH', { item: itemId });
+    
+        if (code !== 200) {
+          console.error(`Failed to update slot "${slot}" with item ID: ${itemId}`);
+        }
+      };
+    
     const removeItemHandler = (item: Item | CollectableItem | Potion) => {
         if ('itemType' in item) {
             let tmpArr = inventory.items.slice();
@@ -120,6 +136,12 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
         }
     };
 
+    const removeItemsHandler = (items: Item[] | CollectableItem[] | Potion[]) => {
+        items.forEach(item => {
+            removeItemHandler(item);
+        })
+    };
+
     const addInventoryItem = (item: Item) => {
         const tmpInv = inventory.items;
         const invItem: InventoryItem = {
@@ -135,7 +157,13 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
         }))
     }
 
+    const addInventoryItems = (items: Item[]) => {
+        items.forEach(item => addInventoryItem(item));
+    };
+
     const replaceEquipmentItem = (item: Item) => {
+        if (item.lvlRequired > userLvlRef)
+            throw Error('This item requires higher lvl!');
         const slot = item.itemType;
         const eqSlot = equipment[slot];
         if (eqSlot.item)
@@ -147,14 +175,23 @@ export const InventoryContextProvider: React.FC<{children: JSX.Element}> = (prop
             ...prevState,
             slot: tmpEq[slot].item
         }));
+
+        updateServerEquipmentSlot(slot, item.id);
+    }
+
+    const updateLvlRefHandler = (lvl: number) => {
+        setUserLvlRef(lvl);
     }
 
     const contextValue = {
         equipment: equipment,
         inventory: inventory,
-        removeFromInventory: removeItemHandler,
+        removeItemFromInventory: removeItemHandler,
+        removeItemsFromInventory: removeItemsHandler,
         replaceEquipmentItem: replaceEquipmentItem,
-        addInventoryItem: addInventoryItem
+        addInventoryItem: addInventoryItem,
+        addInventoryItems: addInventoryItems,
+        updateLvlRef: updateLvlRefHandler
     };
 
     return <InventoryContext.Provider value={contextValue}>
