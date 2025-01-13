@@ -1,6 +1,12 @@
 .main-content-container {
-    width: calc(100% - 20px);
-    max-width: 1260px;
     margin: 10px auto;
     min-height: calc(100% - 20px);
+    max-width: 1260px;
+    width: calc(100% - 20px);
+}
+
+@media only screen and (max-width: 1260px) {
+    .main-content-container {
+        max-width: 100%;
+    }
 }
