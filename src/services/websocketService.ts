@@ -1,5 +1,5 @@
+import { WebSocketMessage } from "../types/GameTypes";
 import { AppSettings } from "../utils/settings";
-import { WebSocketMessage } from "../utils/types";
 
 const WEBSOCKET_URL = `ws://${AppSettings.SERVER_IP}/ws/combat/`;
 
