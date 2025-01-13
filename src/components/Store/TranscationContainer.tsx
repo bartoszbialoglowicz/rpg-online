@@ -3,34 +3,37 @@ import { StoreItem } from "../../types/StoreTypes";
 
 import './TransactionContainer.css';
 import Alert from "../UI/Alert";
+import Button from "../UI/Button";
 
-const TransactionContainer: React.FC<{transactionItemsBuy: StoreItem[][], transactionItemsSell: StoreItem[][], finishTransactionHandler: (amount: number) => void}> = (props) => {
+type Props = {
+    transactionItemsBuy: StoreItem[], 
+    transactionItemsSell: StoreItem[], 
+    finishTransactionHandler: (amount: number) => void,
+    removeTranscationItem: (item: StoreItem, isUserItem: boolean) => void
+}
+
+const TransactionContainer: React.FC<Props> = (props) => {
 
     let totalSellAmount = 0;
     let totalBuyAmount = 0;
 
-
     const [alertIsVisible, setAlertIsVisible] = useState(false);
 
-    const addTransactionItemJSX = (storeItems: StoreItem[][], sell: boolean) => {
-        const items = storeItems.map(arr => {
-            // Total price of every item in current group
-            const itemsGroupAmount: number = arr.reduce(
-                (prev,current) => prev + current.price, 0
-            );
+    const removeTranscationItemHandler = (item: StoreItem, isUserItem: boolean) => {
+        props.removeTranscationItem(item, isUserItem);
+    }
 
-            // Set the total price of every items in every group
-            if (sell) {
-                totalSellAmount += itemsGroupAmount;
-            } else {
-                totalBuyAmount += itemsGroupAmount;
-            }
-
+    const addTransactionItemJSX = (storeItems: StoreItem[], sell: boolean) => {
+        const items = storeItems.map((el, index) => { 
+            if (sell)
+                totalSellAmount += el.price;
+            else
+                totalBuyAmount += el.price;
             // Container with info about item, amount and total price
-            return <div className="transaction-item" key={`${arr[0].item.name}${arr.length}`}>
-                <span>"testsetestests tes test</span>
-                <span>{`${arr.length}x`}</span>
-                <span>{itemsGroupAmount}</span>
+            return <div className="transaction-item" key={index}>
+                <span>{el.item.name}</span>
+                <span>{el.price}</span>
+                <span onClick={() => {removeTranscationItemHandler(el, sell)}}>{`[-]`}</span>
             </div>
         })
         return items;
@@ -44,32 +47,41 @@ const TransactionContainer: React.FC<{transactionItemsBuy: StoreItem[][], transa
         setAlertIsVisible(false);
     }
 
+    const alertHandler = () => {
+        if (props.transactionItemsBuy.length === 0 && props.transactionItemsSell.length === 0)
+            return
+        setAlertIsVisible(true);
+    }
+
     return <div className="transaction-container">
-        <div className="transaction-container-items">
-            <div className="transaction-item">
-                <span>NAZWA</span>
-                <span>ILOŚĆ</span>
-                <span>CENA</span>
-            </div>
-            <div>SPRZEDAŻ</div>
-            {sellItemsJSX}
-            <div>ZAKUP</div>
-            {buyItemsJSX}
-        </div>
-        <div className="transaction-total-amount">
-            {`Łącznie: ${totalSellAmount - totalBuyAmount}`}
-        </div>
-        <div className="transaction-controls">
-            <button onClick={() => setAlertIsVisible(true)}>DOKONAJ TRANSAKCJI</button>
-        </div>
-        {alertIsVisible && <Alert 
-            title={'Potwierdź transakcję'} 
-            description={`Czy dokonać transakcji?`} 
+    <div className="transaction-header">
+        <span>NAZWA</span>
+        <span>CENA</span>
+        <span/>
+    </div>
+    <div className="transaction-section">
+        <h3>SPRZEDAŻ</h3>
+        {sellItemsJSX}
+    </div>
+    <div className="transaction-section">
+        <h3>ZAKUP</h3>
+        {buyItemsJSX}
+    </div>
+    <div className="transaction-total-amount">
+        {`Łącznie: ${totalSellAmount - totalBuyAmount}`}
+    </div>
+    <Button text="DOKONAJ TRANSAKCJI" onClickHandler={alertHandler} />
+    {alertIsVisible && (
+        <Alert
+            title={'Potwierdź transakcję'}
+            description={`Czy dokonać transakcji?`}
             buttonText={'POTWIERDŹ'}
             onButtonClick={finishTransaction}
-            onOutOfBoxClickHandler={()=>{setAlertIsVisible(false)}}/>
-        }
-    </div>
+            onOutOfBoxClickHandler={() => setAlertIsVisible(false)}
+        />
+    )}
+</div>
+
     
     
 };
