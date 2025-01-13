@@ -1,17 +1,9 @@
-/* Ogólne stylowanie kontenera */
 .items-container {
     margin: 0 0 0 auto;
-    display: grid;
     width: 800px;
-    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-    justify-content: center;
     border-radius: 10px;
   }
   
-  /* Puste pole */
-  .item-container.empty {
-    border: 1px solid #555;
-  }
 
 @media only screen and (max-width: 1400px) {
   .items-container {
