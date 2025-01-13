@@ -1,0 +1,20 @@
+.items-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    justify-content: center;
+}
+
+.grid-item {
+    border-radius: 5px;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+    border: 1px solid rgb(13, 18, 28);
+}
+
+.grid-item.empty {
+    border-radius: 5px;
+    overflow: hidden;
+    width: 80px;
+    height: 80px;
+  }
