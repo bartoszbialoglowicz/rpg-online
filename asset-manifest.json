@@ -1,24 +1,28 @@
 {
   "files": {
-    "main.css": "/rpg-online/static/css/main.3765ee09.css",
-    "main.js": "/rpg-online/static/js/main.74210739.js",
+    "main.css": "/rpg-online/static/css/main.2d0c2166.css",
+    "main.js": "/rpg-online/static/js/main.1b9adc8b.js",
     "static/js/787.6e6ec0c7.chunk.js": "/rpg-online/static/js/787.6e6ec0c7.chunk.js",
-    "static/media/tmp_news.jpg": "/rpg-online/static/media/tmp_news.c3cf212719caefd090a9.jpg",
-    "static/media/the-witcher-3-wild-hunt-hearts-of-stone-4k-6a.jpg": "/rpg-online/static/media/the-witcher-3-wild-hunt-hearts-of-stone-4k-6a.79518defe43bfdedec89.jpg",
-    "static/media/802668.png": "/rpg-online/static/media/802668.6d3950b6dee2312957f9.png",
-    "static/media/982990.jpg": "/rpg-online/static/media/982990.3cdcc0de29377f035c82.jpg",
-    "static/media/High_resolution_wallpaper_background_ID_77700660618.jpg": "/rpg-online/static/media/High_resolution_wallpaper_background_ID_77700660618.981ede5145d492afff7b.jpg",
     "static/media/tmp_avatar.png": "/rpg-online/static/media/tmp_avatar.d8594459b71787222637.png",
-    "static/media/tmp_avatar2.png": "/rpg-online/static/media/tmp_avatar2.7fd36cb59232b0196729.png",
-    "static/media/empty_slot.jpg.png": "/rpg-online/static/media/empty_slot.jpg.a88361f28fa9605af497.png",
+    "static/media/critical_hit.wav": "/rpg-online/static/media/critical_hit.697edc4f0adc42ebc199.wav",
+    "static/media/normal_hit.wav": "/rpg-online/static/media/normal_hit.37625b9e5e130af5645f.wav",
     "static/media/coin-svgrepo-com.svg": "/rpg-online/static/media/coin-svgrepo-com.b4b6ae2401e70b45aab271109280dfff.svg",
+    "static/media/protection-gloves-svgrepo-com.svg": "/rpg-online/static/media/protection-gloves-svgrepo-com.7c4dc6c8e38f5feac7922d29a5554e0c.svg",
+    "static/media/boots-svgrepo-com.svg": "/rpg-online/static/media/boots-svgrepo-com.eef7622cdef11372b34050748e30bdff.svg",
+    "static/media/armoury-body-svgrepo-com.svg": "/rpg-online/static/media/armoury-body-svgrepo-com.c9b08e497f320bd3b4b1abafc2b80d3a.svg",
+    "static/media/helmet-svgrepo-com.svg": "/rpg-online/static/media/helmet-svgrepo-com.713c1f03cebefc1ac9467e3ca5a37862.svg",
+    "static/media/armoury-legs-svgrepo-com.svg": "/rpg-online/static/media/armoury-legs-svgrepo-com.e088da851bcf5d9421ccea7665bede89.svg",
     "index.html": "/rpg-online/index.html",
-    "main.3765ee09.css.map": "/rpg-online/static/css/main.3765ee09.css.map",
-    "main.74210739.js.map": "/rpg-online/static/js/main.74210739.js.map",
+    "static/media/health-svgrepo-com.svg": "/rpg-online/static/media/health-svgrepo-com.069b93bd63e5cc888f25493c1447bb47.svg",
+    "static/media/pentagon-svgrepo-com.svg": "/rpg-online/static/media/pentagon-svgrepo-com.6bd3e806228f6995d3a04e8a04960007.svg",
+    "static/media/sword-svgrepo-com.svg": "/rpg-online/static/media/sword-svgrepo-com.8e5939ef3601bb0c23ae51b0d8c039c6.svg",
+    "static/media/hamburger-menu-svgrepo-com.svg": "/rpg-online/static/media/hamburger-menu-svgrepo-com.c40e9d7fd0dda9ff6b1ffb18ea83f998.svg",
+    "main.2d0c2166.css.map": "/rpg-online/static/css/main.2d0c2166.css.map",
+    "main.1b9adc8b.js.map": "/rpg-online/static/js/main.1b9adc8b.js.map",
     "787.6e6ec0c7.chunk.js.map": "/rpg-online/static/js/787.6e6ec0c7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.3765ee09.css",
-    "static/js/main.74210739.js"
+    "static/css/main.2d0c2166.css",
+    "static/js/main.1b9adc8b.js"
   ]
 }
