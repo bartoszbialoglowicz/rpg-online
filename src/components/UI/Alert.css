@@ -1,0 +1,20 @@
+.alert {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+    align-items: center;
+    gap: 10px;
+    height: 100%;
+}
+
+.alert > * {
+    margin: 0;
+}
+.alert-content {
+    display: flex;
+    place-content: center;
+}
+
+.alert > .button-dark-blue {
+    width: 40%;
+}
