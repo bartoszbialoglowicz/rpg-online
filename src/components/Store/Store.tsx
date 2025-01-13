@@ -1,15 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
-import { Potion, CollectableItem, InventoryPotion, InventoryCollectableItem, InventoryItem } from "../../types/ItemTypes";
+import { InventoryPotion, InventoryCollectableItem, InventoryItem } from "../../types/ItemTypes";
 import { Store as StoreType, StoreItem, StorePotion, StoreCollectableItem, } from "../../types/StoreTypes";
 import './Store.css';
-import { ButtonController } from "../../utils/types";
-import StoreItemsContainer from "./StoreItemsContainer";
 import TransactionContainer from "./TranscationContainer";
 import { GameContext } from "../../store/game-context";
 import { InventoryContext } from "../../store/inventory-context";
 import { Item } from "../../types/ItemTypes";
+import ItemsGrid from "../UI/ItemsGrid";
+import ItemContainer from "../Inventory/ItemContainer";
 
 type responseType = {
     items: StoreItem[],
@@ -33,9 +33,9 @@ const Store: React.FC<{store: StoreType}> = (props) => {
     const [potions, setPotions] = useState<InventoryPotion[]>(inventoryCtx.inventory.potions);
     const [collectableItems, setCollectableItems] = useState<InventoryCollectableItem[]>(inventoryCtx.inventory.collectableItems);
     // Current items user going to buy
-    const [transactionItemsBuy, setTransactionItemsBuy] = useState<StoreItem[][]>([]);
+    const [transactionItemsBuy, setTransactionItemsBuy] = useState<StoreItem[]>([]);
     // Current items user going to sell
-    const [transactionItemsSell, setTransactionItemsSell] = useState<StoreItem[][]>([]);
+    const [transactionItemsSell, setTransactionItemsSell] = useState<StoreItem[]>([]);
 
     const gameCtx = useContext(GameContext);
 
@@ -52,10 +52,9 @@ const Store: React.FC<{store: StoreType}> = (props) => {
     };
 
     // Add user item into transaction list
-    const addUserItemIntoTransactionHandler = (item: Item) => {
-        console.log(items);
-        const index = items.find(el => el.item.id === item.id)!.id;
-        const storeItem: StoreItem = {item: item, price: item.goldValue, id: index, store: props.store};
+    const addUserItemIntoTransactionHandler = (item: InventoryItem) => {
+        setItems(prevState=>prevState.filter(el => el.id !== item.id));
+        const storeItem: StoreItem = {item: item.item, price: item.item.goldValue, id: item.id, store: props.store};
         addItemToTransactionHandler(storeItem, true);
     }
 
@@ -67,18 +66,8 @@ const Store: React.FC<{store: StoreType}> = (props) => {
     };
 
     const getTransactionItemsIds = () => {
-        const sellIds: number[] = [];
-        const buyIds: number[] = [];
-        transactionItemsSell.forEach(arr => {
-            arr.forEach(el => {
-                sellIds.push(el.id);
-            });
-        });
-        transactionItemsBuy.forEach(arr => {
-            arr.forEach(el => {
-                buyIds.push(el.id);
-            });
-        });
+        const sellIds = transactionItemsSell.map(el => el.id);
+        const buyIds: number[] = transactionItemsBuy.map(el => el.id);
 
         return {sellIds, buyIds};
     }
@@ -92,15 +81,17 @@ const Store: React.FC<{store: StoreType}> = (props) => {
         }
         const {data, code} = await sendRequest3(undefined, undefined, body);
 
-        return code;
+        return {data,code};
     }
 
     const processTransactionHandler = async (totalAmount: number) => {
         const {buyIds, sellIds} = getTransactionItemsIds();
-        const code = await getTransactionResponse(buyIds, sellIds);
+        const {data,code} = await getTransactionResponse(buyIds, sellIds);
+        console.log(data);
         if (code === 201) {
-            console.log(code);
             gameCtx.updateResources(totalAmount);
+            inventoryCtx.removeItemsFromInventory(transactionItemsSell.flat().map(item => item.item));
+            inventoryCtx.addInventoryItems(transactionItemsBuy.flat().map(item => item.item));
             setTotalAmount(0);
             clearTransactionItems();
         }
@@ -111,46 +102,31 @@ const Store: React.FC<{store: StoreType}> = (props) => {
     }, []);
 
     const addItemToTransactionHandler = (storeItem: StoreItem, isUserItem?: boolean) => {
-        let currTransaction = transactionItemsBuy.slice();
-        if (isUserItem) {
-            currTransaction = transactionItemsSell.slice();
-        }
-        const index = currTransaction.findIndex(arr => arr[0].id === storeItem.id);
-        if (index !== -1) {
-            currTransaction[index].push(storeItem);
-        } else {
-            currTransaction.push([storeItem]);
-        }
-
         if(isUserItem) {
-            setTransactionItemsSell(currTransaction);
-            console.log(transactionItemsSell);
+            setTransactionItemsSell((prevState) => [...prevState, storeItem]);
         }
-            
         else {
-            setTransactionItemsBuy(currTransaction);
+            setTransactionItemsBuy((prevState) => [...prevState, storeItem]);
         }
     }
 
-    const buttonOnClick = (item: Item) => {
-        addUserItemIntoTransactionHandler(item);
-        inventoryCtx.removeFromInventory(item);
+    const removeItemFromTransactionHandler = (item: StoreItem, isUserItem: boolean) => {
+        if (isUserItem) {
+            setTransactionItemsSell((prevState) => prevState.filter(el => el.id !== item.id));
+            setItems((prevState) => [...prevState, {item: item.item, id: item.id, user: userCtx.user?.id} as InventoryItem])
+        }
+        else {
+            setTransactionItemsBuy((prevState) => prevState.filter(el => el.id !== item.id));
+        }
     }
 
-    const userButtons: ButtonController[] = [
-        {
-            onClick: buttonOnClick,
-            text: 'SPRZEDAJ'
-        }
-    ];
 
-    const userItems = items.map(el => el.item);
-    const userPotions = potions.map(el => el.potion);
-    const userCollectableItems = collectableItems.map(el => el.collectableItem);
+    const userItems = items.map(el => {return <ItemContainer item={el.item} onClick={() => {addUserItemIntoTransactionHandler(el)}}/>});
 
     return <div className="store-list-shop">
-        <TransactionContainer transactionItemsBuy={transactionItemsBuy} transactionItemsSell={transactionItemsSell} finishTransactionHandler={processTransactionHandler}/>
-        <StoreItemsContainer storeItems={storeItems} addTransactionItemHandler={addItemToTransactionHandler}/>
+        <ItemsGrid children={userItems} gridItemsCount={40}/>
+        <TransactionContainer transactionItemsBuy={transactionItemsBuy} transactionItemsSell={transactionItemsSell} finishTransactionHandler={processTransactionHandler} removeTranscationItem={removeItemFromTransactionHandler} />
+        <ItemsGrid children={storeItems.map(item => <ItemContainer item={item.item} onClick={() => {addItemToTransactionHandler(item, false)}}/>)} gridItemsCount={40} />
     </div>
 };
 
