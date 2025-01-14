@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/rpg-online/static/css/main.2d0c2166.css",
-    "main.js": "/rpg-online/static/js/main.1b9adc8b.js",
+    "main.js": "/rpg-online/static/js/main.93e24d59.js",
     "static/js/787.6e6ec0c7.chunk.js": "/rpg-online/static/js/787.6e6ec0c7.chunk.js",
     "static/media/tmp_avatar.png": "/rpg-online/static/media/tmp_avatar.d8594459b71787222637.png",
     "static/media/critical_hit.wav": "/rpg-online/static/media/critical_hit.697edc4f0adc42ebc199.wav",
@@ -18,11 +18,11 @@
     "static/media/sword-svgrepo-com.svg": "/rpg-online/static/media/sword-svgrepo-com.8e5939ef3601bb0c23ae51b0d8c039c6.svg",
     "static/media/hamburger-menu-svgrepo-com.svg": "/rpg-online/static/media/hamburger-menu-svgrepo-com.c40e9d7fd0dda9ff6b1ffb18ea83f998.svg",
     "main.2d0c2166.css.map": "/rpg-online/static/css/main.2d0c2166.css.map",
-    "main.1b9adc8b.js.map": "/rpg-online/static/js/main.1b9adc8b.js.map",
+    "main.93e24d59.js.map": "/rpg-online/static/js/main.93e24d59.js.map",
     "787.6e6ec0c7.chunk.js.map": "/rpg-online/static/js/787.6e6ec0c7.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.2d0c2166.css",
-    "static/js/main.1b9adc8b.js"
+    "static/js/main.93e24d59.js"
   ]
 }
