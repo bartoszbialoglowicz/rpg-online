@@ -49,8 +49,7 @@ const LocationListItem: React.FC<Props> = (props) => {
         <div className="location-list-item-info">
             <h3>{props.location.name}</h3>
             <h4>Wymagany poziom: {props.location.lvlRequired}</h4>
-        </div>
-        <div className="location-list-item-action">
+            <p>{props.location.description}</p>
             {!props.currentlyVisited && <Button text="Przejdź"/>}
         </div>
         </div>
