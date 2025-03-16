@@ -21,6 +21,8 @@ const defaultState: GameContextObject = {
             id: 1,
             description: "",
             imageUrl: "",
+            xCoordinate: 0,
+            yCoordinate: 0
         },
         travelTime: new Date(),
         startTravelTime: new Date()
