@@ -71,6 +71,8 @@ export type Location = {
     lvlRequired: number;
     imageUrl: string;
     description: string;
+    xCoordinate: number;
+    yCoordinate: number;
 }
 
 export type UserLocation = {
