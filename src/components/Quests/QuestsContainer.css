@@ -1,0 +1,78 @@
+.quests-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.quests-list-container {
+    background-color: rgb(13, 18, 28);
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.quests-list-container-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.quests-list-container-title:hover {
+    background: rgb(23, 28, 38);
+}
+
+.quests-list-container-title h2 {
+    margin: 0;
+}
+
+.quest-item {
+    border: 1px solid rgb(43, 48, 58);
+    background-color: rgb(3, 8, 18);
+    padding: 10px;
+    border-radius: 8px;
+    margin-top: 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.quest-item h2 {
+    cursor: pointer;
+    padding: 0.5em 0;
+    margin: 0;
+}
+
+.quest-item p {
+    color: #b0b0b0;
+    margin: 5px 0;
+}
+
+.quest-requirement {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+
+.quest-requirement.in-progress {
+    border: 1px solid rgba(255, 165, 0, 0.3);
+    color: orange;
+}
+
+.quest-requirement.completed {
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    color: lime;
+}
+
+.quest-requirement.not-started {
+    background: rgba(255, 0, 0, 0.2);
+    color: red;
+}
+
+.hidden {
+    display: none;
+}
