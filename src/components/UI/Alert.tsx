@@ -13,7 +13,7 @@ type Props = {
 };
 
 const Alert: React.FC<Props> = (props) => {
-    return <Modal onClickHandler={props.onOutOfBoxClickHandler}>
+    return <Modal onClickHandler={props.onOutOfBoxClickHandler} size="small">
         <div className="alert">
             <h2>{props.title}</h2>
             <p>{props.description}</p>
