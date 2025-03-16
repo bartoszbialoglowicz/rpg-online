@@ -6,6 +6,8 @@ import StoreContainer from '../Store/StoreContainer';
 import EnemiesContainer from '../Enemies/EnemiesContainer';
 import InventoryContainer from '../Inventory/InventoryContainer';
 import { mainContentName } from '../../utils/settings';
+import QuestsContainer from '../Quests/QuestsContainer';
+import PageTitle from '../UI/PageTitle';
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
@@ -28,10 +30,14 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
             case 'ENEMIES':
                 setContent(<EnemiesContainer />);
                 break;
+            case 'QUESTS':
+                setContent(<QuestsContainer />);
+                break;
         }
     }, [props.currentContent])
 
     return <div className="main-content-container">
+            <PageTitle title={props.currentContent}/>
             {content}
     </div>
 };
