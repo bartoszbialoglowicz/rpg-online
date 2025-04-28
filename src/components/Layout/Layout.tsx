@@ -10,7 +10,7 @@ import { mainContentName } from "../../utils/settings";
 
 const Layout = () => {
 
-    const [currentMainContent, setCurrentMainContent] = useState<mainContentName>('NEWS');
+    const [currentMainContent, setCurrentMainContent] = useState<mainContentName>('STAGE');
     const [menuHidden, setMenuHidden] = useState(false);
 
     const setCurrentMainContentHandler = (name: mainContentName) => {
