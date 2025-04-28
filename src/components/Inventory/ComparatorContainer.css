@@ -4,7 +4,7 @@
     height: 200px;
     border-radius: 5px;
     border: 1px solid #1d3250;
-    background-color: #000;
+    background-color: rgb(13, 18, 28);
     padding: 10px;
     gap: 20px;
 }

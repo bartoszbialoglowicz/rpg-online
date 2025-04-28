@@ -5,6 +5,8 @@
 }
 
 .equipment-container {
+
+    background-color: rgb(13, 18, 28);
     gap: 10px;
     display: flex;
     flex-direction: column;
