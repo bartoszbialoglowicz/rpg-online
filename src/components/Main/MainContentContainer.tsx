@@ -8,15 +8,16 @@ import InventoryContainer from '../Inventory/InventoryContainer';
 import { mainContentName } from '../../utils/settings';
 import QuestsContainer from '../Quests/QuestsContainer';
 import PageTitle from '../UI/PageTitle';
+import StageContainer from '../Stage/StageContainer';
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
-    const [content, setContent] = useState<JSX.Element>(<p>W budowie...</p>);
+    const [content, setContent] = useState<JSX.Element>(<StageContainer />);
 
     useEffect(() => {
         switch (props.currentContent) {
-            case 'NEWS':
-                setContent(<p>W budowie...</p>);
+            case 'STAGE':
+                setContent(<StageContainer />);
                 break;
             case 'EQUIPMENT':
                 setContent(<InventoryContainer />);

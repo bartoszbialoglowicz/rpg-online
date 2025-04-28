@@ -5,7 +5,7 @@ import { mainContentName } from "../../utils/settings";
 const SideBarList: React.FC<{setCurrentMainContent: (name: mainContentName) => void}> = (props) => {
 
     const tmpList = [
-        <SideBarListItem name="NEWS" setCurrentMainContent={props.setCurrentMainContent} key="NEWS"/>,
+        <SideBarListItem name="STAGE" setCurrentMainContent={props.setCurrentMainContent} key="STAGE"/>,
         <SideBarListItem name="EQUIPMENT" setCurrentMainContent={props.setCurrentMainContent} key="EQUIPMENT" />,
         <SideBarListItem name="MAP" setCurrentMainContent={props.setCurrentMainContent} key="MAP" />,
         <SideBarListItem name="STORE" setCurrentMainContent={props.setCurrentMainContent} key="STORE" />,
