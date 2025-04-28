@@ -65,6 +65,20 @@ export type WebSocketMessage = {
     messageShort?: string,
 }
 
+export type LocationElementType = "npc" | "enemy" | "object" | "location" | "subLocation" | "item";
+
+export type LocationElement = {
+    type: LocationElementType,
+    position_x: number,
+    position_y: number,
+    npc?: NPC,
+    enemy?: Enemy,
+    location_element?: Location,
+    sublocation_element?: Location,
+    item?: Item
+    description?: string
+}
+
 export type Location = {
     id: number;
     name: string;
@@ -73,10 +87,19 @@ export type Location = {
     description: string;
     xCoordinate: number;
     yCoordinate: number;
+    elements: LocationElement[];
+    parent_location?: number,
 }
 
 export type UserLocation = {
     location: Location,
     travelTime: Date,
     startTravelTime: Date
+}
+
+export type TravelData = {
+    path: string[],
+    targetLocation: Location,
+    travelTime: number,
+    travelEndDatetime: Date
 }

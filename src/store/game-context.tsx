@@ -4,35 +4,42 @@ import { useHttp } from "../hooks/use-http";
 import { UserContext } from "./user-context";
 import { InventoryContext } from "./inventory-context";
 import { StatsContext } from "./stats-context";
-import { UserLocation } from "../types/GameTypes";
+import { Location, NPC, UserLocation } from "../types/GameTypes";
 
 type GameContextObject = {
     userLocation: UserLocation
     resources: Resource,
     updateResources: (gold?: number, userLvl?: UserLvl) => void,
-    updateTravelTime: (newTime: Date, startTravelTime: Date) => void
+    updateTravelTime: (newTime: Date, startTravelTime: Date) => void,
+    updateUserLocation: (newLocation: Location) => void,
+    updateUserLocationAsync: (newLocation: Location, timeSeconds: number) => void
+}
+
+const tmpUserLocation = {
+    location: {
+        name: '',
+        lvlRequired: 1,
+        id: 1,
+        description: "",
+        imageUrl: "",
+        xCoordinate: 0,
+        yCoordinate: 0,
+        elements: []
+    },
+    travelTime: new Date(),
+    startTravelTime: new Date()
 }
 
 const defaultState: GameContextObject = {
-    userLocation: {
-        location: {
-            name: '',
-            lvlRequired: 1,
-            id: 1,
-            description: "",
-            imageUrl: "",
-            xCoordinate: 0,
-            yCoordinate: 0
-        },
-        travelTime: new Date(),
-        startTravelTime: new Date()
-    },
+    userLocation: tmpUserLocation,
     resources: {
         gold: 0,
         lvl: {currentExp: 0, lvl: 0, expPointsGap: 0}
     },
     updateResources: (gold?: number, userLvl?: UserLvl) => null,
     updateTravelTime: (newTime: Date, travelStartTime: Date) => null,
+    updateUserLocation: (newLocation: Location) => null,
+    updateUserLocationAsync: (newLocation: Location, timeSeconds: number) => null,
 };
 
 export const GameContext = React.createContext<GameContextObject>(defaultState);
@@ -89,21 +96,6 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
         inventoryCtx.updateLvlRef(resources.lvl.lvl);
     }, [resources.lvl])
 
-    const applyExpPoint = (currentLvl: UserLvl, expPoint: UserLvl) => {
-        let tmpLvl = currentLvl;
-        console.log("current: " + tmpLvl.currentExp);
-        tmpLvl.currentExp += expPoint.currentExp;
-        console.log("next: " + tmpLvl.currentExp)
-        if (tmpLvl.currentExp > tmpLvl.expPointsGap) {
-            console.log('lvl up');
-            tmpLvl.lvl ++;
-            tmpLvl.currentExp = (currentLvl.currentExp + expPoint.currentExp) - tmpLvl.expPointsGap;
-            tmpLvl.expPointsGap = expPoint.expPointsGap;
-        }
-
-        return tmpLvl;
-    }
-
     const updateResources = (gold?: number, userLvl?: UserLvl) => {
         let tmpRes = resources;
         if (gold) {
@@ -123,11 +115,22 @@ const GameContextProvider: React.FC<{children: JSX.Element}> = (props) => {
         }));
     }
 
+    const updateUserLocation = (newLocation: Location) => {
+        setCurrentLocation(prevState => ({...prevState, location: newLocation}));
+    }
+
+    const updateUserLocationAsync = async (newLocation: Location, timeSeconds: number) => {
+        console.log(newLocation);
+        setTimeout(() => updateUserLocation(newLocation), (timeSeconds - 1) * 1000);
+    }
+
     const gameContextValue = {
         userLocation: currentLocation, 
         resources: resources,
         updateResources: updateResources,
         updateTravelTime: updateTravelTime,
+        updateUserLocation: updateUserLocation,
+        updateUserLocationAsync: updateUserLocationAsync
     }
     
     return <GameContext.Provider value={gameContextValue}>
