@@ -36,7 +36,6 @@ const LocationListItem: React.FC<Props> = (props) => {
     const onClickHandler = async () => {
         setIsSelected(() => isSelected === "" ? "location-selected" : "");
         const requestData = await sendRequest();
-        console.log(requestData);
         props.onTravelHandler(new Date(requestData.data.travelEndDatetime), currentTime);
     }
 

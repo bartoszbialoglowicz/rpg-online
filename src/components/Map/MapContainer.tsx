@@ -1,6 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 import { useTimeCalculator } from "../../hooks/use-time-calculator";
-import LocationListContainer from "./LocationListContainer";
 import { UserContext } from "../../store/user-context";
 import { GameContext } from "../../store/game-context";
 import { useHttp } from "../../hooks/use-http";
@@ -37,7 +36,6 @@ const MapContainer = () => {
         //calculate width
         const width = maxX + minX;
         
-        console.log(width);
         return width;
     }
 
@@ -49,7 +47,6 @@ const MapContainer = () => {
         const maxY = Math.max(...yCoordinates);
         //calculate height
         const height = maxY + minY;
-        console.log(height);
         return height;
     }
 
@@ -104,7 +101,7 @@ const MapContainer = () => {
             }
         };
         getData();
-    }, [userLocation]); // 🔥 Odświeżenie mapy, gdy gracz się przemieszcza
+    }, [userLocation]);
 
 
     useEffect(() => {
