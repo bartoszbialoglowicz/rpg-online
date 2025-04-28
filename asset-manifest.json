@@ -1,9 +1,9 @@
 {
   "files": {
-    "main.css": "/rpg-online/static/css/main.2d0c2166.css",
-    "main.js": "/rpg-online/static/js/main.93e24d59.js",
+    "main.css": "/rpg-online/static/css/main.7661fc73.css",
+    "main.js": "/rpg-online/static/js/main.f18807e5.js",
     "static/js/787.6e6ec0c7.chunk.js": "/rpg-online/static/js/787.6e6ec0c7.chunk.js",
-    "static/media/tmp_avatar.png": "/rpg-online/static/media/tmp_avatar.d8594459b71787222637.png",
+    "static/media/tmp_avatar.png": "/rpg-online/static/media/tmp_avatar.06da318c813bb4d6fc18.png",
     "static/media/critical_hit.wav": "/rpg-online/static/media/critical_hit.697edc4f0adc42ebc199.wav",
     "static/media/normal_hit.wav": "/rpg-online/static/media/normal_hit.37625b9e5e130af5645f.wav",
     "static/media/coin-svgrepo-com.svg": "/rpg-online/static/media/coin-svgrepo-com.b4b6ae2401e70b45aab271109280dfff.svg",
@@ -17,12 +17,12 @@
     "static/media/pentagon-svgrepo-com.svg": "/rpg-online/static/media/pentagon-svgrepo-com.6bd3e806228f6995d3a04e8a04960007.svg",
     "static/media/sword-svgrepo-com.svg": "/rpg-online/static/media/sword-svgrepo-com.8e5939ef3601bb0c23ae51b0d8c039c6.svg",
     "static/media/hamburger-menu-svgrepo-com.svg": "/rpg-online/static/media/hamburger-menu-svgrepo-com.c40e9d7fd0dda9ff6b1ffb18ea83f998.svg",
-    "main.2d0c2166.css.map": "/rpg-online/static/css/main.2d0c2166.css.map",
-    "main.93e24d59.js.map": "/rpg-online/static/js/main.93e24d59.js.map",
+    "main.7661fc73.css.map": "/rpg-online/static/css/main.7661fc73.css.map",
+    "main.f18807e5.js.map": "/rpg-online/static/js/main.f18807e5.js.map",
     "787.6e6ec0c7.chunk.js.map": "/rpg-online/static/js/787.6e6ec0c7.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.2d0c2166.css",
-    "static/js/main.93e24d59.js"
+    "static/css/main.7661fc73.css",
+    "static/js/main.f18807e5.js"
   ]
 }
