@@ -1,5 +1,5 @@
 import React from "react"
-import { feedbackResult } from "../../types/RequestTypes";
+import type { feedbackResult } from "../../types/RequestTypes";
 
 import './FormFeedback.css';
 

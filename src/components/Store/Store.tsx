@@ -1,13 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
-import { InventoryPotion, InventoryCollectableItem, InventoryItem } from "../../types/ItemTypes";
-import { Store as StoreType, StoreItem, StorePotion, StoreCollectableItem, } from "../../types/StoreTypes";
+import type { InventoryPotion, InventoryCollectableItem, InventoryItem } from "../../types/ItemTypes";
+import type { Store as StoreType, StoreItem, StorePotion, StoreCollectableItem } from "../../types/StoreTypes";
 import './Store.css';
 import TransactionContainer from "./TranscationContainer";
 import { GameContext } from "../../store/game-context";
 import { InventoryContext } from "../../store/inventory-context";
-import { Item } from "../../types/ItemTypes";
+import type { Item } from "../../types/ItemTypes";
 import ItemsGrid from "../UI/ItemsGrid";
 import ItemContainer from "../Inventory/ItemContainer";
 

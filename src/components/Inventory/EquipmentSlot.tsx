@@ -1,4 +1,4 @@
-import { EquipmentItem } from "../../types/ItemTypes"
+import type { EquipmentItem } from "../../types/ItemTypes";
 import ItemContainer from "./ItemContainer";
 
 import './EquipmentSlot.css';

@@ -1,4 +1,4 @@
-import { Item } from "./ItemTypes"
+import type { Item } from "./ItemTypes";
 
 type QuestProgress = 'completed' | 'in_progress' | 'not_started';
 export type QuestRequirementType = 'kill' | 'collect' | 'explore' | 'talk';

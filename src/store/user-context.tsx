@@ -1,5 +1,5 @@
-import React, { useEffect, useReducer} from "react";
-import { Action, AuthContextObject, AuthState} from "../types/AuthTypes";
+import React, { useEffect, useReducer, type JSX} from "react";
+import type { Action, AuthContextObject, AuthState } from "../types/AuthTypes";
 
 import User from "../models/User";
 

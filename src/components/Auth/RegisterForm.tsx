@@ -1,10 +1,11 @@
-import { ChangeEvent, FormEvent, useState } from "react";
-import { ErrorResponse } from "../../types/AuthTypes";
-import { feedbackResult } from "../../types/RequestTypes";
+import { useState } from "react";
+import type { FormEvent } from "react";
+import type { ErrorResponse } from "../../types/AuthTypes";
+import type { feedbackResult } from "../../types/RequestTypes";
 import { useHttp } from "../../hooks/use-http";
 import InputLabel from "./InputLabel";
 import SubmitInput from "../UI/SubmitInput";
-import { AppSettings } from "../../utils/settings";
+import type { AppSettings } from "../../utils/settings";
 
 const RegisterForm: React.FC<{setFeedbackHandler: (text:string, type:feedbackResult)=>void, setFormTypeHandler: (type: boolean)=> void}> = (props) => {
 

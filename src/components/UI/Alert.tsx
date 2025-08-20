@@ -2,6 +2,7 @@ import Button from "./Button";
 import Modal from "./Modal";
 
 import './Alert.css';
+import type { JSX } from "react";
 
 type Props = {
     title: string, 

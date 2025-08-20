@@ -1,5 +1,5 @@
 import React from "react";
-import { Enemy, Location, LocationElement, LocationElementType, NPC } from "../../types/GameTypes";
+import type { Enemy, Location, LocationElement, LocationElementType, NPC } from "../../types/GameTypes";
 
 import { GiCrossedSwords, GiSwapBag } from "react-icons/gi";
 import { FaPerson } from "react-icons/fa6";

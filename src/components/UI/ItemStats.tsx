@@ -1,5 +1,5 @@
 import React from "react";
-import { Item } from "../../types/ItemTypes";
+import type { Item } from "../../types/ItemTypes";
 
 import './ItemStats.css';
 

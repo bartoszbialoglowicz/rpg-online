@@ -1,5 +1,5 @@
-import { NPC } from "./GameTypes";
-import { CollectableItem, Item, Potion } from "./ItemTypes";
+import type { NPC } from "./GameTypes";
+import type { CollectableItem, Item, Potion } from "./ItemTypes";
 
 export type Store = {
     id: number,

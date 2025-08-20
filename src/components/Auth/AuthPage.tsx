@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LoginFormContainer from "./LoginFormContainer";
 import RegisterFormContainer from "./RegisterFormContainer";
-import { feedbackResult } from "../../types/RequestTypes";
+import type { feedbackResult } from "../../types/RequestTypes";
 
 import './AuthPage.css';
 

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { Location } from "../../types/GameTypes";
+import type { Location } from "../../types/GameTypes";
 
 import './LocationListItem.css';
 import Button from "../UI/Button";

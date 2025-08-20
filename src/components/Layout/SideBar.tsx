@@ -1,4 +1,4 @@
-import { mainContentName } from '../../utils/settings';
+import type { mainContentName } from '../../utils/settings';
 import SideBarList from '../Sidebar/SideBarList';
 import './SideBar.css';
 

@@ -1,14 +1,14 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useState, type JSX } from "react";
 import ActionsContainer from "./ActionsContainer";
 import FightCardsContainer from "./FightCardsContainer";
 import WebsocketService from "../../services/websocketService";
 import { UserContext } from "../../store/user-context";
 import { GameContext } from "../../store/game-context";
 import Alert from "../UI/Alert";
-import { Enemy, Stats, WebSocketMessage } from "../../types/GameTypes";
+import type { Enemy, Stats, WebSocketMessage } from "../../types/GameTypes";
 import { StatsContext } from "../../store/stats-context";
 import { InventoryContext } from "../../store/inventory-context";
-import { Item } from "../../types/ItemTypes";
+import type { Item } from "../../types/ItemTypes";
 import { AppSettings } from "../../utils/settings";
 import ItemContainer from "../Inventory/ItemContainer";
 import useAudio from "../../hooks/use-audio";
@@ -41,8 +41,8 @@ const FightContainer: React.FC<Props> = (props) => {
 
     const playerMaxHP = statsContext.getAllStats().health;
 
-    const normalHitSound = require('../../assets/audio/normal_hit.wav');
-    const criticallHitSound = require('../../assets/audio/critical_hit.wav');
+    const normalHitSound = new URL('../../assets/audio/normal_hit.wav', import.meta.url).href;
+    const criticallHitSound = new URL('../../assets/audio/critical_hit.wav', import.meta.url).href;
 
     const {isPlaying, play, toggle} = useAudio(normalHitSound);
 

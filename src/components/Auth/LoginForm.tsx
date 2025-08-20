@@ -1,7 +1,8 @@
-import { ChangeEvent, FormEvent, useContext, useState } from "react";
+import { useContext, useState } from "react";
+import type { FormEvent } from "react";
 import { useHttp } from "../../hooks/use-http";
-import { feedbackResult } from "../../types/RequestTypes";
-import { LoginResponse } from "../../types/AuthTypes";
+import type { feedbackResult } from "../../types/RequestTypes";
+import type { LoginResponse } from "../../types/AuthTypes";
 import { UserContext } from "../../store/user-context";
 import User from "../../models/User";
 

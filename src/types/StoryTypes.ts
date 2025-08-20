@@ -1,4 +1,4 @@
-import { NPC } from "./GameTypes";
+import type { NPC } from "./GameTypes";
 
 export type DialogOptionEffect = {
     fight?: boolean,

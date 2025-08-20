@@ -1,4 +1,4 @@
-import { Enemy } from "../../types/GameTypes";
+import type { Enemy } from "../../types/GameTypes";
 import Card from "../UI/Card";
 
 import './EnemiesList.css';

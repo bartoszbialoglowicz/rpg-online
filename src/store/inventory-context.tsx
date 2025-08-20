@@ -1,7 +1,7 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
+import React, { createContext, useContext, useEffect, useState, type JSX } from "react";
 import { UserContext } from "./user-context";
 import { useHttp } from "../hooks/use-http";
-import { CollectableItem, Equipment, EquipmentItem, InventoryCollectableItem, InventoryItem, InventoryItems, InventoryPotion, Item, Potion } from "../types/ItemTypes";
+import type { CollectableItem, Equipment, EquipmentItem, InventoryCollectableItem, InventoryItem, InventoryItems, InventoryPotion, Item, Potion } from "../types/ItemTypes";
 
 type InventoryContextObject = {
     equipment: Equipment,

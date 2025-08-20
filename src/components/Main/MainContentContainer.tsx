@@ -5,7 +5,7 @@ import MapContainer from '../Map/MapContainer';
 import StoreContainer from '../Store/StoreContainer';
 import EnemiesContainer from '../Enemies/EnemiesContainer';
 import InventoryContainer from '../Inventory/InventoryContainer';
-import { mainContentName } from '../../utils/settings';
+import type { mainContentName } from '../../utils/settings';
 import QuestsContainer from '../Quests/QuestsContainer';
 import PageTitle from '../UI/PageTitle';
 import StageContainer from '../Stage/StageContainer';

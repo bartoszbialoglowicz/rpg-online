@@ -1,9 +1,9 @@
-import { createContext, useContext, useEffect, useState } from "react";
-import { Stats, StatsContextState } from "../types/GameTypes";
+import { createContext, useContext, useEffect, useState, type JSX } from "react";
+import type { Stats, StatsContextState } from "../types/GameTypes";
 import { useHttp } from "../hooks/use-http";
 import { UserContext } from "./user-context";
-import { Character } from "../types/GameTypes";
-import { Equipment, Item } from "../types/ItemTypes";
+import type { Character } from "../types/GameTypes";
+import type { Equipment, Item } from "../types/ItemTypes";
 
 
 const defaultState: StatsContextState= {

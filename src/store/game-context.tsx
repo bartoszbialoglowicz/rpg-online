@@ -1,10 +1,10 @@
-import React, { useContext, useEffect, useState } from "react";
-import { Resource, ResourceResponse, UserLvl } from "../types/UserTypes";
+import React, { useContext, useEffect, useState, type JSX } from "react";
+import type { Resource, ResourceResponse, UserLvl } from "../types/UserTypes";
 import { useHttp } from "../hooks/use-http";
 import { UserContext } from "./user-context";
 import { InventoryContext } from "./inventory-context";
 import { StatsContext } from "./stats-context";
-import { Location, NPC, UserLocation } from "../types/GameTypes";
+import type { Location, NPC, UserLocation } from "../types/GameTypes";
 
 type GameContextObject = {
     userLocation: UserLocation

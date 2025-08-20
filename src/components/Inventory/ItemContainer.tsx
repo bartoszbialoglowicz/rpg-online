@@ -1,4 +1,4 @@
-import { Item } from "../../types/ItemTypes"
+import type { Item } from "../../types/ItemTypes";
 
 import './ItemContainer.css';
 type Props = {

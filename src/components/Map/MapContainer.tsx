@@ -3,7 +3,7 @@ import { useTimeCalculator } from "../../hooks/use-time-calculator";
 import { UserContext } from "../../store/user-context";
 import { GameContext } from "../../store/game-context";
 import { useHttp } from "../../hooks/use-http";
-import { Location, UserLocation } from "../../types/GameTypes";
+import type { Location, UserLocation } from "../../types/GameTypes";
 
 import './MapContainer.css';
 import LocationListItem from "./LocationListItem";

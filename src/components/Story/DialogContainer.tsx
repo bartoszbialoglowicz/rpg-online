@@ -1,5 +1,5 @@
-import { NPC } from "../../types/GameTypes";
-import { Dialog, DialogOptions } from "../../types/StoryTypes";
+import type { NPC } from "../../types/GameTypes";
+import type { Dialog, DialogOptions } from "../../types/StoryTypes";
 import tmp_img from '../../assets/images/tmp_avatar.png';
 import { IoChatboxSharp } from "react-icons/io5";
 import { IoExitSharp } from "react-icons/io5";

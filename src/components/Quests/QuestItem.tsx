@@ -1,4 +1,4 @@
-import { UserQuest } from "../../types/QuestsTypes";
+import type { UserQuest } from "../../types/QuestsTypes";
 import QuestRequirement from "./QuestRequirement";
 
 import './QuestItem.css';

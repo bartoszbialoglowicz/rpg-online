@@ -3,7 +3,7 @@ import './ComparatorContainer.css';
 import { StatsContext } from '../../store/stats-context';
 import ItemContainer from './ItemContainer';
 import Button from '../UI/Button';
-import { Item, ItemRarity } from '../../types/ItemTypes';
+import type { Item, ItemRarity } from "../../types/ItemTypes";
 import { InventoryContext } from '../../store/inventory-context';
 
 const ComparatorContainer: React.FC = () => {

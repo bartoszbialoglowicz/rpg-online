@@ -1,7 +1,7 @@
 import LoginForm from "./LoginForm";
 import FormTitle from "./FormTitle";
 import FormChange from "./FormChange";
-import { feedbackResult } from "../../types/RequestTypes";
+import type { feedbackResult } from "../../types/RequestTypes";
 import FormFeedback from "./FormFeedback";
 
 import './LoginFormContainer.css';

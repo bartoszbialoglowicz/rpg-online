@@ -1,5 +1,5 @@
-import { Item } from '../../types/ItemTypes';
-import { StoreItem } from '../../types/StoreTypes';
+import type { Item } from "../../types/ItemTypes";
+import type { StoreItem } from "../../types/StoreTypes";
 import ItemContainer from '../Inventory/ItemContainer';
 
 import './StoreItemsContainer.css';

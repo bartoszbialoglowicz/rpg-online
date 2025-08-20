@@ -6,7 +6,7 @@ import { useState } from "react";
 import GameContextProvider from "../../store/game-context";
 import { InventoryContextProvider } from "../../store/inventory-context";
 import { StatsContextProvider } from "../../store/stats-context";
-import { mainContentName } from "../../utils/settings";
+import type { mainContentName } from "../../utils/settings";
 
 const Layout = () => {
 

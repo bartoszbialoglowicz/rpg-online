@@ -1,3 +1,4 @@
+import type { JSX } from 'react';
 import './ItemsGrid.css';
 
 type Props = {

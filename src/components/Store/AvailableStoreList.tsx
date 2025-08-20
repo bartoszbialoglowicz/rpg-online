@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Store } from "../../types/StoreTypes";
+import type { Store } from "../../types/StoreTypes";
 
 import './AvailableStoreList.css';
 import Card from "../UI/Card";

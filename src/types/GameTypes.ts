@@ -1,4 +1,4 @@
-import { Equipment, Item } from "./ItemTypes"
+import type { Equipment, Item } from "./ItemTypes";
 
 export type Stats = {
     damage: number,

@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Quest, UserQuest } from "../../types/QuestsTypes";
+import type { Quest, UserQuest } from "../../types/QuestsTypes";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
 import QuestItem from "./QuestItem";

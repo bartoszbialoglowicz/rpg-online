@@ -1,5 +1,6 @@
-import { ChangeEvent, useRef, useState } from "react";
-import { inputType } from "../../types/AuthTypes";
+import { useRef, useState } from "react";
+import type { ChangeEvent } from "react";
+import type { inputType } from "../../types/AuthTypes";
 
 import './InputLabel.css';
 

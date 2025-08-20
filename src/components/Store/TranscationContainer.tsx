@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StoreItem } from "../../types/StoreTypes";
+import type { StoreItem } from "../../types/StoreTypes";
 
 import './TransactionContainer.css';
 import Alert from "../UI/Alert";

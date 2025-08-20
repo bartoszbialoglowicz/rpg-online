@@ -1,7 +1,7 @@
 import './FightCardsContainer.css';
 import avatar1 from '../../assets/images/tmp_avatar.png';
 import { useEffect, useState } from "react";
-import { Enemy } from '../../types/GameTypes';
+import type { Enemy } from "../../types/GameTypes";
 
 const FightCardsContainer: React.FC<{enemy: Enemy, enemyCurrentHP: number, myCurrentHP: number, myMaxHP: number}> = (props) => {
     

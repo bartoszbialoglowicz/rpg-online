@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserQuest } from "../../types/QuestsTypes";
+import type { UserQuest } from "../../types/QuestsTypes";
 import QuestItem from "./QuestItem";
 
 import './QuestListContainer.css';
