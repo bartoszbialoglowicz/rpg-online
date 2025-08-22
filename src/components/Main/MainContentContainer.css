@@ -1,9 +1,12 @@
 .main-content-container {
-    width: 90%;
-    margin: calc(5% - 20px) 5% 5% 5%;
-    background-color: #212121;
-    box-shadow: 0 0 25px inset #111;
-    height: 85%;
-    overflow: hidden;
+    margin: 10px auto;
+    min-height: calc(100% - 20px);
+    max-width: 1260px;
+    width: calc(100% - 20px);
 }
 
+@media only screen and (max-width: 1260px) {
+    .main-content-container {
+        max-width: 100%;
+    }
+}

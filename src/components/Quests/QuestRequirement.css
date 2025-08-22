@@ -1,0 +1,8 @@
+
+.quest-icon.completed {
+    color: rgba(0, 255, 0, 0.3);
+}
+
+.quest-icon.in-progress {
+    color: rgba(255, 165, 0, 0.3);
+}

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import LoginFormContainer from "./LoginFormContainer";
 import RegisterFormContainer from "./RegisterFormContainer";
-import { feedbackResult } from "../../utils/types";
+import type { feedbackResult } from "../../types/RequestTypes";
 
 import './AuthPage.css';
 
@@ -17,15 +17,25 @@ const AuthPage = () => {
         setFeedbackType(type);
     };
 
+    const changeFormType = () => {
+        if (feedbackType !== "success") {
+            setFeedbackText("");
+            setFeedbackType("success");
+        }
+        setFormType(prevState => !prevState);
+    }
+
     // Provide additional props is there any feedback
-    const loginForm = (feedbackText && feedbackType) ? <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType} /> : <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
-    const registerForm = (feedbackText && feedbackType) ? <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType}/> : <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
+    const loginForm = (feedbackText && feedbackType) ? <LoginFormContainer changeFormHandler={changeFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType} /> : <LoginFormContainer changeFormHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
+    const registerForm = (feedbackText && feedbackType) ? <RegisterFormContainer setFormTypeHandler={changeFormType} setFeedbackHandler={setFeedbackHandler} feedbackText={feedbackText} feedbackResult={feedbackType}/> : <RegisterFormContainer setFormTypeHandler={setFormType} setFeedbackHandler={setFeedbackHandler}/>;
 
     const content = formType ? loginForm : registerForm;
 
     return <div className="login-container">
-        {content}
-    </div>
+                <div className="form-container-wrap">
+                {content}
+            </div>
+        </div>
 };
 
 export default AuthPage;

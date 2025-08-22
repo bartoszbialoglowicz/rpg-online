@@ -1,8 +1,7 @@
 import { useContext, useEffect, useState } from "react";
-import { GameContext } from "../../store/game-context";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
-import { Store as StoreType } from "../../utils/types";
+import type { Store as StoreType } from "../../types/StoreTypes";
 import Store from "./Store";
 import AvailableStoreList from "./AvailableStoreList";
 

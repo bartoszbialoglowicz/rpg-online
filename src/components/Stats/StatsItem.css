@@ -1,0 +1,44 @@
+.stats-item {
+    height: 80px;
+    display: flex;
+}
+
+.stats-item-image {
+    height: 100%;
+    display: flex;
+    place-content: center;
+    place-items: center;
+    width: 80px;
+    background: radial-gradient(red, #000 66%);
+}
+
+.stats-item-image > img {
+    height: 50%;
+    filter: brightness(2.4);
+}
+
+.stats-hp {
+    background: radial-gradient(rgb(38, 138, 63), #000 66%);
+}
+
+.stats-damage {
+    background: radial-gradient(rgb(129, 36, 36), #000 66%);
+}
+
+.stats-magic-resist {
+    background: radial-gradient(rgb(35, 53, 134), #000 66%);
+}
+
+.stats-armor {
+    background: radial-gradient(rgb(133, 126, 41), #000 66%);
+}
+
+.stats-item-value {
+    display: flex;
+    flex-direction: column;
+    place-content: center;
+}
+
+.stats-item-value > div:nth-child(2) {
+    font-size: 26px;
+}

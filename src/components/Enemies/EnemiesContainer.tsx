@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from "react";
-import { Enemy } from "../../utils/types";
+import type { Enemy } from "../../types/GameTypes";
 import { useHttp } from "../../hooks/use-http";
 import { UserContext } from "../../store/user-context";
 import EnemiesList from "./EnemiesList";
@@ -30,11 +30,16 @@ const EnemiesContainer = () => {
         setIsFight(true);
     };
 
+    const endFightHandler = () => {
+        setPickedEnemy(undefined);
+        setIsFight(false);
+    }
+
     const enemiesJSX = <div className="enemies-container">
             <EnemiesList enemies={enemies} pickEnemyHandler={setEnemyHandler}/>
         </div>;
     
-    const fightJSX = pickedEnemy ?<FightContainer enemy={pickedEnemy}/> : <p>Ooops, something went wrong.</p>
+    const fightJSX = pickedEnemy ? <FightContainer enemy={pickedEnemy} onFightEnd={endFightHandler}/> : <p>Ooops, something went wrong.</p>
 
     return isFight ? fightJSX : enemiesJSX;
 };

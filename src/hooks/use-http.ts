@@ -1,5 +1,6 @@
 import { AppSettings } from "../utils/settings";
-import { HttpMethod, responseObject } from "../utils/types";
+import type { responseObject } from "../types/RequestTypes";
+import type { HttpMethod } from "../types/RequestTypes";
 
 export const useHttp = <objType>(path: string, method: HttpMethod, body?: object, token?: string) => {
     const sendRequest = async <obj2Type>(path_2?: string, method_2?: HttpMethod, body_2?: object) => {

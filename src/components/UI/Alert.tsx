@@ -1,5 +1,8 @@
 import Button from "./Button";
-import Modal from "./Modal"
+import Modal from "./Modal";
+
+import './Alert.css';
+import type { JSX } from "react";
 
 type Props = {
     title: string, 
@@ -8,15 +11,15 @@ type Props = {
     onButtonClick: () => void, 
     onOutOfBoxClickHandler: () => void,
     children?: JSX.Element
-}
+};
 
 const Alert: React.FC<Props> = (props) => {
-    return <Modal onClickHandler={props.onOutOfBoxClickHandler}>
+    return <Modal onClickHandler={props.onOutOfBoxClickHandler} size="small">
         <div className="alert">
-        <h2>{props.title}</h2>
-        <p>{props.description}</p>
-        {props.children}
-        <Button text={props.buttonText} onClickHandler={props.onButtonClick} />
+            <h2>{props.title}</h2>
+            <p>{props.description}</p>
+            {props.children && <div className="alert-content">{props.children}</div>}
+            <Button text={props.buttonText} onClickHandler={props.onButtonClick}/>
         </div>
     </Modal>
     

@@ -1,4 +1,12 @@
-.main {
+.main-small {
     width: calc(100% - 150px);
-    height: 100%;
+    min-height: 100%;
+    margin-top: 50px;
+    margin-left: 150px;
+}
+
+.main-big {
+    width: 100%;
+    min-height: 100%;
+    margin-top: 50px;
 }

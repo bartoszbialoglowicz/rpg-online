@@ -1,0 +1,8 @@
+.form-feedback-error {
+    color:#ad2424;
+    text-wrap: wrap;
+}
+
+.form-feedback-success {
+    color: rgb(44, 160, 44);
+}

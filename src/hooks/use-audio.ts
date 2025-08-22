@@ -13,13 +13,19 @@ const useAudio = (url: string) => {
         return () => {
             audio.removeEventListener('ended', () => setIsPlaying(false));
         }
-    }, []);
+    }, [audio]);
 
     const toggle = () => {
         setIsPlaying(!isPlaying)
     };
 
-    return {isPlaying, toggle};
+    const play = (url2?: string) => {
+        audio.pause();
+        setAudio(new Audio(url2 ? url2 : url));
+        setIsPlaying(true);
+    }
+
+    return {isPlaying, play, toggle};
 };
 
 export default useAudio;

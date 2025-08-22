@@ -1,9 +1,17 @@
-import { mainContentName } from '../../utils/types';
+import type { mainContentName } from '../../utils/settings';
 import SideBarList from '../Sidebar/SideBarList';
 import './SideBar.css';
 
-const SideBar: React.FC<{setCurrentMainContent: (name: mainContentName) => void}> = (props) => {
-    return <div className="sidebar">
+type Props = {
+    setCurrentMainContent: (name: mainContentName) => void,
+    menuHidden: boolean
+}
+
+const SideBar: React.FC<Props> = (props) => {
+    
+    const classes = props.menuHidden ? 'sidebar hidden' : 'sidebar';
+
+    return <div className={classes}>
         <SideBarList setCurrentMainContent={props.setCurrentMainContent}/>
     </div>
 };

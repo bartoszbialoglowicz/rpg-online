@@ -3,24 +3,25 @@ import { GameContext } from "../../store/game-context";
 import HeaderLvlBar from "./HeaderLvlBar";
 
 import './HeaderResources.css';
-import coins from '../../assets/images/coins.png';
-import { UserContext } from "../../store/user-context";
+ import coins from '../../assets/svgs/coin-svgrepo-com.svg';
+import { useNumber } from "../../hooks/use-number";
 
 const HeaderResources = () => {
     
     const gameCtx = useContext(GameContext);
+    const numberConverter = useNumber();
     
-    const userCtx = useContext(UserContext);
-
     const [resources, setResources] = useState(gameCtx.resources);
+
+    const gold = numberConverter.convertWithSIPrefix(resources.gold);
 
     useEffect(() => {
         setResources(gameCtx.resources);
     }, [gameCtx.resources]);
+
     return <div className="header-resources">
-        <div className="header-resources-gold">{resources.gold} <img src={coins} alt="coins"></img></div>
+        <div className="header-resources-gold">{gold} <img src={coins} alt="coins"></img></div>
         <HeaderLvlBar currentEXP={resources.lvl.currentExp} lvlExpLimit={resources.lvl.expPointsGap} lvl={resources.lvl.lvl}/>
-        <div className="header-logout" onClick={userCtx.logout}>LOGOUT</div>
     </div>
 };
 

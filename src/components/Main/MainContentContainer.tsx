@@ -1,59 +1,26 @@
-import { useContext, useEffect, useState } from 'react';
-import { mainContentName } from '../../utils/types';
+import { useEffect, useState } from 'react';
 import './MainContentContainer.css';
-import MainNewsContainer from './MainNewsContainer';
-import CharacterContainer from '../Character/CharacterContainer';
-import Equipment from '../Equipment/Equipment';
 import React from 'react';
 import MapContainer from '../Map/MapContainer';
 import StoreContainer from '../Store/StoreContainer';
 import EnemiesContainer from '../Enemies/EnemiesContainer';
-import EquipmentContextProvider from '../../store/equipment-context';
-import Alert from '../UI/Alert';
-import { UserContext } from '../../store/user-context';
-import { useHttp } from '../../hooks/use-http';
-import AvatarList from '../UI/AvatarList';
-
-type responseType = {
-    id: number,
-    name: string,
-    imageUrl: string
-}
+import InventoryContainer from '../Inventory/InventoryContainer';
+import type { mainContentName } from '../../utils/settings';
+import QuestsContainer from '../Quests/QuestsContainer';
+import PageTitle from '../UI/PageTitle';
+import StageContainer from '../Stage/StageContainer';
 
 const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props) => {
 
-    const [content, setContent] = useState<JSX.Element>(<MainNewsContainer />);
-    const [itemsReady, setItemsReady] = useState(false);
-    
-    const userCtx = useContext(UserContext);
-    const sendRequest = useHttp<responseType[]>('api/avatars/', 'GET', undefined, userCtx.user?.authToken);
-    const [isNew, setIsNew] = useState(userCtx.user?.isNew);
-
-    const [avatarsJSX, setAvatarsJSX] = useState<JSX.Element>();
-
-    useEffect(() => {
-        const getData = async () => {
-            const {data, code} = await sendRequest();
-
-            if (code === 200) {
-                setItemsReady(true);
-                setAvatarsJSX(<AvatarList avatars={data} />);
-            }
-        }
-
-        getData();
-    }, [])
+    const [content, setContent] = useState<JSX.Element>(<StageContainer />);
 
     useEffect(() => {
         switch (props.currentContent) {
-            case 'CHARACTER':
-                setContent(<CharacterContainer /> );
-                break;
-            case 'NEWS':
-                setContent(<MainNewsContainer />);
+            case 'STAGE':
+                setContent(<StageContainer />);
                 break;
             case 'EQUIPMENT':
-                setContent(<Equipment />);
+                setContent(<InventoryContainer />);
                 break;
             case 'MAP':
                 setContent(<MapContainer />);
@@ -64,20 +31,15 @@ const MainContentContainer: React.FC<{currentContent: mainContentName}> = (props
             case 'ENEMIES':
                 setContent(<EnemiesContainer />);
                 break;
+            case 'QUESTS':
+                setContent(<QuestsContainer />);
+                break;
         }
     }, [props.currentContent])
 
     return <div className="main-content-container">
-        <EquipmentContextProvider>
+            <PageTitle title={props.currentContent}/>
             {content}
-        </EquipmentContextProvider>
-        {(itemsReady && !isNew) && <Alert title={`Witaj ${userCtx.user?.nickname}!`}
-        description='Aby zakończyć proces tworzenia postaci wybierz awatar z listy poniżej'
-        buttonText='OK'
-        onButtonClick={() => {}}
-        onOutOfBoxClickHandler={() => {}}
-        children={avatarsJSX}
-        />}
     </div>
 };
 

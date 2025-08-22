@@ -1,0 +1,10 @@
+.header-hamburger {
+    height: 100%;
+    display: flex;
+    place-items: center;
+}
+
+.header-hamburger > img {
+    height: 70%;
+    padding-left: 10px;
+}

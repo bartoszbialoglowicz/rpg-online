@@ -1,0 +1,9 @@
+.stats-container {
+    width: 200px;
+}
+
+@media only screen and (max-width: 400px) {
+    .stats-container {
+        width: 150px;
+    }
+}

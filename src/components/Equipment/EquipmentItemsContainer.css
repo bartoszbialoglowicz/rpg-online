@@ -1,9 +1,0 @@
-.equipment-container-row {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.equipment-container {
-    width: 100%;
-}
